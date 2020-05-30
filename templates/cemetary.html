@@ -213,7 +213,7 @@
 												{% endif %}
 											{% endfor %}
 										</div><br>
-										<span id="grave_{{ ( i * 4 ) + j }}_count">{{ characters.flowers|length }}</span> flowers.
+										<span id="grave_{{ ( i * 4 ) + j }}_count">{{ characters[(i * 4) + j].flowers|length }}</span> flowers.
 									</td>
 								</tr>
 							</table>
