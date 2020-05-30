@@ -1,0 +1,238 @@
+{% extends "layout_pages.html" %}
+
+{% block inside_row %}
+
+<script>
+	// document.addEventListener('DOMContentLoaded', function() {
+	// 	document.querySelector('button').onclick = count;
+	// });
+
+	let counter_flowers = [];
+	let counter_messages = [];
+	let graves_messages = [];
+	let current_flower_id = 0;
+	let current_character_id = 0;
+	{% if session['user_id'] %}
+		let user_id = {{ session['user_id'] }};
+	{% else %}
+		let user_id = -1;
+	{% endif %}
+	let last_click_pos = { x:0, y:0 }
+
+
+	
+
+	function change_current_flower(flower_id)
+	{
+		current_flower_id = flower_id;
+	}
+
+	function change_last_click(e) 
+	{
+		var rect = e.target.getBoundingClientRect();
+		var x = Math.round(e.clientX - rect.left);
+		var y = Math.round(e.clientY - rect.top);
+		last_click_pos = { x, y };
+		return { x,	y };
+	}
+
+	function add_message(grave_id, character_id)
+	{
+		document.querySelector('#add_message_box').grave = grave_id;
+		document.querySelector('#add_message_box').style.display = "block";
+		current_character_id = character_id;
+	}
+
+	function add_flower(grave_id, character_id)
+	{
+		if (counter_flowers[grave_id])
+		{
+			counter_flowers[grave_id]++;
+		}
+		else
+		{
+			counter_flowers[grave_id] = parseInt(document.querySelector('#grave_'+grave_id+'_count').innerHTML) + 1;
+		}
+
+		let grave = document.querySelector('#grave_'+grave_id+'_count');
+		grave.innerHTML = counter_flowers[grave_id];
+		
+		let flower = document.createElement("img");
+		flower.src = "/static/images/flowers/"+current_flower_id+".png";
+		flower.alt = "flower";
+		flower.height = "20";
+		flower.position = "relative"
+		flower.top = last_click_pos.x + "px"
+		flower.left = last_click_pos.y + "px"
+		document.querySelector('#grave_'+grave_id).appendChild(flower);
+	}
+
+	function add_to_grave(grave_id, character_id) 
+	{
+		if (current_flower_id == -1)
+		{
+			add_message(grave_id, character_id);
+		}
+		else
+		{
+			add_flower(grave_id, character_id);	
+
+			// Sends AJAX request to save flower
+			var xhttp = new XMLHttpRequest();
+			ajax_url = "/save_flower/"+character_id+"/"+current_flower_id+"/"+last_click_pos.x+"/"+last_click_pos.y;
+			xhttp.open("GET", ajax_url, true);
+			xhttp.send();
+		} 
+	}
+
+
+	function leave_message()
+	{
+		grave_id = document.querySelector('#add_message_box').grave;
+		new_message = document.querySelector('#message_text').value;
+
+		if (!graves_messages[grave_id])
+		{
+			graves_messages[grave_id] = [];
+			counter_messages[grave_id] = 1;
+		}
+		else
+		{
+			counter_messages[grave_id]++;
+		}
+
+		graves_messages[grave_id].push(new_message);
+
+		let message_div = document.createElement("span");
+		message_div.id = "grave_message"+grave_id;
+		message_div.classList.add("grave_message");
+		document.querySelector('#grave_'+grave_id).appendChild(message_div);
+
+		let message_text = document.createElement("span");
+		message_text.classList.add("grave_message_text");
+		message_text.innerHTML = new_message;
+		document.querySelector('#grave_message'+grave_id).appendChild(message_text);
+
+		//document.querySelector('#grave_'+grave_id+'_count').innerHTML = counter_messages[grave_id];
+		let message = document.createElement("img");
+		message.src = "/static/images/flowers/scroll.png";
+		message.alt = "message";
+		message.height = "20";
+		document.querySelector('#grave_message'+grave_id).appendChild(message);
+
+		var xhttp = new XMLHttpRequest();
+		ajax_url = "/save_message";
+		xhttp.open("POST", ajax_url, true);
+		xhttp.setRequestHeader("Content-Type", "application/json");
+		
+        xhttp.onreadystatechange = function () 
+        {
+            if (xhttp.readyState === 4 && xhttp.status === 200) 
+            {
+                var jsonData = JSON.parse(xhttp.response);
+                console.log(jsonData);
+            }
+        };
+        var data = JSON.stringify({"message": new_message, "user_id": user_id, "character_id": current_character_id });
+        console.log(data);
+        xhttp.send(data);
+
+		document.querySelector('#add_message_box').style.display = "none";	
+	}
+
+</script>
+
+
+<main id="cemetary_page" class="col-12" role="main">
+	<h1>{{ show_title }}</h1>
+	<h2>Memorial Grounds</h2>
+
+	{% if session['username'] %}
+		<br>
+		{% if is_blocked %}
+			Your account has been blocked: you can't leave public flowers nor messages on graves anymore. You can leave temporary flowers, they just won't be registered.
+		{% else %}
+		Welcome to {{ show_title }}'s cemetary. Here you can leave flowers or messages to your favourite characters. Messages will be reviewed by the maintenance of this cemetary for approval before they can be displayed to the public.
+		<br><br>
+		<div id="flower_choice">
+			<p>
+			{% for i in range(4) %}
+				<span class="flower_choice_item" onclick="change_current_flower({{ i }})"><img src="/static/images/flowers/{{ i }}.png" alt="Flower {{ i }}" height="20"> (select)</span>
+			{% endfor %}
+			<span class="flower_choice_item" onclick="change_current_flower(-1)"><img src="/static/images/flowers/scroll.png" alt="Message" height="20"> Message</span>
+			</p>
+		</div>
+		{% endif %}
+	{% else %}
+		Welcome to {{ show_title }}'s cemetary. You can click on a grave to leave a flower in memory of a character.
+	{% endif %}
+
+		<div id="add_message_box" class="modal" display="none">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<p>
+						Write here the message you want to leave. Other visitors will be able to see it once the cemetary maintenance will have approved it.<br>
+						<input type="text" id="message_text">
+						<br><br>
+						<button onclick="leave_message()">Leave message.</button>
+					</p>
+				</div>
+			</div>
+		</div>  
+	</div>
+
+
+	<div id="cemetary_grounds" align="center">
+		<p>
+			<table>
+				{% for i in range((graves_count // 4) + 1) %}
+				<tr>
+					{% for j in range(4) %}
+						{% if characters[(i * 4) + j] %}
+						<td class="grave">
+							<table>
+								<tr>
+									<td>
+										{{ characters[(i * 4) + j].name }}<br>
+										Season {{ characters[(i * 4) + j].death_season }} Episode {{ characters[(i * 4) + j].death_episode }}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div id="grave_{{ ( i * 4 ) + j }}" class="grave_plaque" onclick="add_to_grave({{ ( i * 4 ) + j }}, {{ characters[(i * 4) + j].id }})">
+											{% for flower in characters[(i * 4) + j].flowers %}
+												<img src="/static/images/flowers/{{ flower.flowertype_id }}.png" alt="flower" height="20">
+											{% endfor %}
+											{% for message in characters[(i * 4) + j].messages %}
+												{% if message.admin_id > 0 %}
+												<span id="grave_message{{ (i * 4) + j }}" class="grave_message">
+													<span class="grave_message_text">{{ message.content }}</span>
+													<img src="/static/images/flowers/scroll.png" alt="{{ message.content }}" height="20">
+												</span>
+												{% endif %}
+											{% endfor %}
+										</div><br>
+										<span id="grave_{{ ( i * 4 ) + j }}_count">{{ characters.flowers|length }}</span> flowers.
+									</td>
+								</tr>
+							</table>
+						</td>
+						{% endif %}
+					{% endfor %}
+				</tr>
+				{% endfor %}
+			</table>
+		</p>
+	</div>
+
+
+<script>
+	let graves_plaques = document.getElementsByClassName('grave_plaque');
+	for (var i = 0; i < graves_plaques.length; i++) 
+	{
+    	graves_plaques[i].addEventListener('click', change_last_click);
+	}
+</script>
+</main>
+{% endblock %}

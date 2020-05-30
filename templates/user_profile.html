@@ -1,0 +1,48 @@
+{% extends "layout_pages.html" %}
+
+{% block inside_row %}
+<main id="user_panel" class="col-12" role="main">
+	<div class="user_panel">
+		<table>
+			<tr>
+				<td>
+					<h1>User profile: {{ user_profile_name }}</h1><br>
+				</td>
+			</tr>
+			{% if user_profile_favourite_shows %}
+				<tr>
+					<td>	
+						Favourite shows: 
+						<form action="{{ url_for('search_cemetary') }}" method="post">
+					    	<select name="cemetary_search">
+					    		{% for show in user_profile_favourite_shows %}
+									<option value="{{ show.name }}">{{ show.name }}</option>
+								{% endfor %}
+							</select>
+							<button>See cemetary</button>
+						</form><br>
+					</td>
+				</tr>
+			{% endif %}
+			<tr>
+				<td>
+					<h3>Activity:</h3>
+					<p>
+						{% if activity and activity|length > 0 %}
+						<ul>
+							{% for act in activity %}
+							<li>
+								[{{ act['date'] }}] {{ user.name }} left a {{ act['type'] }} on {{ act['character'] }}'s grave (from {{ act['show'] }}).
+							</li>
+							{% endfor %}
+						</ul>
+						{% else %}
+						There is no activity to display for this user.
+						{% endif %}
+					</p>
+				</td>
+			</tr>
+		</table>
+	</div>
+</main>
+{% endblock %}
