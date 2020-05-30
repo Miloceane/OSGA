@@ -34,7 +34,7 @@ from import_characters import CharactersList
 
 # Configure Flask app
 app = Flask(__name__)
-app.secret_key = os.environ["SECRET_KEY"]
+app.secret_key = =dd9fadd2de6003bf66cbe5ecdb6551015150fd955811ba1e8217d76c21f5f974 #os.environ["SECRET_KEY"]
 
 # Configure database
 if not os.getenv("DATABASE_URL"):
