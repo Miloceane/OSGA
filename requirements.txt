@@ -8,3 +8,4 @@ Flask_BasicAuth==0.2.0
 requests==2.23.0
 Flask_Session==0.3.1
 gunicorn
+werkzeug
