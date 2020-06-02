@@ -97,9 +97,7 @@ class Characters(db.Model):
 	flower_count = db.Column(db.Integer)
 	flowers = relationship(CharactersFlowers)
 	messages = relationship(CharactersMessages)
-
-
-
+	
 
 class Suggestions(db.Model):
 	__tablename__ = 'suggestions'

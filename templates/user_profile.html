@@ -9,6 +9,7 @@
 					<h1>User profile: {{ user_profile_name }}</h1><br>
 				</td>
 			</tr>
+
 			{% if user_profile_favourite_shows %}
 				<tr>
 					<td>	
@@ -24,10 +25,12 @@
 					</td>
 				</tr>
 			{% endif %}
+
 			<tr>
 				<td>
 					<h3>Activity:</h3>
 					<p>
+
 						{% if activity and activity|length > 0 %}
 						<ul>
 							{% for act in activity %}
@@ -36,9 +39,11 @@
 							</li>
 							{% endfor %}
 						</ul>
+
 						{% else %}
 						There is no activity to display for this user.
 						{% endif %}
+
 					</p>
 				</td>
 			</tr>

@@ -14,16 +14,18 @@
 	    	<a class="nav-link {{ selected_suggestions }}" href="/user_panel/suggestions">Suggestions</a>
 	  	</li>
 	</ul>
+
 	{% if error %}
 		<div class="alert alert-info">{{ error }}</div>
 	{% endif %}
+
 	<div class="user_panel">
 		{% if selected_shows_settings %}
   		<table>
   			<tr>
   				<td>Favourite shows:</td>
   				<td>
-  					{% if favourite_shows_count > 0 %}
+  					{% if favourite_shows|length > 0 %}
 	  					<form action="/user_panel/shows_settings" method="post">
 				  			<select id="favourite_shows" name="remove_favourited">
 				  				{% for show in favourite_shows %}
@@ -60,7 +62,7 @@
   			<tr>
   				<td>Spoilers blacklist:</td>
   				<td>
-  					{% if blacklisted_shows_count > 0 %}
+  					{% if blacklisted_shows|length > 0 %}
 	  					<form action="/user_panel/shows_settings" method="post">
 				  			<select id="blacklisted_shows" name="remove_blacklisted">
 				  				{% for show in blacklisted_shows %}
@@ -91,6 +93,7 @@
 		  		</td>
 		  	</tr>
   		</table>
+
 
   		{% elif selected_user_settings %}
   		<form action="#" method="post">

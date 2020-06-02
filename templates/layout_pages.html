@@ -16,10 +16,7 @@
 					</form>
 			    </div>
 		  	</div>
-		  	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
-  			{% block js %}{% endblock %}
-         	<!-- Include Choices JavaScript -->
-		  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+		
 		  	<ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
 			    
 			      	{% if session['username'] %}
@@ -44,6 +41,7 @@
 			  		{% endif %}
 		  		</ul>
 			</div>
+			
 			<div id="login_box" class="modal" display="none">
 				<div class="modal-dialog">
 					<div class="modal-content">
