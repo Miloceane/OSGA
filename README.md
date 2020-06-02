@@ -1,11 +1,7 @@
 # OSGA: One Site to Grieve them All
 
-[OSGA](https://miloceane-osga.herokuapp.com/) is a mourning place for all lovers of TV shows who lost their favourite character on screen.
+OSGA is a mourning place for all lovers of TV shows who lost their favourite character on screen.
 Each universe has its own cemetary, where you can find the resting place of your favourite character and leave messages and flowers.
-
-Click [here](https://miloceane-osga.herokuapp.com/) to browse OSGA and on the picture here under to access a presentation video (with screencast):
-
-[![OSGA screencast](https://img.youtube.com/vi/ePPcAt0UkvA/0.jpg)](https://www.youtube.com/watch?v=ePPcAt0UkvA)
 
 ## Problem statement
 

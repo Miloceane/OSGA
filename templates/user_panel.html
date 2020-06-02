@@ -1,0 +1,182 @@
+{% extends "layout_pages.html" %}
+
+{% block inside_row %}
+<main id="user_panel" class="col-12" role="main">
+	<h1>User panel</h1>
+	<ul class="nav nav-tabs">
+  		<li class="nav-item">
+    		<a class="nav-link {{ selected_shows_settings }}" href="/user_panel/shows_settings">Shows settings</a>
+	  	</li>
+	  	<li class="nav-item">
+	    	<a class="nav-link {{ selected_user_settings }}" href="/user_panel/user_settings">User settings</a>
+	  	</li>
+	  	<li class="nav-item">
+	    	<a class="nav-link {{ selected_suggestions }}" href="/user_panel/suggestions">Suggestions</a>
+	  	</li>
+	</ul>
+	{% if error %}
+		<div class="alert alert-info">{{ error }}</div>
+	{% endif %}
+	<div class="user_panel">
+		{% if selected_shows_settings %}
+  		<table>
+  			<tr>
+  				<td>Favourite shows:</td>
+  				<td>
+  					{% if favourite_shows_count > 0 %}
+	  					<form action="/user_panel/shows_settings" method="post">
+				  			<select id="favourite_shows" name="remove_favourited">
+				  				{% for show in favourite_shows %}
+									<option value="{{ show.id }}">{{ show.name }}</option>
+								{% endfor %}
+							</select>
+							<button>Remove from favourites</button>
+						</form>
+					{% else %}
+						You haven't added any show to your favourite yet.
+					{% endif %}
+				</td>
+				<td rowspan="2" width="30%" class="small_description">Your favourite shows will appear on the main page of OSGA and can be displayed on your profile.</td>
+			</tr>
+			<tr>
+				<td>Add to favourites:	</td>
+				<td>
+					<form action="/user_panel/shows_settings" method="post">
+			  			<select name="add_favourite">
+			  				{% for show in shows %}
+			  					{% if show not in favourite_shows %}
+								<option value="{{ show.id }}">{{ show.name }}</option>
+								{% endif %}
+							{% endfor %}
+						</select>
+						<button>Add to favourites</button>
+					</form>
+			  		<br>
+		  		</td>
+		  	</tr>
+  			<tr>
+  				<td><br></td>
+  			</tr>
+  			<tr>
+  				<td>Spoilers blacklist:</td>
+  				<td>
+  					{% if blacklisted_shows_count > 0 %}
+	  					<form action="/user_panel/shows_settings" method="post">
+				  			<select id="blacklisted_shows" name="remove_blacklisted">
+				  				{% for show in blacklisted_shows %}
+									<option value="{{ show.id }}">{{ show.name }}</option>
+								{% endfor %}
+							</select>
+							<button>Remove from blacklist</button>
+						</form>
+					{% else %}
+						You haven't added any show to your blacklist.
+					{% endif %}
+				</td>
+				<td rowspan="2" width="35%" class="small_description">OSGA activity related to shows that are in your spoilers blacklist will be censored. If you open a cemetary page of one of these shows, you will be asked for confirmation before being able to see the page.</td>
+			</tr>
+			<tr>
+				<td>Add to spoilers blacklist: </td>
+				<td>
+		  			<form action="/user_panel/shows_settings" method="post">
+			  			<select name="add_blacklist">
+			  				{% for show in shows %}
+			  					{% if show not in blacklisted_shows %}
+								<option value="{{ show.id }}">{{ show.name }}</option>
+								{% endif %}
+							{% endfor %}
+						</select>
+						<button>Add to spoilers blacklist</button>
+					</form>
+		  		</td>
+		  	</tr>
+  		</table>
+
+  		{% elif selected_user_settings %}
+  		<form action="#" method="post">
+	  		<table>
+		  		<tr>
+	  				<td>Username:</td>
+	  				<td>{{ session['username'] }}</td>
+	  				<td><a href="/user_profile/{{ session['user_id'] }}">See profile</a></td>
+				</tr>
+				<tr>
+					<td>Password:	</td>
+					<td>
+			  			<input type="password" name="password" placeholder="New password">
+			  			<input type="password" name="password_confirmation" placeholder="Password (confirmation)">
+			  		</td>
+			  		<td>
+			  			<button>Change password</button>
+			  		</td>
+			  	</tr>
+	  			<tr>
+	  				<td>E-mail address:</td>
+	  				<td><input type="text" name="email" placeholder="New e-mail address">
+	  					<input type="text" name="email_confirmation" placeholder="New e-mail address (confirmation)">
+	  				</td>
+	  				<td>
+			  			<button>Change e-mail address</button>
+			  		</td>
+			  		<td width="20%" class="small_description"> 
+			  			Current address: {{ user_info.email }}
+			  		</td>
+	  			</tr>
+	  			<tr>
+	  				<td><br></td>
+	  			</tr>
+	  			<tr>
+	  				<td colspan="3">
+			  			<input type="checkbox" name="display_favourite" {% if user_info.display_fav %}checked="checked"{% endif %}>
+						<label for="display_favourite"> Display favourite shows on profile</label>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+			  			<input type="checkbox" name="display_activity" {% if user_info.display_activity %}checked="checked"{% endif %}>
+						<label for="display_activity"> Display recent activity on profile</label>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="submit" name="update_pref" value="Update profile preferences">
+					</td>
+			  	</tr>
+	  		</table>
+	  	</form>
+	  	
+
+  		{% else %}
+  		<form action="#" method="post">
+	  		<table>
+	  			<tr>
+	  				<td>Shows only have a cemetary if at least one of their characters died. We use a large database of shows, but it is possible that less known shows were forgotten. We don't want to let anyone in pain of mourning their favourite character, so feel free to suggest shows to add to our database!</td>
+	  			</tr>
+	  			<tr>
+	  				<td>
+	  					Show that doesn't have a cemetary yet:<br>
+			  			<input type="text" name="suggest_show" placeholder="Type a show's name.">
+			  			<button>Suggest</button>
+			  		</td>
+				</tr>
+				<tr>
+					<td>
+						Other suggestion:<br>
+			  			<textarea name="other_suggestion" rows="5" cols="100">Type your suggestion here.</textarea>	
+			  		</td>
+				</tr>
+				<tr>
+					<td>
+						<button>Send</button>
+					</td>
+			  	</tr>
+	  		</table>
+	  	</form>
+
+
+  		{% endif %}
+
+  	</div>
+
+</main>
+{% endblock %}

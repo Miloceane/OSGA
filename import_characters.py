@@ -1,11 +1,3 @@
-################################
-# OSGA - import_characters.py  #
-# Written by Charlotte Lafage  #
-# (GitHub: Miloceane)          #
-# For Minor Programmeren       #
-# (Universiteit van Amsterdam) #
-################################
-
 import os, csv
 
 from flask import Flask, session, render_template, request
@@ -18,22 +10,18 @@ from models import *
 
 class CharactersList():
 	def __init__(self, import_file):
-		""" Initializes object. """
 		self.import_file = import_file
 		self.database = db # db is default database from models
 
 	def set_db(self, database):
-		""" Sets specified database. """
 		self.database = database
 
 	def fetch_default_db(self):
-		""" Sets database in environment variables. """
 		app = Flask(__name__)
 
 		# Check for environment variable
 		if not os.getenv("DATABASE_URL"):
 			raise RuntimeError("DATABASE_URL is not set")
-
 		# Configure session to use filesystem
 		app.config["SESSION_PERMANENT"] = False
 		app.config["SESSION_TYPE"] = "filesystem"
@@ -41,17 +29,18 @@ class CharactersList():
 		engine = create_engine(os.getenv("DATABASE_URL"))
 		self.database = scoped_session(sessionmaker(bind=engine))
 
-
 	def import_characters(self):
-		""" Reads csv file and imports it into database """
+		# read CSV
 		file = open(self.import_file)
 		reader = csv.reader(file)
 
 		query_check = Characters.query.count()
-		
+		# if query_check > 0:
+		# 	return "Characters had alredy been imported!"
+
 		for series, name, season_death, episode_death in reader:
 			if series == "series":
-				continue # Cheap way to skip the first line of the table (with column names)
+				continue
 
 			check_series = Shows.query.filter_by(name=series)
 
@@ -68,7 +57,6 @@ class CharactersList():
 
 		db.session.commit()
 		return "Characters have been imported!"
-		
 
 if __name__ == "__main__":
 	books = BooksList("Characters.csv")
