@@ -230,14 +230,14 @@ header .navbar-brand
 /************/
 
 
-@media (min-width: 1000px)
+@media (min-width: 700px)
 {
-	#cemetary_grounds table
+	#cemetary_grounds
 	{
-		border: 20px solid white;
-		padding: 25px;
-		margin: 2%;
-		text-align: center;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
 	}
 
 	.flower_choice_item
@@ -248,11 +248,13 @@ header .navbar-brand
 
 	.grave
 	{
+		text-align: center;
+		padding-right: 5%;
+		margin: 25px 20px;
 		background-image: url("/static/images/gravestone.png");
-		background-size: 180px 150px;
-		background-position: 20px 25px;
+		background-size: 170px 150px;
 		background-repeat: no-repeat;
-		
+		width: 180px;
 	}
 
 	.grave td
@@ -288,14 +290,21 @@ header .navbar-brand
 	}
 }
 
-@media (max-width: 999px)
+@media (max-width: 699px)
 {
-	#cemetary_grounds table
+	#cemetary_page
 	{
-		border: 10px solid white;
-		padding: 10px;
-		margin: 1%;
+		margin: 0%;
+		padding: 0px;
+	}
+
+	#cemetary_grounds
+	{
 		text-align: center;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
 	}
 
 	.flower_choice_item
@@ -306,9 +315,11 @@ header .navbar-brand
 
 	.grave
 	{
+		text-align: center;
+		padding-right: 5%;
+		margin: 10px 5px;
 		background-image: url("/static/images/gravestone.png");
-		background-size: 120px 100px;
-		background-position: 10px 10px;
+		background-size: 110px 100px;
 		background-repeat: no-repeat;
 		font-size: 10px;
 	}
