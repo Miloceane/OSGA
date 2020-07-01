@@ -126,34 +126,7 @@
 /****************/
 
 
-@media (max-width: 539px)
-{
-	.navbar
-	{
-		text-align: center;
-		justify-content: center;
-	}
-
-	nav
-	{
-		justify-content: center;
-		text-align: center;
-	}
-
-	nav .navbar-brand
-	{
-		font-size: 25px;
-		padding-top: 0%;
-	}
-
-	form .btn
-	{
-		justify-content: center;
-		display: none;
-	}
-}
-
-@media (min-width: 540px)
+@media (min-width: 770px)
 {
 	.nav-item
 	{
@@ -178,6 +151,40 @@
 		margin-left: 50px;
 	}
 }
+
+@media (max-width: 769px)
+{
+	.navbar
+	{
+		text-align: center;
+		justify-content: center;
+	}
+
+	.navbar-nav
+	{
+		padding-right: 5px;
+		padding-left: 5px;
+	}
+
+	nav
+	{
+		justify-content: center;
+		text-align: center;
+	}
+
+	nav .navbar-brand
+	{
+		font-size: 25px;
+		padding-top: 0%;
+	}
+
+	form .btn
+	{
+		justify-content: center;
+		display: none;
+	}
+}
+
 
 /***************/
 /* Pages style */
