@@ -339,9 +339,10 @@ header .navbar-brand
 	  text-align: center;
 	  padding: 2px 3px;
 	  border-radius: 4px;
+	  max-width: 40%;
 	 
 	  position: absolute;
-	  z-index: 1;
+	  z-index: 2;
 	}
 }
 
