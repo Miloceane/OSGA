@@ -6,6 +6,9 @@
 	/* Code from W3Schools for drop down search */
 	/* When the user clicks on the button,
 	toggle between hiding and showing the dropdown content */
+	document.addEventListener('DOMContenLoaded', function() {
+
+	});
 
 	function myFunction() 
 	{
@@ -35,8 +38,8 @@
 	}
 </script>
 
-<div class="row">
-	<div id="front_page" class="col-12">      
+<div>
+	<div id="front_page">      
 		<h1>O S G A</h1>
 		<h2>One Site to Grieve them All</h2>
 		
@@ -73,8 +76,8 @@
 			</div>
 		{% endif %}
 
-		<div class="osga_main_search">
-			<div class="main_dropdown">
+		<div id="osga_main_search">
+			<div id="main_dropdown">
 				<div id="myDropdown" class="dropdown-content" onclick="myFunction()">
 					<input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
 					{% for show in shows %}

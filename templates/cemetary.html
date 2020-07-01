@@ -3,15 +3,14 @@
 {% block inside_row %}
 
 <script>
-	// document.addEventListener('DOMContentLoaded', function() {
-	// 	document.querySelector('button').onclick = count;
-	// });
-
+	let screen_width = window.screen.width;
+	let graves_per_row = 4;
 	let counter_flowers = [];
 	let counter_messages = [];
 	let graves_messages = [];
 	let current_flower_id = 0;
 	let current_character_id = 0;
+
 	{% if session['user_id'] %}
 		let user_id = {{ session['user_id'] }};
 	{% else %}
@@ -19,8 +18,20 @@
 	{% endif %}
 	let last_click_pos = { x:0, y:0 }
 
+	document.addEventListener('DOMContenLoaded', function() {
+		if (screen_width >= 1000) {
+			graves_per_row = 4;
+		}
+		else if (screen_width > 700) {
+			graves_per_row = 3;
+		}
+		else {
+			graves_per_row = 2;
+		}
 
-	
+
+		//let flower = document.createElement("img");
+	});
 
 	function change_current_flower(flower_id)
 	{
@@ -181,49 +192,41 @@
 			</div>
 		</div>  
 	</div>
-
-
 	<div id="cemetary_grounds" align="center">
-		<p>
-			<table>
-				{% for i in range((graves_count // 4) + 1) %}
-				<tr>
-					{% for j in range(4) %}
-						{% if characters[(i * 4) + j] %}
-						<td class="grave">
-							<table>
-								<tr>
-									<td>
-										{{ characters[(i * 4) + j].name }}<br>
-										Season {{ characters[(i * 4) + j].death_season }} Episode {{ characters[(i * 4) + j].death_episode }}
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div id="grave_{{ ( i * 4 ) + j }}" class="grave_plaque" onclick="add_to_grave({{ ( i * 4 ) + j }}, {{ characters[(i * 4) + j].id }})">
-											{% for flower in characters[(i * 4) + j].flowers %}
-												<img src="/static/images/flowers/{{ flower.flowertype_id }}.png" alt="flower" height="20">
-											{% endfor %}
-											{% for message in characters[(i * 4) + j].messages %}
-												{% if message.admin_id > 0 %}
-												<span id="grave_message{{ (i * 4) + j }}" class="grave_message">
-													<span class="grave_message_text">{{ message.content }}</span>
-													<img src="/static/images/flowers/scroll.png" alt="{{ message.content }}" height="20">
-												</span>
-												{% endif %}
-											{% endfor %}
-										</div><br>
-										<span id="grave_{{ ( i * 4 ) + j }}_count">{{ characters[(i * 4) + j].flowers|length }}</span> flowers.
-									</td>
-								</tr>
-							</table>
-						</td>
-						{% endif %}
-					{% endfor %}
-				</tr>
-				{% endfor %}
-			</table>
-		</p>
+		
+			{% for i in range(graves_count) %}
+				{% if characters[i] %}
+				<div class="grave">
+					<table>
+						<tr>
+							<td>
+								{{ characters[i].name }}<br>
+								Season {{ characters[i].death_season }} Episode {{ characters[i].death_episode }}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div id="grave_{{ i }}" class="grave_plaque" onclick="add_to_grave({{ i }}, {{ characters[i].id }})">
+									{% for flower in characters[i].flowers %}
+										<img src="/static/images/flowers/{{ flower.flowertype_id }}.png" alt="flower" height="20">
+									{% endfor %}
+									{% for message in characters[i].messages %}
+										{% if message.admin_id > 0 %}
+										<span id="grave_message{{ i }}" class="grave_message">
+											<span class="grave_message_text">{{ message.content }}</span>
+											<img src="/static/images/flowers/scroll.png" alt="{{ message.content }}" height="20">
+										</span>
+										{% endif %}
+									{% endfor %}
+								</div><br>
+								<span id="grave_{{ i }}_count">{{ characters[i].flowers|length }}</span> flowers.
+							</td>
+						</tr>
+					</table>
+				</div>
+				{% endif %}
+			{% endfor %}
+		
 	</div>
 
 
