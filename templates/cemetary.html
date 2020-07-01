@@ -198,7 +198,7 @@
 				{% if characters[i] %}
 				<div class="grave">
 					<table>
-						<tr>
+						<tr class="grave_text">
 							<td>
 								{{ characters[i].name }}<br>
 								Season {{ characters[i].death_season }} Episode {{ characters[i].death_episode }}
@@ -208,18 +208,22 @@
 							<td>
 								<div id="grave_{{ i }}" class="grave_plaque" onclick="add_to_grave({{ i }}, {{ characters[i].id }})">
 									{% for flower in characters[i].flowers %}
-										<img src="/static/images/flowers/{{ flower.flowertype_id }}.png" alt="flower" height="20">
+										<img src="/static/images/flowers/{{ flower.flowertype_id }}.png" alt="flower">
 									{% endfor %}
 									{% for message in characters[i].messages %}
 										{% if message.admin_id > 0 %}
 										<span id="grave_message{{ i }}" class="grave_message">
 											<span class="grave_message_text">{{ message.content }}</span>
-											<img src="/static/images/flowers/scroll.png" alt="{{ message.content }}" height="20">
+											<img src="/static/images/flowers/scroll.png" alt="{{ message.content }}">
 										</span>
 										{% endif %}
 									{% endfor %}
 								</div><br>
-								<span id="grave_{{ i }}_count">{{ characters[i].flowers|length }}</span> flowers.
+								{% if characters[i].flowers|length == 1 %}
+									<span id="grave_{{ i }}_count">1</span> flower.
+								{% else %}
+									<span id="grave_{{ i }}_count">{{ characters[i].flowers|length }}</span> flowers.
+								{% endif %}
 							</td>
 						</tr>
 					</table>

@@ -29,7 +29,6 @@
 	body
 	{
 		padding: 5%;
-		position: fixed;
 		text-align: center;
 		background-color: transparent;
 	}
@@ -75,7 +74,6 @@
 	{
 		font-size: 18px;
 		color: #ddd;
-		/*font-weight: bold;*/
 		text-shadow: 1px 1px #000;
 		margin: 20px;
 	}
@@ -116,7 +114,6 @@
 	{
 		font-size: 18px;
 		color: #ddd;
-		/*font-weight: bold;*/
 		text-shadow: 1px 1px #000;
 		margin: 20px;
 	}
@@ -229,22 +226,22 @@ header .navbar-brand
 /* Cemetary */
 /************/
 
+#cemetary_grounds
+{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.flower_choice_item
+{
+	margin: 20px;
+	cursor: pointer;
+}
 
 @media (min-width: 700px)
 {
-	#cemetary_grounds
-	{
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: center;
-	}
-
-	.flower_choice_item
-	{
-		margin: 20px;
-		cursor: pointer;
-	}
 
 	.grave
 	{
@@ -262,17 +259,23 @@ header .navbar-brand
 		/*background-color: gray;*/
 		width: 180px;
 		height: 120px;
-		padding: 0px;
+		padding-left: 0px;
 	}
 
 	.grave_plaque
 	{
 		background-color: darkgray;
-		border:3px solid #778;
-		border-bottom: 20px solid #778;
+		border:3px solid #808080;
+		border-bottom: 20px solid #808080;
+		border-left: 8px solid #808080;
 		height: 80px;
 		width: 170px;
 		padding: 2px;
+	}
+
+	.grave_plaque img
+	{
+		height: 20px;
 	}
 
 	.grave_message .grave_message_text
@@ -292,27 +295,6 @@ header .navbar-brand
 
 @media (max-width: 699px)
 {
-	#cemetary_page
-	{
-		margin: 0%;
-		padding: 0px;
-	}
-
-	#cemetary_grounds
-	{
-		text-align: center;
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: center;
-	}
-
-	.flower_choice_item
-	{
-		margin: 10px;
-		cursor: pointer;
-	}
-
 	.grave
 	{
 		text-align: center;
@@ -329,17 +311,23 @@ header .navbar-brand
 		/*background-color: gray;*/
 		width: 120px;
 		height: 70px;
-		margin: 0px;
+		padding-left: 0px;
 	}
 
 	.grave_plaque
 	{
 		background-color: darkgray;
-		border:2px solid #778;
-		border-bottom: 10px solid #778;
+		border:2px solid #808080;
+		border-bottom: 10px solid #808080;
+		border-left: 5px solid #808080;
 		height: 60px;
 		width: 110px;
 		padding: 0px;
+	}
+
+	.grave_plaque img
+	{
+		height: 15px;
 	}
 
 	.grave_message .grave_message_text
@@ -356,6 +344,13 @@ header .navbar-brand
 	  z-index: 1;
 	}
 }
+
+.grave_text td
+{
+	padding-left: 6%;
+	padding-right: 2%;
+}
+
 
 .grave_message:hover .grave_message_text 
 {
