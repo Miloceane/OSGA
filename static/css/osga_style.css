@@ -272,6 +272,14 @@
 	justify-content: center;
 }
 
+#flower_choice
+{
+	display:flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
 .flower_choice_item
 {
 	margin: 20px;

@@ -165,17 +165,21 @@
 		{% else %}
 		Welcome to {{ show_title }}'s cemetary. Here you can leave flowers or messages to your favourite characters. Messages will be reviewed by the maintenance of this cemetary for approval before they can be displayed to the public.
 		<br><br>
+		To select a different type of flower than the default red rose, or to leave a message, click on the picture of the item type you wish to use here under.
+		<br><br>
 		<div id="flower_choice">
 			<p>
 			{% for i in range(4) %}
-				<span class="flower_choice_item" onclick="change_current_flower({{ i }})"><img src="/static/images/flowers/{{ i }}.png" alt="Flower {{ i }}" height="20"> (select)</span>
+				<span class="flower_choice_item" onclick="change_current_flower({{ i }})"><img src="/static/images/flowers/{{ i }}.png" alt="Flower {{ i }}" height="20"></span>
 			{% endfor %}
-			<span class="flower_choice_item" onclick="change_current_flower(-1)"><img src="/static/images/flowers/scroll.png" alt="Message" height="20"> Message</span>
+			<span class="flower_choice_item" onclick="change_current_flower(-1)"><img src="/static/images/flowers/scroll.png" alt="Message" height="20"> </span>
 			</p>
 		</div>
 		{% endif %}
 	{% else %}
 		Welcome to {{ show_title }}'s cemetary. You can click on a grave to leave a flower in memory of a character.
+		<br>
+		Registered users can leave several types of flowers as well as messages.
 	{% endif %}
 
 		<div id="add_message_box" class="modal" display="none">
