@@ -125,28 +125,59 @@
 /* Navbar style */
 /****************/
 
-#top
-{
 
+@media (max-width: 539px)
+{
+	.navbar
+	{
+		text-align: center;
+		justify-content: center;
+	}
+
+	nav
+	{
+		justify-content: center;
+		text-align: center;
+	}
+
+	nav .navbar-brand
+	{
+		font-size: 25px;
+		padding-top: 0%;
+	}
+
+	form .btn
+	{
+		justify-content: center;
+		display: none;
+	}
 }
 
-header .navbar-brand
+@media (min-width: 540px)
 {
-	font-size: 25px;
-	padding: 5px;
-}
+	.nav-item
+	{
+		padding-left: 5px;
+		padding-right: 5px;
+	}
 
-.navbar-nav .nav-item:not(:last-child) 
-{
-   border-right: 1px solid silver;
-}
+	.osga_right_nav
+	{
+		margin-left: auto!important;
+	}
 
-.nav-item
-{
-	padding-left: 15px;
-	padding-right: 15px;
-}
+	nav .navbar-brand
+	{
+		font-size: 25px;
+		padding-top: 0%;
+		padding-left: 0px;
+	}
 
+	form
+	{
+		margin-left: 50px;
+	}
+}
 
 /***************/
 /* Pages style */
