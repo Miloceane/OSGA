@@ -70,6 +70,14 @@
 					</div>
 				</div>
 			</div>
+		{% else %}
+		<div class="osga_index_login">
+				<p>
+					<a href="/user_panel">Settings</a> |
+					<a href="/user_profile/{{ session['user_id'] }}">Profile</a> |
+					<a href="/logout">Log-out</a>
+				</p>
+			</div>
 		{% endif %}
 
 		<div id="osga_main_search">
