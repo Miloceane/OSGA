@@ -170,7 +170,6 @@ def search_cemetary():
 @app.route("/cemetary/<int:cemetary_id>", methods=["GET", "POST"])
 def cemetary(cemetary_id):
 	""" Displays cemetary """
-	is_spoiler = False
 
 	user = Users.query.get(session.get("user_id"))
 
@@ -182,7 +181,11 @@ def cemetary(cemetary_id):
 	show_query = Shows.query.filter_by(id=cemetary_id).first()
 	cemetary_query = Characters.query.filter_by(show_id=cemetary_id).order_by(Characters.id)
 
-	return render_template("cemetary.html", graves_count=cemetary_query.count(), characters=cemetary_query.all(), show_title=show_query.name, is_blocked=is_blocked, is_spoiler=is_spoiler)
+	spoiler_query = BlacklistedShows.query.filter(and_(BlacklistedShows.user_id == session.get("user_id"), BlacklistedShows.show_id == cemetary_id)).first()
+
+	is_spoiler = (spoiler_query != None)
+
+	return render_template("cemetary.html", graves_count=cemetary_query.count(), characters=cemetary_query.all(), show_title=show_query.name, is_blocked=is_blocked, is_spoiler=True)
 
 
 @app.route("/api", methods=["GET"])
