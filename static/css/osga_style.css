@@ -209,6 +209,11 @@
 	margin: 1%;
 }
 
+#user_panel textarea
+{
+	width: 100%;
+	height: 100px;
+}
 
 @media (min-width: 700px)
 {
@@ -216,7 +221,7 @@
 	{
 		text-align: left;
 	}
-	
+
 	.user_panel
 	{
 		text-align: left;
