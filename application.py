@@ -185,7 +185,7 @@ def cemetary(cemetary_id):
 
 	is_spoiler = (spoiler_query != None)
 
-	return render_template("cemetary.html", graves_count=cemetary_query.count(), characters=cemetary_query.all(), show_title=show_query.name, is_blocked=is_blocked, is_spoiler=True)
+	return render_template("cemetary.html", graves_count=cemetary_query.count(), characters=cemetary_query.all(), show_title=show_query.name, is_blocked=is_blocked, is_spoiler=is_spoiler)
 
 
 @app.route("/api", methods=["GET"])
