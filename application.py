@@ -15,6 +15,7 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_basicauth import BasicAuth
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_mail import Mail, Message
@@ -36,7 +37,8 @@ g_is_local = False
 
 # Configure Flask app
 app = Flask(__name__)
-app.secret_key = os.environ["SECRET_KEY"]
+app.secret_key = "dd9fadd2de6003bf66cbe5ecdb6551015150fd955811ba1e8217d76c21f5f974" #os.environ["SECRET_KEY"]
+
 
 # Configure database
 if not os.getenv("DATABASE_URL"):
@@ -179,7 +181,7 @@ def cemetary(cemetary_id):
 	show_query = Shows.query.filter_by(id=cemetary_id).first()
 	cemetary_query = Characters.query.filter_by(show_id=cemetary_id).order_by(Characters.id)
 
-	return render_template("cemetary.html", graves_count=cemetary_query.count(), characters=cemetary_query.all(), show_title=show_query.name, is_blocked=is_blocked)
+	return render_template("cemetary.html", graves_count=cemetary_query.count(), characters=cemetary_query.all(), show_title=show_query.name, is_blocked=is_blocked, is_spoiler=is_spoiler)
 
 
 @app.route("/api", methods=["GET"])
