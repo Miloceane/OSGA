@@ -15,14 +15,11 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_basicauth import BasicAuth
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_mail import Mail, Message
 from sqlalchemy import and_
 from requests import get
-
-# from urllib2 import Request, urlopen
 
 from models import *
 from import_characters import CharactersList
@@ -32,9 +29,14 @@ from import_characters import CharactersList
 # GENERAL CONFIGURATION #
 #########################
 
+# IMPORTANT: Setting this variable to True allows anyone to access Flask Admin via /admin. Always set back to False before deploying!
+g_is_local = False
+
+# TODO: Change global variable names to make them start with g_, as to show that they are global.
+
 # Configure Flask app
 app = Flask(__name__)
-app.secret_key = "dd9fadd2de6003bf66cbe5ecdb6551015150fd955811ba1e8217d76c21f5f974" #os.environ["SECRET_KEY"]
+app.secret_key = os.environ["SECRET_KEY"]
 
 # Configure database
 if not os.getenv("DATABASE_URL"):
@@ -44,21 +46,17 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 
-# Configure basic authentification
-app.config['BASIC_AUTH_USERNAME'] = 'admin'
-app.config['BASIC_AUTH_PASSWORD'] = 'password' # I know, I'll change it later.
-basic_auth = BasicAuth(app)
-
 
 # Configure session, use filesystem
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# Configure API stuff
+
+# Configure API connexion
+# Note: this would probably be better put somewhere safer such as in the database
 api_id = '9cba8155f5e9c914ace595df9e6e57efc8bf073b3e69de3aba717a147a634a27'
 api_key = 'e2e38b259acb59d88cd855a3af7a9f60c8dab289592f73ee1f1bdba9877dda5d'
-
 headers = { 'Content-Type': 'application/json', 'trakt-api-key': '9cba8155f5e9c914ace595df9e6e57efc8bf073b3e69de3aba717a147a634a27', 'trakt-api-version': '2'}
 
 # Configure mail
@@ -79,29 +77,21 @@ mail = Mail(app)
 # DATABASE CONFIGURATION #
 ##########################
 
-# Redefine models methods to force the use of basic authentification
-class OsgaModelView(ModelView):
-    # def is_accessible(self):
-    #     if not basic_auth.authenticate():
-    #         redirect(url_for('index'))
-    #     else:
-    #         return True
-
-    def inaccessible_callback(self, name, **kwargs):
-        return redirect(basic_auth.challenge())
-
+# FLASK ADMIN - ONLY USE IN LOCAL TESTING, DO NOT DEPLOY IF is_local IS True!
+# (Allows database access to anyone going to /admin from OSGA's main page)
 # Configure database models 
-admin = Admin(app, name='OSGA Aministration', template_mode='bootstrap3')
-admin.add_view(OsgaModelView(Users, db.session))
-admin.add_view(OsgaModelView(Universes, db.session))
-admin.add_view(OsgaModelView(Shows, db.session))
-admin.add_view(OsgaModelView(FavouritedShows, db.session))
-admin.add_view(OsgaModelView(BlacklistedShows, db.session))
-admin.add_view(OsgaModelView(FlowerTypes, db.session))
-admin.add_view(OsgaModelView(Characters, db.session))
-admin.add_view(OsgaModelView(CharactersFlowers, db.session))
-admin.add_view(OsgaModelView(CharactersMessages, db.session))
-admin.add_view(OsgaModelView(Suggestions, db.session))
+if g_is_local:
+	admin = Admin(app, name='OSGA Aministration', template_mode='bootstrap3')
+	admin.add_view(ModelView(Users, db.session))
+	admin.add_view(ModelView(Universes, db.session))
+	admin.add_view(ModelView(Shows, db.session))
+	admin.add_view(ModelView(FavouritedShows, db.session))
+	admin.add_view(ModelView(BlacklistedShows, db.session))
+	admin.add_view(ModelView(FlowerTypes, db.session))
+	admin.add_view(ModelView(Characters, db.session))
+	admin.add_view(ModelView(CharactersFlowers, db.session))
+	admin.add_view(ModelView(CharactersMessages, db.session))
+	admin.add_view(ModelView(Suggestions, db.session))
 
 # Configure migrations
 Migrate(app, db, render_as_batch=True)
@@ -122,14 +112,9 @@ if __name__ == "__main__":
 
 @app.route("/")
 def index():
-	user_name = "" if session is None else session.get("user_name")
-	user_id = session.get("user_id")
-	headers_index_search = headers
-	headers_index_search['X-Pagination-Limit'] = '30'
-	headers_index_search['X-Pagination-Page'] = '3'
-	# api_request = get('https://api.trakt.tv/shows/popular', headers=headers_index_search).json()
+	""" Index page """
 	list_shows = Shows.query.all()
-	return render_template("index.html", title="OSGA: One Site to Grieve them All", selected_home="active", username=user_name, shows=list_shows)
+	return render_template("index.html", title="OSGA: One Site to Grieve them All", shows=list_shows)
 
 
 
@@ -140,12 +125,14 @@ def index():
 
 @app.route("/create_db")
 def create_db():
+	""" Creates tables based on db.model inherited classes in models.py """
 	db.create_all()
 	return "Database created."
 
 
 @app.route("/empty_db")
 def empty_db():
+	""" Deletes all tables and data in database, resets user session """
 	db.drop_all()
 	session["username"] = None
 	session["user_id"] = None
@@ -154,17 +141,10 @@ def empty_db():
 
 @app.route("/import_characters")
 def import_to_db():
-	# Reads CSV and imports characters to database
+	""" Reads CSV file and imports characters to database """
 	characters = CharactersList("Characters.csv")
 	message = characters.import_characters()
-
 	return message
-
-
-@app.route('/admin')
-@basic_auth.required
-def admin_view():
-    return redirect("/admin")
 
 
 #--------------------------------------------------------------------------------------------------
@@ -174,7 +154,8 @@ def admin_view():
 
 @app.route("/search_cemetary", methods=["GET", "POST"])
 def search_cemetary():
-	# TODO protect this against injection
+	""" Searches show among shows with a cemetary in database """
+
 	show_name = request.form.get("cemetary_search")
 	show_query = Shows.query.filter_by(name=show_name)
 
@@ -187,6 +168,7 @@ def search_cemetary():
 @app.route("/cemetary/<int:cemetary_id>", methods=["GET", "POST"])
 def cemetary(cemetary_id):
 	""" Displays cemetary """
+
 	user = Users.query.get(session.get("user_id"))
 
 	if user is None:
@@ -202,6 +184,7 @@ def cemetary(cemetary_id):
 
 @app.route("/api", methods=["GET"])
 def api():
+	""" Page for api tests """
 	api_request = get('https://api.trakt.tv/shows/popular', headers=headers).json()
 	return api_request
 
@@ -213,13 +196,13 @@ def api():
 
 @app.route("/save_flower/<int:character_id>/<int:flowertype_id>/<int:pos_x>/<int:pos_y>", methods=["GET"])
 def save_flower(character_id, flowertype_id, pos_x, pos_y):
+	""" Saves the flower with flowertype flowertype_id and position (pos_x, pos_y) in database for character character_id. """
+
 	# Just in case the user tried to artificially insert JS to bypass blocked account and leave flower (idk who would do that, but who knows)
 	user = Users.query.get(session.get("user_id"))
-	
 	if (user and user.blocked):
 		return ""
 
-	#flowers_query = CharactersFlowers.query.filter(and_(CharactersFlowers.flowertype_id == flowertype_id, CharactersFlowers.character_id == character_id))
 	curr_char = Characters.query.get(character_id)
 
 	if not curr_char.flower_count:
@@ -234,9 +217,10 @@ def save_flower(character_id, flowertype_id, pos_x, pos_y):
 
 @app.route("/save_message", methods=["POST"])
 def save_message():
+	""" Saves message sent via POST in database. """
+
 	# Just in case the user tried to artificially insert JS to bypass blocked account and leave message
 	user = Users.query.get(session.get("user_id"))
-	
 	if (user and user.blocked):
 		return ""
 
@@ -257,6 +241,7 @@ def save_message():
 @app.route("/register", methods=["GET", "POST"])
 def register():
 	""" Registers the user based on POST data sent from register.html """
+	
 	username = "" if session is None else session.get("username")
 	userid = session.get("user_id")
 
@@ -273,7 +258,8 @@ def register():
 		email_confirmation = request.form.get("email_confirmation")
 		error = ""
 
-		# TODO: find a better way to avoid injections.
+		# NOTE: isalnum() was used here to force usernames to contain only alphanumeric characters in order to protect against SQL injections,
+		# but SQLAlchemy already makes them technically impossible, so this is probably not necessary.
 		if not username.isalnum():
 			error += "Your username can only contain letters or numbers. "
 		
@@ -283,7 +269,7 @@ def register():
 		if password != password_confirmation:
 			error += "Password and confirmation didn't match! "
 
-		# TODO: check email validity. Library? Regex?
+		# TODO: check email validity. Library? Regex? Maybe Flask-login already does this?
 		if email != email_confirmation:
 			error += "Email and confirmation didn't match! "
 
@@ -294,7 +280,7 @@ def register():
 		if error != "":
 			return render_template("register.html", error=error)
 
-		# TODO: apparently md5 isn't safe anymore? Check what to use instead
+		# TODO: apparently md5 isn't safe anymore? Check what to use instead.
 		password_hash = hashlib.md5(password.encode('utf-8')).hexdigest()
 
 		new_user = Users(name=username, password=password_hash, email=email)
@@ -311,21 +297,24 @@ def register():
 	
 	return render_template("register.html")
 
-# Login
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
+	""" Logs user in and redirects to currently visited page """
 	if request.form.get("username") and request.form.get("password"):
 
 		username_input = request.form.get("username")
 		password_input = request.form.get("password")
 		
-		# TODO: find a better way to avoid code injection
+		# NOTE: isalnum() was used here to force usernames to contain only alphanumeric characters in order to protect against SQL injections,
+		# but SQLAlchemy already makes them technically impossible, so this is probably not necessary.
 		if username_input.isalnum():
 			password_hash = hashlib.md5(password_input.encode('utf-8')).hexdigest()
 			login_request = Users.query.filter(and_(Users.name == username_input, Users.password == password_hash))
 
 			if login_request.count() == 0:
-				# TODO: either make a log-in page to redirect the user, or check this in JS
+				# TODO: either make a log-in page to redirect the user, or check this in JS, this is tiresome for users.
 				return render_template("layout_message.html", error="Username and password didn't match.")
 			
 			else:
@@ -335,9 +324,11 @@ def login():
 	
 	return redirect(request.referrer)
 
-# Logout
+
+
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
+	""" Logs user out and redirects to currently visisted page """
 	session["username"] = None
 	session["user_id"] = None
 	return redirect(request.referrer)
@@ -350,15 +341,17 @@ def logout():
 #############
 
 @app.route("/user_panel", methods=["GET"])
-def user_panel_default():	
+def user_panel_default():
+	""" Returns default user panel tab """	
 	return user_panel("")
 
 
 @app.route("/user_panel/<string:page_type>", methods=["GET", "POST"])
 def user_panel(page_type):
+	""" Returns specified user panel page if it exists, otherwise default. """
 
 	if session.get("user_id") is None:
-		redirect("/")
+		return redirect("/")
 
 	user = Users.query.get(session.get("user_id"))
 	error_message = ""
@@ -378,7 +371,6 @@ def user_panel(page_type):
 			if request.form.get("email") != request.form.get("email_confirmation"):
 				error_message += "E-mail address and confirmation didn't match! "
 			else:
-				# TODO: Protect agains injection
 				user.email = request.form.get("email")
 				db.session.commit()
 
@@ -394,7 +386,8 @@ def user_panel(page_type):
 	elif page_type == "suggestions":
 
 		confirmation = ""
-		# TODO: protect against injections as user can send a large block ot text!!
+		
+		# TODO: protect against HTML injections? (Or does SQLAlchemy also escape HTML?)
 		if request.form.get("suggest_show") or request.form.get("other_suggestion"):
 			show = request.form.get("suggest_show")
 			other_suggestion = request.form.get("other_suggestion")
@@ -440,9 +433,8 @@ def user_panel(page_type):
 
 @app.route("/user_profile/<int:user_profile_id>", methods=["GET"])
 def user_profile(user_profile_id):	
-	""" DIsplays user profile information """
-	#flowers_left = Characters.query.join(FavouritedShows, FavouritedShows.show_id == Shows.id, isouter=True).filter(FavouritedShows.user_id == user.id)
-
+	""" Displays user profile information """
+	
 	user_profile = Users.query.get(user_profile_id)
 	user_favourite = []
 
@@ -454,6 +446,8 @@ def user_profile(user_profile_id):
 		
 	return render_template("user_profile.html", user_profile_name=user_profile.name, user_profile_favourite_shows=user_favourite)
 
+
+
 #--------------------------------------------------------------------------------------------------
 ##################
 # ADMINISTRATION #
@@ -461,10 +455,14 @@ def user_profile(user_profile_id):
 
 @app.route("/admin_panel", methods=["GET"])
 def admin_panel_default():
+	""" Returns default admin panel tab """
 	return admin_panel("")
+
 
 @app.route("/admin_panel/<string:page_type>", methods=["GET", "POST"])
 def admin_panel(page_type):
+	""" Returns specified admin panel tab if it exists, otherwise default. """
+
 	if not session.get("user_id"):
 		return redirect("/")
 
@@ -477,11 +475,12 @@ def admin_panel(page_type):
 	#---- Declare character death ----#
 	if page_type == "declare_death":
 		# TODO: Add a way to make import of dead characters in database faster because really for newly added series this takes forever
+		# and I don't know if I can trust other admins enough to let them use the .csv import.
 
 		if request.form.get("character"): # Receive death declaration
 			# TODO: Add some protection against injections here in case an admin suddenly decides to hack the website (been there)
 			# TODO: Maybe switch to OMDB API? Track seems to have issues matching IMDB ids...
-			show_api_id = "0"# request.form.get("declare_death_show_search")
+			show_api_id = "0" # Old code for reference: if request.form.get("declare_death_show_search")
 			character = request.form.get("character")
 			season = request.form.get("declare_death_season")
 			episode = request.form.get("declare_death_episode")
@@ -551,6 +550,7 @@ def admin_panel(page_type):
 
 @app.route("/moderate_comment/<int:comment_id>", methods=["GET", "POST"])
 def moderate_comment(comment_id):
+	""" Manages comment with id comment_id based on action received via POST data """
 	if not session['user_id']:
 		return redirect("/")
 
@@ -558,7 +558,7 @@ def moderate_comment(comment_id):
 	if user_request.admin_level < 1:
 		return redirect("/")		
 
-	comment = CharactersMessages.query.get(comment_id) # Casting as int to avoid injection (TODO: check if there is a better way to do this)
+	comment = CharactersMessages.query.get(comment_id)
 
 	if request.form.get("validate"):
 		comment.admin_id = session.get("user_id")			
@@ -578,9 +578,10 @@ def moderate_comment(comment_id):
 
 
 
-
 @app.route("/manage_suggestions/<int:suggestion_id>", methods=["GET", "POST"])
 def manage_suggestion(suggestion_id):
+	""" Manages suggestion with id suggestion_id based on action received via POST data. """
+
 	if not session['user_id']:
 		return redirect("/")
 
@@ -588,7 +589,7 @@ def manage_suggestion(suggestion_id):
 	if user_request.admin_level < 1:
 		return redirect("/")		
 
-	suggestion = Suggestions.query.get(suggestion_id) # Casting as int to avoid injection (TODO: check if there is a better way to do this)
+	suggestion = Suggestions.query.get(suggestion_id)
 
 	if request.form.get("important"):
 		suggestion.is_important = not suggestion.is_important		
