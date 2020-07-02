@@ -203,31 +203,70 @@
 	/*margin-top: 5px;*/
 }
 
-.user_panel
+@media (min-width: 700px)
 {
-	text-align: left;
-	padding: 15px;
+	.user_panel
+	{
+		text-align: left;
+		padding: 15px;
+	}
+
+	.user_panel table, .user_panel td
+	{
+		border: 0px solid gray;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		padding-right: 1px;
+		padding-left: 1px;
+		height: 0px;
+		margin-top: 2%;
+		margin-bottom: 2%;
+	}
+
+	.admin_panel table, .admin_panel td
+	{
+		text-align: left;
+		border: 1px solid gray;
+		width: 90%;
+		padding: 10px;
+		height: 0px;
+	}
 }
 
-.user_panel table, .user_panel td
+@media (max-width: 699px)
 {
-	border: 0px solid gray;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	padding-right: 1px;
-	padding-left: 1px;
-	height: 0px;
-	margin-top: 2%;
-	margin-bottom: 2%;
-}
+	#user_panel
+	{
+		padding: 0%;
+		font-size: 14px;
+	}
 
-.admin_panel table, .admin_panel td
-{
-	text-align: left;
-	border: 1px solid gray;
-	width: 90%;
-	padding: 10px;
-	height: 0px;
+	.user_panel
+	{
+		text-align: left;
+		padding: 5px;
+	}
+
+	.user_panel table, .user_panel td
+	{
+		border: 0px solid gray;
+		padding-top: 4px;
+		padding-bottom: 4px;
+		padding-right: 1px;
+		padding-left: 1px;
+		height: 0px;
+		margin-top: 2%;
+		margin-bottom: 2%;
+	}
+
+	.admin_panel table, .admin_panel td
+	{
+		text-align: left;
+		border: 1px solid gray;
+		width: 90%;
+		padding: 5px;
+		height: 0px;
+	}
 }
 
 .register_panel table
@@ -245,11 +284,6 @@
 	height: 0px;
 }
 
-.small_description
-{
-	font-size: 14px;
-}
-
 .important_suggestion table
 {
 	border: 2px solid #444;
@@ -258,6 +292,22 @@
 .read_suggestion table
 {
 	color: #aaa;
+}
+
+@media (min-width: 700px)
+{
+	.small_description
+	{
+		font-size: 14px;
+	}
+}
+
+@media (max-width: 699px)
+{
+	.small_description
+	{
+		display: none;
+	}
 }
 
 /************/
