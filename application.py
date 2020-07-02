@@ -172,18 +172,17 @@ def cemetary(cemetary_id):
 	""" Displays cemetary """
 
 	user = Users.query.get(session.get("user_id"))
-
-	if user is None:
-		is_blocked = False
-	else:
-		is_blocked = user.blocked
-
+		
 	show_query = Shows.query.filter_by(id=cemetary_id).first()
 	cemetary_query = Characters.query.filter_by(show_id=cemetary_id).order_by(Characters.id)
 
-	spoiler_query = BlacklistedShows.query.filter(and_(BlacklistedShows.user_id == session.get("user_id"), BlacklistedShows.show_id == cemetary_id)).first()
-
-	is_spoiler = (spoiler_query != None)
+	if user is None:
+		is_blocked = False
+		is_spoiler = False
+	else:
+		is_blocked = user.blocked
+		spoiler_query = BlacklistedShows.query.filter(and_(BlacklistedShows.user_id == session.get("user_id"), BlacklistedShows.show_id == cemetary_id)).first()
+		is_spoiler = (spoiler_query != None)
 
 	return render_template("cemetary.html", graves_count=cemetary_query.count(), characters=cemetary_query.all(), show_title=show_query.name, is_blocked=is_blocked, is_spoiler=is_spoiler)
 
