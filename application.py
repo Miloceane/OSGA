@@ -170,6 +170,7 @@ def search_cemetary():
 @app.route("/cemetary/<int:cemetary_id>", methods=["GET", "POST"])
 def cemetary(cemetary_id):
 	""" Displays cemetary """
+	is_spoiler = False
 
 	user = Users.query.get(session.get("user_id"))
 
