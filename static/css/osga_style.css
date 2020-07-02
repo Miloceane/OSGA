@@ -299,12 +299,15 @@
 		display: flex;
 		flex-direction: column;
 		padding: 5% 0%;
+		justify-content: center;
 	}
 
 	.user_panel_flexelement
 	{
-		width: 30%;
+		width: 100%;
 		min-width: 200px;
+
+		justify-content: center;
 	}
 
 	.user_panel_flexelement button
