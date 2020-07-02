@@ -203,8 +203,20 @@
 	/*margin-top: 5px;*/
 }
 
+
+#user_panel form
+{
+	margin: 1%;
+}
+
+
 @media (min-width: 700px)
 {
+	#user_panel
+	{
+		text-align: left;
+	}
+	
 	.user_panel
 	{
 		text-align: left;
@@ -223,6 +235,24 @@
 		margin-bottom: 2%;
 	}
 
+	.user_panel_flexrow
+	{
+		display: flex;
+		flex-wrap: wrap;
+		padding: 2% 0%;
+	}
+
+	.user_panel_flexelement
+	{
+		width: 30%;
+		min-width: 200px;
+	}
+
+	.user_panel_flexelement button
+	{
+		width: 150px;
+	}
+
 	.admin_panel table, .admin_panel td
 	{
 		text-align: left;
@@ -239,11 +269,11 @@
 	{
 		padding: 0%;
 		font-size: 14px;
+		text-align: left;
 	}
 
 	.user_panel
 	{
-		text-align: left;
 		padding: 5px;
 	}
 
@@ -258,6 +288,25 @@
 		margin-top: 2%;
 		margin-bottom: 2%;
 	}
+
+	.user_panel_flexrow
+	{
+		display: flex;
+		flex-direction: column;
+		padding: 5% 0%;
+	}
+
+	.user_panel_flexelement
+	{
+		width: 30%;
+		min-width: 200px;
+	}
+
+	.user_panel_flexelement button
+	{
+		width: 150px;
+	}
+
 
 	.admin_panel table, .admin_panel td
 	{
