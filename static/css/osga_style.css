@@ -470,6 +470,7 @@
 
 	.grave_plaque
 	{
+		position: relative;
 		background-color: darkgray;
 		border:2px solid #808080;
 		border-bottom: 10px solid #808080;
