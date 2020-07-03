@@ -4,7 +4,6 @@
 
 <script>
 	let screen_width = window.screen.width;
-	let graves_per_row = 4;
 	let counter_flowers = [];
 	let counter_messages = [];
 	let graves_messages = [];
@@ -17,21 +16,6 @@
 		let user_id = -1;
 	{% endif %}
 	let last_click_pos = { x:0, y:0 }
-
-	document.addEventListener('DOMContenLoaded', function() {
-		if (screen_width >= 1000) {
-			graves_per_row = 4;
-		}
-		else if (screen_width > 700) {
-			graves_per_row = 3;
-		}
-		else {
-			graves_per_row = 2;
-		}
-
-
-		//let flower = document.createElement("img");
-	});
 
 	function change_current_flower(flower_id)
 	{
@@ -151,6 +135,12 @@
 		document.querySelector('#add_message_box').style.display = "none";	
 	}
 
+
+	function display_spoiler_cemetary() {
+		document.querySelector('#cemetary_grounds').style.display = "flex";
+		document.querySelector('#display_spoiler_cemetary').style.display = "none";			
+	}
+
 </script>
 
 
@@ -163,22 +153,26 @@
 		{% if is_blocked %}
 			Your account has been blocked: you can't leave public flowers nor messages on graves anymore. You can leave temporary flowers, they just won't be registered.
 		{% else %}
-		Welcome to {{ show_title }}'s cemetary. Here you can leave flowers or messages to your favourite characters. Messages will be reviewed by the maintenance of this cemetary for approval before they can be displayed to the public.
-		<br><br>
-		<div id="flower_choice">
-			<p>
-			{% for i in range(4) %}
-				<span class="flower_choice_item" onclick="change_current_flower({{ i }})"><img src="/static/images/flowers/{{ i }}.png" alt="Flower {{ i }}" height="20"> (select)</span>
-			{% endfor %}
-			<span class="flower_choice_item" onclick="change_current_flower(-1)"><img src="/static/images/flowers/scroll.png" alt="Message" height="20"> Message</span>
-			</p>
-		</div>
+			Welcome to {{ show_title }}'s cemetary. Here you can leave flowers or messages to your favourite characters. Messages will be reviewed by the maintenance of this cemetary for approval before they can be displayed to the public.
+			<br><br>
+			To select a different type of flower than the default red rose, or to leave a message, click on the picture of the item type you wish to use here under.
+			<br><br>
+			<div id="flower_choice">
+				<p>
+				{% for i in range(4) %}
+					<span class="flower_choice_item" onclick="change_current_flower({{ i }})"><img src="/static/images/flowers/{{ i }}.png" alt="Flower {{ i }}" height="20"></span>
+				{% endfor %}
+				<span class="flower_choice_item" onclick="change_current_flower(-1)"><img src="/static/images/flowers/scroll.png" alt="Message" height="20"> </span>
+				</p>
+			</div>
 		{% endif %}
 	{% else %}
 		Welcome to {{ show_title }}'s cemetary. You can click on a grave to leave a flower in memory of a character.
+		<br>
+		Registered users can leave several types of flowers as well as messages.
 	{% endif %}
 
-		<div id="add_message_box" class="modal" display="none">
+	<div id="add_message_box" class="modal" display="none">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-body">
@@ -192,13 +186,29 @@
 			</div>
 		</div>  
 	</div>
+
+	{% if is_spoiler %}
+	<div id="display_spoiler_cemetary" display="block">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<p>
+						This is the cemetary of a show in your spoilers blacklist! Are you sure you want to view it?<br>
+						<br>
+						<button onclick="display_spoiler_cemetary()">View anyway.</button>
+					</p>
+				</div>
+			</div>
+		</div>  
+	</div>
+	{% endif %}
+
 	<div id="cemetary_grounds" align="center">
-		
 			{% for i in range(graves_count) %}
 				{% if characters[i] %}
 				<div class="grave">
 					<table>
-						<tr>
+						<tr class="grave_text">
 							<td>
 								{{ characters[i].name }}<br>
 								Season {{ characters[i].death_season }} Episode {{ characters[i].death_episode }}
@@ -208,18 +218,22 @@
 							<td>
 								<div id="grave_{{ i }}" class="grave_plaque" onclick="add_to_grave({{ i }}, {{ characters[i].id }})">
 									{% for flower in characters[i].flowers %}
-										<img src="/static/images/flowers/{{ flower.flowertype_id }}.png" alt="flower" height="20">
+										<img src="/static/images/flowers/{{ flower.flowertype_id }}.png" alt="flower">
 									{% endfor %}
 									{% for message in characters[i].messages %}
 										{% if message.admin_id > 0 %}
 										<span id="grave_message{{ i }}" class="grave_message">
 											<span class="grave_message_text">{{ message.content }}</span>
-											<img src="/static/images/flowers/scroll.png" alt="{{ message.content }}" height="20">
+											<img src="/static/images/flowers/scroll.png" alt="{{ message.content }}">
 										</span>
 										{% endif %}
 									{% endfor %}
 								</div><br>
-								<span id="grave_{{ i }}_count">{{ characters[i].flowers|length }}</span> flowers.
+								{% if characters[i].flowers|length == 1 %}
+									<span id="grave_{{ i }}_count">1</span> flower.
+								{% else %}
+									<span id="grave_{{ i }}_count">{{ characters[i].flowers|length }}</span> flowers.
+								{% endif %}
 							</td>
 						</tr>
 					</table>
@@ -236,6 +250,10 @@
 	{
     	graves_plaques[i].addEventListener('click', change_last_click);
 	}
+
+	{% if is_spoiler %}
+		document.querySelector('#cemetary_grounds').style.display = "none";
+	{% endif %}
 </script>
 </main>
 {% endblock %}

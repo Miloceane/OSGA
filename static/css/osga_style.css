@@ -29,7 +29,6 @@
 	body
 	{
 		padding: 5%;
-		position: fixed;
 		text-align: center;
 		background-color: transparent;
 	}
@@ -75,7 +74,6 @@
 	{
 		font-size: 18px;
 		color: #ddd;
-		/*font-weight: bold;*/
 		text-shadow: 1px 1px #000;
 		margin: 20px;
 	}
@@ -116,7 +114,6 @@
 	{
 		font-size: 18px;
 		color: #ddd;
-		/*font-weight: bold;*/
 		text-shadow: 1px 1px #000;
 		margin: 20px;
 	}
@@ -128,26 +125,64 @@
 /* Navbar style */
 /****************/
 
-#top
-{
 
+@media (min-width: 770px)
+{
+	.nav-item
+	{
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+
+	.osga_right_nav
+	{
+		margin-left: auto!important;
+	}
+
+	nav .navbar-brand
+	{
+		font-size: 25px;
+		padding-top: 0%;
+		padding-left: 0px;
+	}
+
+	form
+	{
+		margin-left: 50px;
+	}
 }
 
-header .navbar-brand
+@media (max-width: 769px)
 {
-	font-size: 25px;
-	padding: 5px;
-}
+	.navbar
+	{
+		text-align: center;
+		justify-content: center;
+	}
 
-.navbar-nav .nav-item:not(:last-child) 
-{
-   border-right: 1px solid silver;
-}
+	.navbar-nav
+	{
+		padding-right: 5px;
+		padding-left: 5px;
+	}
 
-.nav-item
-{
-	padding-left: 15px;
-	padding-right: 15px;
+	nav
+	{
+		justify-content: center;
+		text-align: center;
+	}
+
+	nav .navbar-brand
+	{
+		font-size: 25px;
+		padding-top: 0%;
+	}
+
+	form .btn
+	{
+		justify-content: center;
+		display: none;
+	}
 }
 
 
@@ -168,31 +203,127 @@ header .navbar-brand
 	/*margin-top: 5px;*/
 }
 
-.user_panel
+
+#user_panel form
 {
-	text-align: left;
-	padding: 15px;
+	margin: 1%;
 }
 
-.user_panel table, .user_panel td
+#user_panel textarea
 {
-	border: 0px solid gray;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	padding-right: 1px;
-	padding-left: 1px;
-	height: 0px;
-	margin-top: 2%;
-	margin-bottom: 2%;
+	width: 100%;
+	height: 100px;
 }
 
-.admin_panel table, .admin_panel td
+@media (min-width: 700px)
 {
-	text-align: left;
-	border: 1px solid gray;
-	width: 90%;
-	padding: 10px;
-	height: 0px;
+	#user_panel
+	{
+		text-align: left;
+	}
+
+	.user_panel
+	{
+		text-align: left;
+		padding: 15px;
+	}
+
+	.user_panel table, .user_panel td
+	{
+		border: 0px solid gray;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		padding-right: 1px;
+		padding-left: 1px;
+		height: 0px;
+		margin-top: 2%;
+		margin-bottom: 2%;
+	}
+
+	.user_panel_flexrow
+	{
+		display: flex;
+		flex-wrap: wrap;
+		padding: 2% 0%;
+	}
+
+	.user_panel_flexelement
+	{
+		width: 30%;
+		min-width: 200px;
+	}
+
+	.user_panel_flexelement button
+	{
+		width: 150px;
+	}
+
+	.admin_panel table, .admin_panel td
+	{
+		text-align: left;
+		border: 1px solid gray;
+		width: 90%;
+		padding: 10px;
+		height: 0px;
+	}
+}
+
+@media (max-width: 699px)
+{
+	#user_panel
+	{
+		padding: 0%;
+		font-size: 14px;
+		text-align: left;
+	}
+
+	.user_panel
+	{
+		padding: 5px;
+	}
+
+	.user_panel table, .user_panel td
+	{
+		border: 0px solid gray;
+		padding-top: 4px;
+		padding-bottom: 4px;
+		padding-right: 1px;
+		padding-left: 1px;
+		height: 0px;
+		margin-top: 2%;
+		margin-bottom: 2%;
+	}
+
+	.user_panel_flexrow
+	{
+		display: flex;
+		flex-direction: column;
+		padding: 5% 0%;
+		justify-content: center;
+	}
+
+	.user_panel_flexelement
+	{
+		width: 100%;
+		min-width: 200px;
+
+		justify-content: center;
+	}
+
+	.user_panel_flexelement button
+	{
+		width: 150px;
+	}
+
+
+	.admin_panel table, .admin_panel td
+	{
+		text-align: left;
+		border: 1px solid gray;
+		width: 90%;
+		padding: 5px;
+		height: 0px;
+	}
 }
 
 .register_panel table
@@ -210,11 +341,6 @@ header .navbar-brand
 	height: 0px;
 }
 
-.small_description
-{
-	font-size: 14px;
-}
-
 .important_suggestion table
 {
 	border: 2px solid #444;
@@ -225,26 +351,50 @@ header .navbar-brand
 	color: #aaa;
 }
 
+@media (min-width: 700px)
+{
+	.small_description
+	{
+		font-size: 14px;
+	}
+}
+
+@media (max-width: 699px)
+{
+	.small_description
+	{
+		display: none;
+	}
+}
+
 /************/
 /* Cemetary */
 /************/
 
+#cemetary_grounds
+{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+#flower_choice
+{
+	display:flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.flower_choice_item
+{
+	margin: 20px;
+	cursor: pointer;
+}
 
 @media (min-width: 700px)
 {
-	#cemetary_grounds
-	{
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: center;
-	}
-
-	.flower_choice_item
-	{
-		margin: 20px;
-		cursor: pointer;
-	}
 
 	.grave
 	{
@@ -262,17 +412,23 @@ header .navbar-brand
 		/*background-color: gray;*/
 		width: 180px;
 		height: 120px;
-		padding: 0px;
+		padding-left: 0px;
 	}
 
 	.grave_plaque
 	{
 		background-color: darkgray;
-		border:3px solid #778;
-		border-bottom: 20px solid #778;
+		border:3px solid #808080;
+		border-bottom: 20px solid #808080;
+		border-left: 8px solid #808080;
 		height: 80px;
 		width: 170px;
 		padding: 2px;
+	}
+
+	.grave_plaque img
+	{
+		height: 20px;
 	}
 
 	.grave_message .grave_message_text
@@ -292,27 +448,6 @@ header .navbar-brand
 
 @media (max-width: 699px)
 {
-	#cemetary_page
-	{
-		margin: 0%;
-		padding: 0px;
-	}
-
-	#cemetary_grounds
-	{
-		text-align: center;
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: center;
-	}
-
-	.flower_choice_item
-	{
-		margin: 10px;
-		cursor: pointer;
-	}
-
 	.grave
 	{
 		text-align: center;
@@ -329,17 +464,23 @@ header .navbar-brand
 		/*background-color: gray;*/
 		width: 120px;
 		height: 70px;
-		margin: 0px;
+		padding-left: 0px;
 	}
 
 	.grave_plaque
 	{
 		background-color: darkgray;
-		border:2px solid #778;
-		border-bottom: 10px solid #778;
+		border:2px solid #808080;
+		border-bottom: 10px solid #808080;
+		border-left: 5px solid #808080;
 		height: 60px;
 		width: 110px;
 		padding: 0px;
+	}
+
+	.grave_plaque img
+	{
+		height: 15px;
 	}
 
 	.grave_message .grave_message_text
@@ -351,11 +492,19 @@ header .navbar-brand
 	  text-align: center;
 	  padding: 2px 3px;
 	  border-radius: 4px;
+	  max-width: 40%;
 	 
 	  position: absolute;
-	  z-index: 1;
+	  z-index: 2;
 	}
 }
+
+.grave_text td
+{
+	padding-left: 4%;
+	padding-right: 2%;
+}
+
 
 .grave_message:hover .grave_message_text 
 {

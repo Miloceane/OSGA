@@ -3,52 +3,51 @@
 {% block content %}       		
 <div class="container" id="top">
 	<div class="col-12">
-		<header class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="/">O S G A</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-		    	<span class="navbar-toggler-icon"></span>
-		  	</button>
-
-		  	<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-			    <div class="navbar-nav">
-					<form class="nav-item navbar-search pull-left" action="/search_cemetary" method="post">
-						<input type="text" class="search-query" name="cemetary_search" placeholder="Search for cemetary">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<ul class="navbar navbar-nav">
+				<li class="nav-item">
+					<a class="navbar-brand" href="/">O S G A</a>
+				</li>
+				<li class="nav-item">
+					<form class="form-inline" action="/search_cemetary" method="post">
+						<input type="text" class="form-control" name="cemetary_search" placeholder="Search for cemetary">
+						<button class="btn" type="submit">Search</button>
 					</form>
-			    </div>
-		  	</div>
-		  	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
-  			{% block js %}{% endblock %}
-         	<!-- Include Choices JavaScript -->
-		  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-		  	<ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
-			    
-			      	{% if session['username'] %}
-			  			<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="/user_panel" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true">
-							{{ session['username'] }}
-							</a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-								<a class="dropdown-item" href="/user_panel">User panel</a>
-			  					<a class="dropdown-item" href="/logout">Logout</a>
-			  				</div>
-			  				<a class="nav-link" href="/logout">[ Logout] </a>
-						</li>
+				</li>
+			</ul>
 
-			  		{% else %}
-			  			<li class="nav-item">
-							<a class="nav-link" onclick="document.getElementById('login_box').style.display='block'">Login</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-item nav-link" href="/register">Register</a>
-						</li>
-			  		{% endif %}
-		  		</ul>
-			</div>
+			<ul class="navbar navbar-nav osga_right_nav">
+
+				{% if session['username'] %}
+		  		<li class="nav-item">	
+		      		<div class="dropdown">
+						<button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+							{{ session['username'] }}
+						</button>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="/user_panel">User panel</a>
+		  					<a class="dropdown-item" href="/logout">Log out</a>
+		  				</div>
+		  			</div>
+	  			</li>
+	  				
+		  		{% else %}
+
+		  		<li class="nav-item">	
+	  				<a class="nav-link" onclick="document.getElementById('login_box').style.display='block'">Log in</a>
+				</li>
+				<li class="nav-item">	
+					<a class="nav-item nav-link" href="/register">Register</a>
+				</li>
+		  		{% endif %}
+		  		
+		  	</ul>
+
 			<div id="login_box" class="modal" display="none">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5>Log-in</h5>
+							<h5>Log in</h5>
           					<button type="button" class="close" data-dismiss="modal"  height="20px" onclick="document.getElementById('login_box').style.display='none'">&times;</button>
 						</div>
 
@@ -61,14 +60,14 @@
 									<label for="password"><b>Password: </b></label>
 									<input type="password" placeholder="Enter Password" name="password" required><br>
 
-									<button type="submit">Login</button>
+									<button type="submit">Log in</button>
 								</form>
 							</p>
 						</div>
 					</div>
 				</div>
 			</div>
-		</header>
+		</nav>
 	</div>
 </div>
 <div class="container" id="main">

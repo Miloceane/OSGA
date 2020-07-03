@@ -6,10 +6,6 @@
 	/* Code from W3Schools for drop down search */
 	/* When the user clicks on the button,
 	toggle between hiding and showing the dropdown content */
-	document.addEventListener('DOMContenLoaded', function() {
-
-	});
-
 	function myFunction() 
 	{
 		document.getElementById("my").classList.toggle("show");
@@ -46,7 +42,7 @@
       	{% if not session['username'] %}
 			<div class="osga_index_login">
 				<p>
-					<a onclick="document.getElementById('login_box').style.display='block'" href="#">Login</a> |
+					<a onclick="document.getElementById('login_box').style.display='block'" href="#">Log in</a> |
 					<a href="/register">Register</a>
 				</p>
 			</div>
@@ -54,7 +50,7 @@
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5>Log-in</h5>
+							<h5>Log in</h5>
           					<button type="button" class="close" data-dismiss="modal"  height="20px" onclick="document.getElementById('login_box').style.display='none'">&times;</button>
 						</div>
 
@@ -73,6 +69,14 @@
 						</div>
 					</div>
 				</div>
+			</div>
+		{% else %}
+		<div class="osga_index_login">
+				<p>
+					<a href="/user_panel">Settings</a> |
+					<a href="/user_profile/{{ session['user_id'] }}">Profile</a> |
+					<a href="/logout">Log out</a>
+				</p>
 			</div>
 		{% endif %}
 
