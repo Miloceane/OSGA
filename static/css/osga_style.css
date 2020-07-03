@@ -411,17 +411,18 @@
 	{
 		/*background-color: gray;*/
 		width: 180px;
-		height: 120px;
+		height: 100px;
 		padding-left: 0px;
 	}
 
 	.grave_plaque
 	{
+		position: relative;
 		background-color: darkgray;
 		border:3px solid #808080;
 		border-bottom: 20px solid #808080;
 		border-left: 8px solid #808080;
-		height: 80px;
+		height: 100px;
 		width: 170px;
 		padding: 2px;
 	}
@@ -442,7 +443,7 @@
 	  border-radius: 6px;
 	 
 	  position: absolute;
-	  z-index: 1;
+	  z-index: 2;
 	}
 }
 
@@ -463,7 +464,7 @@
 	{
 		/*background-color: gray;*/
 		width: 120px;
-		height: 70px;
+		height: 60px;
 		padding-left: 0px;
 	}
 
@@ -473,7 +474,7 @@
 		border:2px solid #808080;
 		border-bottom: 10px solid #808080;
 		border-left: 5px solid #808080;
-		height: 60px;
+		height: 75px;
 		width: 110px;
 		padding: 0px;
 	}

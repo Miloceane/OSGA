@@ -10,11 +10,16 @@
 	let current_flower_id = 0;
 	let current_character_id = 0;
 
+	// Initializes height and width of grave plaque. Actual value is given at the end of this page, after DOM is loaded.
+	var grave_plaque_height = 0;
+	var grave_plaque_width = 0;
+
 	{% if session['user_id'] %}
 		let user_id = {{ session['user_id'] }};
 	{% else %}
 		let user_id = -1;
 	{% endif %}
+
 	let last_click_pos = { x:0, y:0 }
 
 	function change_current_flower(flower_id)
@@ -25,8 +30,8 @@
 	function change_last_click(e) 
 	{
 		var rect = e.target.getBoundingClientRect();
-		var x = Math.round(e.clientX - rect.left);
-		var y = Math.round(e.clientY - rect.top);
+		var x = Math.round((e.clientX - rect.left) * 100 / grave_plaque_width);
+		var y = Math.round((e.clientY - rect.top) * 100 / grave_plaque_height);
 		last_click_pos = { x, y };
 		return { x,	y };
 	}
@@ -56,14 +61,18 @@
 		flower.src = "/static/images/flowers/"+current_flower_id+".png";
 		flower.alt = "flower";
 		flower.height = "20";
-		flower.position = "relative"
-		flower.top = last_click_pos.x + "px"
-		flower.left = last_click_pos.y + "px"
+		flower.style.position = "absolute"
+		flower.style.top = Math.min(last_click_pos.y - 15, 75) + "%"
+		flower.style.left = Math.max(0, Math.min(last_click_pos.x - 10, 90)) + "%"
+
 		document.querySelector('#grave_'+grave_id).appendChild(flower);
 	}
 
-	function add_to_grave(grave_id, character_id) 
+	function add_to_grave(e) 
 	{
+		grave_id = e.target.getAttribute('grave_id');
+		character_id = e.target.getAttribute('character_id');
+
 		if (current_flower_id == -1)
 		{
 			add_message(grave_id, character_id);
@@ -216,9 +225,12 @@
 						</tr>
 						<tr>
 							<td>
-								<div id="grave_{{ i }}" class="grave_plaque" onclick="add_to_grave({{ i }}, {{ characters[i].id }})">
+								<div id="grave_{{ i }}" class="grave_plaque" grave_id="{{ i }}", character_id="{{ characters[i].id }}">
 									{% for flower in characters[i].flowers %}
-										<img src="/static/images/flowers/{{ flower.flowertype_id }}.png" alt="flower">
+										<img src="/static/images/flowers/{{ flower.flowertype_id }}.png" alt="flower" style="position: absolute; 
+										left: {% if flower.pos_x > 90 %}90{% else %} {{ flower.pos_x - 5 }}{% endif %}%;
+										top: {% if flower.pos_y > 90 %}90{% else %} {{ flower.pos_y - 15 }}{% endif %}%
+										">
 									{% endfor %}
 									{% for message in characters[i].messages %}
 										{% if message.admin_id > 0 %}
@@ -245,11 +257,17 @@
 
 
 <script>
+
 	let graves_plaques = document.getElementsByClassName('grave_plaque');
 	for (var i = 0; i < graves_plaques.length; i++) 
 	{
-    	graves_plaques[i].addEventListener('click', change_last_click);
+		current_grave = graves_plaques[i];
+    	current_grave.addEventListener('click', change_last_click, true);
+    	current_grave.addEventListener('click', add_to_grave);
 	}
+
+	grave_plaque_height = graves_plaques[0].scrollHeight; 
+	grave_plaque_width = graves_plaques[0].scrollWidth;
 
 	{% if is_spoiler %}
 		document.querySelector('#cemetary_grounds').style.display = "none";

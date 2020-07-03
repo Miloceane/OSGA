@@ -23,6 +23,7 @@ from sqlalchemy import and_
 from requests import get
 
 from models import *
+from helpers import *
 from import_characters import CharactersList
 
 #--------------------------------------------------------------------------------------------------
@@ -31,7 +32,7 @@ from import_characters import CharactersList
 #########################
 
 # IMPORTANT: Setting this variable to True allows anyone to access Flask Admin via /admin. Always set back to False before deploying!
-g_is_local = False
+g_is_local = True
 
 # TODO: Change global variable names to make them start with g_, as to show that they are global.
 
@@ -175,6 +176,9 @@ def cemetary(cemetary_id):
 		
 	show_query = Shows.query.filter_by(id=cemetary_id).first()
 	cemetary_query = Characters.query.filter_by(show_id=cemetary_id).order_by(Characters.id)
+
+	for character in cemetary_query:
+		quick_sort_flowers(character.flowers, 0, len(character.flowers) - 1)
 
 	if user is None:
 		is_blocked = False
