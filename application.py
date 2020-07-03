@@ -32,7 +32,7 @@ from import_characters import CharactersList
 #########################
 
 # IMPORTANT: Setting this variable to True allows anyone to access Flask Admin via /admin. Always set back to False before deploying!
-g_is_local = True
+g_is_local = False
 
 # TODO: Change global variable names to make them start with g_, as to show that they are global.
 
