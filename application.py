@@ -472,8 +472,17 @@ def user_profile(user_profile_id):
 
 	if user_profile.display_fav:
 		user_favourite = Shows.query.join(FavouritedShows, FavouritedShows.show_id == Shows.id, isouter=True).filter(FavouritedShows.user_id == user_profile.id)
-		
-	return render_template("user_profile.html", user_profile_name=user_profile.name, user_profile_favourite_shows=user_favourite)
+	
+	activity_total = []	
+	# activity_flowers = CharactersFlowers.query.filter_by(user_id=user_profile)
+	# activity_messages = CharactersMessages.query.filter_by(user_id=user_profile)
+	# activity_total = activity_flowers + activity_messages
+	# activity_total.sort(key=lambda x: x.date, reverse=True)
+
+	# for act in activity_total:
+	# 	act['type'] = "flower" if isinstance(act, CharactersFlowers) else "message"
+
+	return render_template("user_profile.html", user_profile_name=user_profile.name, user_profile_favourite_shows=user_favourite, activity=activity_total[:50])
 
 
 
