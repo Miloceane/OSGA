@@ -96,7 +96,7 @@ class CharactersFlowers(db.Model):
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	flowertype_id = db.Column(db.Integer)# , db.ForeignKey('flower_types.id'))  -> For some reason, complained about there being no constraints?
 	character_id = db.Column(db.Integer, db.ForeignKey('characters.id')) 
-	user_id = db.Column(db.Integer, db.ForeignKey('users.id')) 
+	# user_id = db.Column(db.Integer, db.ForeignKey('users.id')) 
 	date = db.Column(db.DateTime(timezone=True), server_default=func.now())
 	pos_x =  db.Column(db.Integer)
 	pos_y =  db.Column(db.Integer)	
