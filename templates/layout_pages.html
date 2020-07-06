@@ -18,11 +18,11 @@
 
 			<ul class="navbar navbar-nav osga_right_nav">
 
-				{% if session['username'] %}
+				{% if current_user.name %}
 		  		<li class="nav-item">	
 		      		<div class="dropdown">
 						<button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-							{{ session['username'] }}
+							{{ current_user.name}}
 						</button>
 						<div class="dropdown-menu">
 							<a class="dropdown-item" href="/user_panel">User panel</a>
@@ -59,6 +59,9 @@
 
 									<label for="password"><b>Password: </b></label>
 									<input type="password" placeholder="Enter Password" name="password" required><br>
+
+									<input type="checkbox" name="remember_me">
+									<label for="remember_me"> Remember me</label><br>
 
 									<button type="submit">Log in</button>
 								</form>

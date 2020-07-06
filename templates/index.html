@@ -39,7 +39,19 @@
 		<h1>O S G A</h1>
 		<h2>One Site to Grieve them All</h2>
 		
-      	{% if not session['username'] %}
+      	{% if current_user.is_authenticated %}
+
+      		<div class="osga_index_login">
+				<p>
+					<a href="/user_panel">Settings</a> |
+					<a href="/user_profile/{{ current_user.id }}">Profile</a> |
+					<a href="/logout">Log out</a>
+				</p>
+			</div>
+		
+			
+		{% else %}
+		
 			<div class="osga_index_login">
 				<p>
 					<a onclick="document.getElementById('login_box').style.display='block'" href="#">Log in</a> |
@@ -63,20 +75,15 @@
 									<label for="password"><b>Password: </b></label>
 									<input type="password" placeholder="Enter Password" name="password" required><br>
 
-									<button type="submit">Login</button><br>
+									<input type="checkbox" name="remember_me">
+									<label for="remember_me"> Remember me</label><br>
+
+									<button type="submit">Log in</button>
 								</form>
 							</p>
 						</div>
 					</div>
 				</div>
-			</div>
-		{% else %}
-		<div class="osga_index_login">
-				<p>
-					<a href="/user_panel">Settings</a> |
-					<a href="/user_profile/{{ session['user_id'] }}">Profile</a> |
-					<a href="/logout">Log out</a>
-				</p>
 			</div>
 		{% endif %}
 

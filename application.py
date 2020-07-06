@@ -11,7 +11,7 @@ import sys
 import json
 import hashlib
 
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, flash
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -19,6 +19,7 @@ from flask_basicauth import BasicAuth
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_mail import Mail, Message
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from sqlalchemy import and_
 from requests import get
 
@@ -73,6 +74,16 @@ app.config["MAIL_USE_TLS"] = False
 app.config["MAIL_USE_SSL"] = True
 app.config["MAIL_DEBUG"] = True
 mail = Mail(app)
+
+# Configure Flask login
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.session_protection = "strong"
+login_manager.login_view = "/"
+
+@login_manager.user_loader
+def load_user(user_id):
+    return Users.query.get(int(user_id))
 
 
 #--------------------------------------------------------------------------------------------------
@@ -137,8 +148,8 @@ def create_db():
 def empty_db():
 	""" Deletes all tables and data in database, resets user session """
 	db.drop_all()
-	session["username"] = None
-	session["user_id"] = None
+	current_user.name = None
+	current_user.id = None
 	return "Database emptied."
 
 
@@ -172,7 +183,7 @@ def search_cemetary():
 def cemetary(cemetary_id):
 	""" Displays cemetary """
 
-	user = Users.query.get(session.get("user_id"))
+	user = Users.query.get(current_user.id)
 		
 	show_query = Shows.query.filter_by(id=cemetary_id).first()
 	cemetary_query = Characters.query.filter_by(show_id=cemetary_id).order_by(Characters.id)
@@ -185,7 +196,7 @@ def cemetary(cemetary_id):
 		is_spoiler = False
 	else:
 		is_blocked = user.blocked
-		spoiler_query = BlacklistedShows.query.filter(and_(BlacklistedShows.user_id == session.get("user_id"), BlacklistedShows.show_id == cemetary_id)).first()
+		spoiler_query = BlacklistedShows.query.filter(and_(BlacklistedShows.user_id == current_user.id, BlacklistedShows.show_id == cemetary_id)).first()
 		is_spoiler = (spoiler_query != None)
 
 	return render_template("cemetary.html", graves_count=cemetary_query.count(), characters=cemetary_query.all(), show_title=show_query.name, is_blocked=is_blocked, is_spoiler=is_spoiler)
@@ -208,7 +219,7 @@ def save_flower(character_id, flowertype_id, pos_x, pos_y):
 	""" Saves the flower with flowertype flowertype_id and position (pos_x, pos_y) in database for character character_id. """
 
 	# Just in case the user tried to artificially insert JS to bypass blocked account and leave flower (idk who would do that, but who knows)
-	user = Users.query.get(session.get("user_id"))
+	user = Users.query.get(current_user.id)
 	if (user and user.blocked):
 		return ""
 
@@ -225,11 +236,12 @@ def save_flower(character_id, flowertype_id, pos_x, pos_y):
 
 
 @app.route("/save_message", methods=["POST"])
+@login_required
 def save_message():
 	""" Saves message sent via POST in database. """
 
 	# Just in case the user tried to artificially insert JS to bypass blocked account and leave message
-	user = Users.query.get(session.get("user_id"))
+	user = Users.query.get(current_user.id)
 	if (user and user.blocked):
 		return ""
 
@@ -251,8 +263,8 @@ def save_message():
 def register():
 	""" Registers the user based on POST data sent from register.html """
 	
-	username = "" if session is None else session.get("username")
-	userid = session.get("user_id")
+	username = "" if session is None else current_user.name
+	userid = current_user.id
 
 	# User is already registered + logged_in
 	if username:
@@ -324,13 +336,14 @@ def login():
 
 			if login_request.count() == 0:
 				# TODO: either make a log-in page to redirect the user, or check this in JS, this is tiresome for users.
-				return render_template("layout_message.html", error="Username and password didn't match.")
+				flash("Username and password didn't match.")
+				return render_template("layout_message.html", error="Your username and password didn't match.")
+
 			
 			else:
 				user = login_request.first()
-				session["username"] = username_input
-				session["user_id"] = user.id
-	
+				login_user(user, remember = not (request.form.get("remember_me") is None))
+				
 	return redirect(request.referrer)
 
 
@@ -338,8 +351,9 @@ def login():
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
 	""" Logs user out and redirects to currently visisted page """
-	session["username"] = None
-	session["user_id"] = None
+	logout_user()
+	# current_user.name = None
+	# current_user.id = None
 	return redirect(request.referrer)
 
 
@@ -350,19 +364,21 @@ def logout():
 #############
 
 @app.route("/user_panel", methods=["GET"])
+@login_required
 def user_panel_default():
 	""" Returns default user panel tab """	
 	return user_panel("")
 
 
 @app.route("/user_panel/<string:page_type>", methods=["GET", "POST"])
+@login_required
 def user_panel(page_type):
 	""" Returns specified user panel page if it exists, otherwise default. """
 
-	if session.get("user_id") is None:
+	if current_user.id is None:
 		return redirect("/")
 
-	user = Users.query.get(session.get("user_id"))
+	user = Users.query.get(current_user.id)
 	error_message = ""
 
 	#---- Display User settings tab ----#
@@ -400,7 +416,7 @@ def user_panel(page_type):
 		if request.form.get("suggest_show") or request.form.get("other_suggestion"):
 			show = request.form.get("suggest_show")
 			other_suggestion = request.form.get("other_suggestion")
-			db.session.add(Suggestions(user_id=session.get("user_id"), show=show, content=other_suggestion))
+			db.session.add(Suggestions(user_id=current_user.id, show=show, content=other_suggestion))
 			db.session.commit()
 
 			confirmation = "Your suggestion has been registered and the cemetaries' maintenance will review it, thanks!"
@@ -463,19 +479,21 @@ def user_profile(user_profile_id):
 ##################
 
 @app.route("/admin_panel", methods=["GET"])
+@login_required
 def admin_panel_default():
 	""" Returns default admin panel tab """
 	return admin_panel("")
 
 
 @app.route("/admin_panel/<string:page_type>", methods=["GET", "POST"])
+@login_required
 def admin_panel(page_type):
 	""" Returns specified admin panel tab if it exists, otherwise default. """
 
-	if not session.get("user_id"):
+	if not current_user.id:
 		return redirect("/")
 
-	user_request = Users.query.filter_by(id=session['user_id']).first()
+	user_request = Users.query.filter_by(id=current_user.id).first()
 	if user_request.admin_level < 1:
 		return redirect("/")		
 
@@ -501,7 +519,7 @@ def admin_panel(page_type):
 				db.session.commit()
 				show_request = Shows.query.filter_by(name=show_title)
 
-			new_character = Characters(name=character, show_id=show_request.first().id, admin_id=session['user_id'], death_season=season, death_episode=episode)
+			new_character = Characters(name=character, show_id=show_request.first().id, admin_id=current_user.id, death_season=season, death_episode=episode)
 			db.session.add(new_character)
 			db.session.commit()
 
@@ -558,19 +576,20 @@ def admin_panel(page_type):
 
 
 @app.route("/moderate_comment/<int:comment_id>", methods=["GET", "POST"])
+@login_required
 def moderate_comment(comment_id):
 	""" Manages comment with id comment_id based on action received via POST data """
-	if not session['user_id']:
+	if not current_user.id:
 		return redirect("/")
 
-	user_request = Users.query.filter_by(id=session['user_id']).first()
+	user_request = Users.query.filter_by(id=current_user.id).first()
 	if user_request.admin_level < 1:
 		return redirect("/")		
 
 	comment = CharactersMessages.query.get(comment_id)
 
 	if request.form.get("validate"):
-		comment.admin_id = session.get("user_id")			
+		comment.admin_id = current_user.id			
 		db.session.commit()
 
 	if request.form.get("refuse"):
@@ -588,13 +607,14 @@ def moderate_comment(comment_id):
 
 
 @app.route("/manage_suggestions/<int:suggestion_id>", methods=["GET", "POST"])
+@login_required
 def manage_suggestion(suggestion_id):
 	""" Manages suggestion with id suggestion_id based on action received via POST data. """
 
-	if not session['user_id']:
+	if not current_user.id:
 		return redirect("/")
 
-	user_request = Users.query.filter_by(id=session['user_id']).first()
+	user_request = Users.query.filter_by(id=current_user.id).first()
 	if user_request.admin_level < 1:
 		return redirect("/")		
 

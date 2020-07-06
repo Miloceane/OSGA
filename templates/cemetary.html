@@ -14,8 +14,8 @@
 	var grave_plaque_height = 0;
 	var grave_plaque_width = 0;
 
-	{% if session['user_id'] %}
-		let user_id = {{ session['user_id'] }};
+	{% if current_user.id %}
+		let user_id = {{ current_user.id }};
 	{% else %}
 		let user_id = -1;
 	{% endif %}
@@ -157,7 +157,7 @@
 	<h1>{{ show_title }}</h1>
 	<h2>Memorial Grounds</h2>
 
-	{% if session['username'] %}
+	{% if current_user.name %}
 		<br>
 		{% if is_blocked %}
 			Your account has been blocked: you can't leave public flowers nor messages on graves anymore. You can leave temporary flowers, they just won't be registered.

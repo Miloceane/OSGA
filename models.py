@@ -26,6 +26,23 @@ class Users(db.Model):
 	display_activity = db.Column(db.Boolean, default=False)
 	flowers_left = db.Column(db.Integer, default=5)
 	blocked = db.Column(db.Boolean, default=False)
+	# authenticated = db.Column(db.Boolean, default=False)
+
+	def is_authenticated(self):
+		return True
+
+
+	def is_active(self):
+		return True
+
+
+	def is_anonymous(self):
+		return False
+
+
+	def get_id(self):
+		return(self.id) 
+
 
 
 class Universes(db.Model):
