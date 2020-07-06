@@ -19,7 +19,7 @@ from flask_basicauth import BasicAuth
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_mail import Mail, Message
-from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask_login import LoginManager, login_user, logout_user, login_required, login_fresh, current_user
 from sqlalchemy import and_
 from requests import get
 
@@ -380,6 +380,7 @@ def user_panel(page_type):
 
 	user = Users.query.get(current_user.id)
 	error_message = ""
+	success_message = ""
 
 	#---- Display User settings tab ----#
 	if page_type == "user_settings": 
@@ -388,14 +389,20 @@ def user_panel(page_type):
 				error_message += "Password and password confirmation didn't match! "
 			elif len(request.form.get("password")) < 6:
 				error_message += "Password should be at least 6 characters long. "
+			elif login_fresh() is False:
+				error_message += "You are using an old session, please log out and log in again to change your password."
 			else:
+				success_message += "Your password has been changed! "
 				user.password = hashlib.md5(request.form.get("password").encode('utf-8')).hexdigest()
 				db.session.commit()
 		
 		if request.form.get("email"):
 			if request.form.get("email") != request.form.get("email_confirmation"):
 				error_message += "E-mail address and confirmation didn't match! "
+			elif login_fresh() is False:
+				error_message += "You are using an old session, please log out and log in again to change your e-mail address."
 			else:
+				success_message += "Your e-mail address has been changed! "
 				user.email = request.form.get("email")
 				db.session.commit()
 
@@ -404,7 +411,7 @@ def user_panel(page_type):
 			user.display_activity = not (request.form.get("display_activity") is None)
 			db.session.commit()
 
-		return render_template("user_panel.html", selected_user_settings="active", user_info=user, error=error_message)
+		return render_template("user_panel.html", selected_user_settings="active", user_info=user, error=error_message, success=success_message, fresh_session=login_fresh())
 
 
 	#---- Display Suggestions tab ----#
