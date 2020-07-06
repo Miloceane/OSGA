@@ -183,7 +183,10 @@ def search_cemetary():
 def cemetary(cemetary_id):
 	""" Displays cemetary """
 
-	user = Users.query.get(current_user.id)
+	if current_user.is_authenticated:
+		user = Users.query.get(current_user.id)
+	else:
+		user = None
 		
 	show_query = Shows.query.filter_by(id=cemetary_id).first()
 	cemetary_query = Characters.query.filter_by(show_id=cemetary_id).order_by(Characters.id)
