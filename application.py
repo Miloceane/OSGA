@@ -262,12 +262,9 @@ def save_message():
 @app.route("/register", methods=["GET", "POST"])
 def register():
 	""" Registers the user based on POST data sent from register.html """
-	
-	username = "" if session is None else current_user.name
-	userid = current_user.id
 
 	# User is already registered + logged_in
-	if username:
+	if current_user.is_authenticated:
 		return redirect(url_for('index'))
 
 	# Receiving registration form
