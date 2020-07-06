@@ -67,7 +67,7 @@ headers = { 'Content-Type': 'application/json', 'trakt-api-key': '9cba8155f5e9c9
 # TODO: store credentials in db or somewhere else that's safe
 app.config["MAIL_SERVER"] = 'smtp.gmail.com'
 app.config["MAIL_USERNAME"] = 'osga.staff@gmail.com'
-app.config["MAIL_DEFAULT_SENDER"] = 'noreply@osga.com'
+app.config["MAIL_DEFAULT_SENDER"] = 'osga.staff@gmail.com'
 app.config["MAIL_PASSWORD"] = 'dany0000'
 app.config["MAIL_PORT"] = 465
 app.config["MAIL_USE_TLS"] = False
