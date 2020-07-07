@@ -14,37 +14,6 @@ from sqlalchemy.sql import func
 
 db = SQLAlchemy()
 
-class Users(db.Model):
-	__tablename__ = 'users'
-	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String(128))
-	password = db.Column(db.String(128))
-	email = db.Column(db.String(128))
-	admin_level = db.Column(db.Integer, default=0)
-	registration_date = db.Column(db.DateTime(timezone=True), server_default=func.now())
-	display_fav = db.Column(db.Boolean, default=False)
-	display_activity = db.Column(db.Boolean, default=False)
-	flowers_left = db.Column(db.Integer, default=5)
-	blocked = db.Column(db.Boolean, default=False)
-	# authenticated = db.Column(db.Boolean, default=False)
-
-	def is_authenticated(self):
-		return True
-
-
-	def is_active(self):
-		return True
-
-
-	def is_anonymous(self):
-		return False
-
-
-	def get_id(self):
-		return(self.id) 
-
-
-
 class Universes(db.Model):
 	__tablename__ = 'shows_universes'
 	id = db.Column(db.Integer, primary_key=True)
@@ -89,18 +58,20 @@ class CharactersMessages(db.Model):
 	admin_id = db.Column(db.Integer, default=0) # Admin who validated the message 
 	pos_x =  db.Column(db.Integer, default=0)
 	pos_y =  db.Column(db.Integer, default=0)	
-	character = relationship("Characters", back_populates="messages")
+	character = relationship("Characters", back_populates="messages")	
+	user = relationship("Users", back_populates="messages")
 
 class CharactersFlowers(db.Model):
 	__tablename__ = 'characters_flowers'
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-	flowertype_id = db.Column(db.Integer)# , db.ForeignKey('flower_types.id'))  -> For some reason, complained about there being no constraints?
+	flowertype_id = db.Column(db.Integer, db.ForeignKey('flower_types.id'))# , db.ForeignKey('flower_types.id'))  -> For some reason, complained about there being no constraints?
 	character_id = db.Column(db.Integer, db.ForeignKey('characters.id')) 
-	# user_id = db.Column(db.Integer, db.ForeignKey('users.id')) 
+	user_id = db.Column(db.Integer, db.ForeignKey('users.id')) 
 	date = db.Column(db.DateTime(timezone=True), server_default=func.now())
 	pos_x =  db.Column(db.Integer)
 	pos_y =  db.Column(db.Integer)	
 	character = relationship("Characters", back_populates="flowers")
+	user = relationship("Users", back_populates="flowers")
 
 class Characters(db.Model):
 	__tablename__ = 'characters'
@@ -115,6 +86,40 @@ class Characters(db.Model):
 	flower_count = db.Column(db.Integer, default=0)
 	flowers = relationship(CharactersFlowers)
 	messages = relationship(CharactersMessages)
+
+
+class Users(db.Model):
+	__tablename__ = 'users'
+	id = db.Column(db.Integer, primary_key=True)
+	name = db.Column(db.String(128))
+	password = db.Column(db.String(128))
+	email = db.Column(db.String(128))
+	admin_level = db.Column(db.Integer, default=0)
+	registration_date = db.Column(db.DateTime(timezone=True), server_default=func.now())
+	display_fav = db.Column(db.Boolean, default=False)
+	display_activity = db.Column(db.Boolean, default=False)
+	flowers_left = db.Column(db.Integer, default=5)
+	blocked = db.Column(db.Boolean, default=False)
+	flowers = relationship(CharactersFlowers)
+	messages = relationship(CharactersMessages)
+# authenticated = db.Column(db.Boolean, default=False)
+
+	def is_authenticated(self):
+		return True
+
+
+	def is_active(self):
+		return True
+
+
+	def is_anonymous(self):
+		return False
+
+
+	def get_id(self):
+		return(self.id) 
+
+
 
 
 

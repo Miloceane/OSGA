@@ -1,0 +1,26 @@
+{% extends "layout_pages.html" %}
+
+{% block inside_row %}
+<main id="register_page" class="col-12" role="main">
+	<h1>{{ character.name }}</h1>
+		{% if picture_url %}
+		<div id="character_picture">
+			<img src="/static/images/character_pictures/{{ picture_url }}" alt="{{ character.name }}"/>
+		</div>
+		{% endif %}
+	<div id="character_info">
+		Original show: <a href="{{ url_for('cemetary', cemetary_id=character.show_id) }}">{{ show_name }}</a><br>
+		Deceased season {{ character.death_season }}, episode {{ character.death_episode }}.
+	</div>
+	{% if character.messages and character.messages|length > 0 %}
+		<div id="character_messages">
+			{% for message in character.messages %}
+			<div class="character_message">
+				<div>Left by <a href="/user_profile/{{ message.user_id }}">{{ message.user.name }}</a> on {{ message.date }}.</div>
+				<div>{{ message.content }}</div>
+			</div>
+			{% endfor %}
+		</div>
+	{% endif %}
+</main>
+{% endblock %}

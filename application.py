@@ -213,6 +213,16 @@ def api():
 	return 	
 
 
+@app.route("/character/<int:character_id>", methods=["GET"])
+def character(character_id):
+	""" Displays character info """
+
+	character = Characters.query.get(character_id)
+	show = Shows.query.get(character.show_id)
+
+	return render_template("character.html", character=character, show_name=show.name)
+
+
 #--------------------------------------------------------------------------------------------------
 ####################
 # CEMETARIES: AJAX #
@@ -288,7 +298,7 @@ def register():
 		if password != password_confirmation:
 			error += "Password and confirmation didn't match! "
 
-		# TODO: check email validity. Library? Regex? Maybe Flask-login already does this?
+		# TODO: check email validity. Library? Regex?
 		if email != email_confirmation:
 			error += "Email and confirmation didn't match! "
 
