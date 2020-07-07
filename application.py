@@ -132,6 +132,14 @@ def index():
 
 
 
+@app.route("/about")
+def about():
+	""" About page """
+	list_shows = Shows.query.all()
+	return render_template("about.html", title="OSGA: One Site to Grieve them All", shows=list_shows)
+
+
+
 #--------------------------------------------------------------------------------------------------
 #######################
 # DATABASE MAGANEMENT #

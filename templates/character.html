@@ -14,6 +14,7 @@
 	</div>
 	{% if character.messages and character.messages|length > 0 %}
 		<div id="character_messages">
+			<h3>Messages</h3>
 			{% for message in character.messages %}
 			<div class="character_message">
 				<div>Left by <a href="/user_profile/{{ message.user_id }}">{{ message.user.name }}</a> on {{ message.date }}.</div>
