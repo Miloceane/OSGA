@@ -179,8 +179,20 @@
 		Welcome to {{ show_title }}'s cemetary. You can click on a grave to leave a flower in memory of a character.
 		<br>
 		Registered users can leave several types of flowers as well as messages.
+		<br>
+	
 	{% endif %}
-
+	<br>
+	<form action="{{ url_for('cemetary', cemetary_id=show_id) }}" method="post">
+		Sort graves by: 
+		<select name="graves_sorting">
+			<option value="chronological">Chronological order</option>
+			<option value="popularity">Popularity</option>
+		</select>
+		<button>Reload</button>
+	</form>
+	<br>
+	
 	<div id="add_message_box" class="modal" display="none">
 		<div class="modal-dialog">
 			<div class="modal-content">

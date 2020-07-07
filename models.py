@@ -112,7 +112,7 @@ class Characters(db.Model):
 	death_season = db.Column(db.Integer)
 	death_episode = db.Column(db.Integer)
 	admin_id = db.Column(db.Integer, db.ForeignKey('users.id')) # Admin who declared death
-	flower_count = db.Column(db.Integer)
+	flower_count = db.Column(db.Integer, default=0)
 	flowers = relationship(CharactersFlowers)
 	messages = relationship(CharactersMessages)
 

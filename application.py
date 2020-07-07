@@ -183,33 +183,34 @@ def search_cemetary():
 def cemetary(cemetary_id):
 	""" Displays cemetary """
 
-	if current_user.is_authenticated:
-		user = Users.query.get(current_user.id)
-	else:
-		user = None
-		
 	show_query = Shows.query.filter_by(id=cemetary_id).first()
-	cemetary_query = Characters.query.filter_by(show_id=cemetary_id).order_by(Characters.id)
+
+	if request.form.get("graves_sorting") == "popularity":
+		cemetary_query = Characters.query.filter_by(show_id=cemetary_id).order_by(Characters.flower_count.desc())
+	
+	else:
+		cemetary_query = Characters.query.filter_by(show_id=cemetary_id).order_by(Characters.id)
+
 
 	for character in cemetary_query:
 		quick_sort_flowers(character.flowers, 0, len(character.flowers) - 1)
 
-	if user is None:
+	if current_user is None or current_user.is_authenticated is False:
 		is_blocked = False
 		is_spoiler = False
 	else:
-		is_blocked = user.blocked
+		is_blocked = current_user.blocked
 		spoiler_query = BlacklistedShows.query.filter(and_(BlacklistedShows.user_id == current_user.id, BlacklistedShows.show_id == cemetary_id)).first()
 		is_spoiler = (spoiler_query != None)
 
-	return render_template("cemetary.html", graves_count=cemetary_query.count(), characters=cemetary_query.all(), show_title=show_query.name, is_blocked=is_blocked, is_spoiler=is_spoiler)
+	return render_template("cemetary.html", graves_count=cemetary_query.count(), characters=cemetary_query.all(), show_title=show_query.name, show_id=show_query.id, is_blocked=is_blocked, is_spoiler=is_spoiler)
 
 
 @app.route("/api", methods=["GET"])
 def api():
 	""" Page for api tests """
 	api_request = get('https://api.trakt.tv/shows/popular', headers=headers).json()
-	return api_request
+	return 	
 
 
 #--------------------------------------------------------------------------------------------------
