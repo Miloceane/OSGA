@@ -618,7 +618,7 @@
 
 @media (min-width: 700px)
 {
-	#cemetary_grounds a
+	#cemetary_grounds .grave_text a
 	{
 		font-weight: 500;
 		font-size: 16px;
@@ -635,6 +635,10 @@
 		background-size: 170px 150px;
 		background-repeat: no-repeat;
 		width: 180px;
+	}
+
+	.grave_text
+	{
 		color: #778;
 		font-size: 14px;
 		text-shadow: 0px -1px #334;
@@ -682,7 +686,7 @@
 
 @media (max-width: 699px)
 {
-	#cemetary_grounds a
+	#cemetary_grounds .grave_text a
 	{
 		font-size: 10px;
 		color: #667;
