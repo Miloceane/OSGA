@@ -238,6 +238,19 @@ def character(character_id):
 	return render_template("character.html", character=character, show=show, is_spoiler=is_spoiler, show_characters=show_characters)
 
 
+@app.route("/delete_character_message/<int:message_id>", methods=["GET"])
+def delete_character_message(message_id):
+	""" Deletes CharactersMessage with id message_id """
+
+	message = CharactersMessages.query.get(message_id)
+	
+	if current_user.is_authenticated and current_user.id == message.user_id:
+		db.session.delete(message)
+		db.session.commit()
+
+	return
+
+
 #--------------------------------------------------------------------------------------------------
 ####################
 # CEMETARIES: AJAX #

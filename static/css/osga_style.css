@@ -590,6 +590,8 @@
 {
 	max-height: 16px;
 	margin-left: 5px;
+	margin-bottom: 3px;
+	cursor: pointer;
 }
 
 /************/
