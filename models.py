@@ -19,7 +19,6 @@ class Universes(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(128))
 
-
 class Shows(db.Model):
 	__tablename__ = 'shows'
 	id = db.Column(db.Integer, primary_key=True)
@@ -71,7 +70,7 @@ class CharactersFlowers(db.Model):
 	pos_x =  db.Column(db.Integer)
 	pos_y =  db.Column(db.Integer)	
 	character = relationship("Characters", back_populates="flowers")
-	user = relationship("Users", back_populates="flowers")
+	user =	relationship("Users", back_populates="flowers")
 
 class Characters(db.Model):
 	__tablename__ = 'characters'
@@ -87,7 +86,7 @@ class Characters(db.Model):
 	flowers = relationship(CharactersFlowers)
 	messages = relationship(CharactersMessages)
 
-
+	
 class Users(db.Model):
 	__tablename__ = 'users'
 	id = db.Column(db.Integer, primary_key=True)

@@ -1,27 +1,110 @@
+
+
 {% extends "layout_pages.html" %}
 
 {% block inside_row %}
-<main id="register_page" class="col-12" role="main">
-	<h1>{{ character.name }}</h1>
-		{% if picture_url %}
-		<div id="character_picture">
-			<img src="/static/images/character_pictures/{{ picture_url }}" alt="{{ character.name }}"/>
-		</div>
-		{% endif %}
-	<div id="character_info">
-		Original show: <a href="{{ url_for('cemetary', cemetary_id=character.show_id) }}">{{ show_name }}</a><br>
-		Deceased season {{ character.death_season }}, episode {{ character.death_episode }}.
-	</div>
-	{% if character.messages and character.messages|length > 0 %}
-		<div id="character_messages">
-			<h3>Messages</h3>
-			{% for message in character.messages %}
-			<div class="character_message">
-				<div>Left by <a href="/user_profile/{{ message.user_id }}">{{ message.user.name }}</a> on {{ message.date }}.</div>
-				<div>{{ message.content }}</div>
+<script>
+
+	function display_spoiler_character() {
+		document.querySelector('#character_info').style.display = "block";
+		document.querySelector('#other_characters').style.display = "block";
+		document.querySelector('#display_spoiler_cemetary').style.display = "none";			
+	}
+
+</script>
+
+<main id="character_page" class="col-12" role="main">
+
+	{% if is_spoiler %}
+	<div id="display_spoiler_cemetary" display="block">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<p>
+						This is the page of a character from a show in your spoilers blacklist! Are you sure you want to view it?<br>
+						<br>
+						<button onclick="display_spoiler_character()">View anyway.</button>
+					</p>
+				</div>
 			</div>
-			{% endfor %}
-		</div>
+		</div>  
+	</div>
 	{% endif %}
+
+	<div id="character_info">
+		<h1>{{ character.name }}</h1>
+		<h5>From <a href="{{ url_for('cemetary', cemetary_id=character.show_id) }}">{{ show.name }}</a></h5>
+		<br>
+		<div class="grave">
+			<table>
+				<tr class="grave_text">
+					<td>
+						{{ character.name }}<br>
+						Season {{ character.death_season }} Episode {{ character.death_episode }}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div id="grave_{{ i }}" class="grave_plaque" grave_id="{{ i }}", character_id="{{ character.id }}">
+							{% for flower in character.flowers %}
+								<img src="/static/images/flowers/{{ flower.flowertype_id }}.png" alt="flower" style="position: absolute; 
+								left: {% if flower.pos_x > 90 %}90{% else %} {{ flower.pos_x - 5 }}{% endif %}%;
+								top: {% if flower.pos_y > 90 %}90{% else %} {{ flower.pos_y - 15 }}{% endif %}%
+								">
+							{% endfor %}
+							{% for message in character.messages %}
+								{% if message.admin_id > 0 %}
+								<span id="grave_message{{ i }}" class="grave_message">
+									<span class="grave_message_text">{{ message.content }}</span>
+									<img src="/static/images/flowers/scroll.png" alt="{{ message.content }}">
+								</span>
+								{% endif %}
+							{% endfor %}
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		{% if character_image %}
+			{% if picture_url %}
+			<div id="character_picture">
+				<img src="/static/images/character_pictures/{{ picture_url }}" alt="{{ character.name }}"/>
+			</div>
+			{% endif %}
+		{% endif %}
+		{% if character.messages and character.messages|length > 0 %}
+			<div id="character_messages">
+				<h4>Messages left</h4>
+				<div id="character_messages_list">
+					{% for message in character.messages %}
+					<div class="character_message">
+						<div class="character_message_header">
+							Left by <a href="/user_profile/{{ message.user_id }}">{{ message.user.name }}</a>
+							 on {{ message.date.strftime('%Y-%m-%d') }}
+						</div>
+						<div class="character_message_content">
+							<img src="/static/images/flowers/scroll.png" height="20px"/> 
+							{{ message.content }}
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		{% endif %}
+	</div>
+	<div id="other_characters">
+		<h6>All deceased characters from <a href="{{ url_for('cemetary', cemetary_id=character.show_id) }}">{{ show.name }}</a>:</h6>
+		{% for character in show_characters %}
+			{% if show_characters[0].id != character.id %}· {% endif %}
+		<a href="/character/{{ character.id }}">{{ character.name }}</a>
+		{% endfor %}
+	</div>
 </main>
+
+<script>
+	{% if is_spoiler %}
+		document.querySelector('#character_info').style.display = "none";
+		document.querySelector('#other_characters').style.display = "none";
+	{% endif %}
+</script>
 {% endblock %}

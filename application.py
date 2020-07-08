@@ -227,8 +227,15 @@ def character(character_id):
 
 	character = Characters.query.get(character_id)
 	show = Shows.query.get(character.show_id)
+	show_characters = Characters.query.filter_by(show_id=show.id).order_by(Characters.id)
 
-	return render_template("character.html", character=character, show_name=show.name)
+	if current_user is None or current_user.is_authenticated is False:
+		is_spoiler = False
+	else:
+		spoiler_query = BlacklistedShows.query.filter(and_(BlacklistedShows.user_id == current_user.id, BlacklistedShows.show_id == show.id)).first()
+		is_spoiler = (spoiler_query != None)
+
+	return render_template("character.html", character=character, show=show, is_spoiler=is_spoiler, show_characters=show_characters)
 
 
 #--------------------------------------------------------------------------------------------------

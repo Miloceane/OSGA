@@ -195,22 +195,6 @@
 	margin-top: 2%;
 }
 
-#about
-{
-	text-align: left;
-	padding: 15px 20px;
-}
-
-#about p
-{
-	margin-top: 15px;
-}
-
-#about li
-{
-	margin: 10px 5px;
-}
-
 .container
 {
 	border-bottom: 1px solid gray;
@@ -239,6 +223,31 @@
 	color: #ccc;
 }
 
+
+/*********/
+/* About */
+/*********/
+
+#about
+{
+	text-align: left;
+	padding: 15px 20px;
+}
+
+#about p
+{
+	margin-top: 15px;
+}
+
+#about li
+{
+	margin: 10px 5px;
+}
+
+
+/************************/
+/* User and admin panel */
+/************************/
 
 #user_panel form
 {
@@ -402,6 +411,78 @@
 		display: none;
 	}
 }
+
+
+/*******************/
+/* Character page */
+/*******************/
+
+#character_page .grave
+{
+	justify-content: center;
+	margin: auto;
+}
+
+#character_page a
+{
+	color: #777;
+}
+
+#character_info
+{
+	float: left;
+	width: 80%;
+}
+
+#other_characters
+{
+	text-align: left;
+	float: right;
+	width: 20%;
+	margin-top: 2%;
+	padding-left: 2%;
+	border-left: 1px solid gray;
+}
+
+#other_characters a
+{
+	margin: 0px 5px;
+}
+
+#character_messages
+{
+	text-align: left;
+	padding: 2% 0%;
+}
+
+#character_messages_list
+{
+	display:flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: left;
+}
+
+.character_message
+{
+	margin-top: 2%;
+	margin-right: 2%;
+	padding: 12px;
+	border: 1px solid #aaa;
+}
+
+.character_message_header
+{
+	color: #444;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.character_message_content
+{
+	padding-top: 1%;	
+}
+
 
 /************/
 /* Cemetary */
