@@ -594,8 +594,20 @@
 	cursor: pointer;
 }
 
+#cemetary_grounds a:hover
+{
+	text-decoration: none;
+}
+
 @media (min-width: 700px)
 {
+	#cemetary_grounds a
+	{
+		font-weight: 500;
+		font-size: 16px;
+		color: #667;
+		text-shadow: 0px -1.5px #223;
+	}
 
 	.grave
 	{
@@ -606,6 +618,9 @@
 		background-size: 170px 150px;
 		background-repeat: no-repeat;
 		width: 180px;
+		color: #778;
+		font-size: 14px;
+		text-shadow: 0px -1px #334;
 	}
 
 	.grave td
@@ -650,11 +665,17 @@
 
 @media (max-width: 699px)
 {
+	#cemetary_grounds a
+	{
+		font-size: 10px;
+		color: #667;
+		text-shadow: 0px -1px #223;
+	}
+
 	#cemetary_grounds .grave
 	{
 		text-align: center;
-		padding-right: 5%;
-		margin: 10px 5px;
+		margin: 10px 0px;
 		background-image: url("/static/images/gravestone.png");
 		background-size: 110px 100px;
 		background-repeat: no-repeat;
@@ -667,6 +688,7 @@
 		width: 120px;
 		height: 60px;
 		padding-left: 0px;
+		margin: 5px;
 	}
 
 	#cemetary_grounds .grave_plaque
