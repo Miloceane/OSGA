@@ -447,9 +447,18 @@
 	}
 }
 
+#character_info .character_name
+{
+	font-weight: 500;
+	font-size: 16px;
+	color: #667;
+	text-shadow: 0px -1.5px #223;
+}
+
+
 #character_info .grave
 {
-	padding: 10px 0px;
+	padding: 10px 5px;
 	margin-bottom: 10px;
 	justify-content: center;
 	text-align: center;
@@ -458,6 +467,15 @@
 	background-repeat: no-repeat;
 	background-position-x: center;
 	width: 90%;
+	color: #778;
+	font-size: 14px;
+	text-shadow: 0px -1px #334;
+
+}
+
+#character_info .grave_text
+{
+	padding-left: 15%;
 }
 
 #character_info .grave table
@@ -471,7 +489,6 @@
 {
 	width: 180px;
 	height: 100px;
-	padding-left: 0px;
 	justify-content: center;
 }
 
