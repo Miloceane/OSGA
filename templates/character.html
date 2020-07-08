@@ -113,21 +113,23 @@
 				<h4>Messages left</h4>
 				<div id="character_messages_list">
 					{% for message in character.messages %}
-					<div id="message_{{ message.id }}" class="character_message" message_id="{{ message.id }}">
-						<div class="character_message_header">
-							Left by <a href="/user_profile/{{ message.user_id }}">{{ message.user.name }}</a>
-							 on {{ message.date.strftime('%Y-%m-%d') }}
-							 {% if current_user.is_authenticated and message.user_id == current_user.id %}
-							 	<span class="delete_message">
-							 		<img src="/static/images/fire.png" alt="Delete message" message_id="{{ message.id }}"/>
-							 	</span>
-							 {% endif %}
+						{% if message.admin_id > 0 %}
+						<div id="message_{{ message.id }}" class="character_message" message_id="{{ message.id }}">
+							<div class="character_message_header">
+								Left by <a href="/user_profile/{{ message.user_id }}">{{ message.user.name }}</a>
+								 on {{ message.date.strftime('%Y-%m-%d') }}
+								 {% if current_user.is_authenticated and message.user_id == current_user.id %}
+								 	<span class="delete_message">
+								 		<img src="/static/images/fire.png" alt="Delete message" message_id="{{ message.id }}"/>
+								 	</span>
+								 {% endif %}
+							</div>
+							<div class="character_message_content">
+								<img src="/static/images/flowers/scroll.png" height="20px"/> 
+								{{ message.content }}
+							</div>
 						</div>
-						<div class="character_message_content">
-							<img src="/static/images/flowers/scroll.png" height="20px"/> 
-							{{ message.content }}
-						</div>
-					</div>
+						{% endif %}
 					{% endfor %}
 				</div>
 			</div>
