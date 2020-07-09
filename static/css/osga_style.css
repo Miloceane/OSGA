@@ -128,6 +128,11 @@
 
 @media (min-width: 770px)
 {
+	.navbar
+	{
+		padding:  3px 0px;
+	}
+
 	.nav-item
 	{
 		padding-left: 5px;
@@ -142,8 +147,9 @@
 	nav .navbar-brand
 	{
 		font-size: 25px;
-		padding-top: 0%;
+		padding-top: 10px;
 		padding-left: 0px;
+		padding-bottom: 15px;
 	}
 
 	form
@@ -203,8 +209,21 @@
 	/*margin-top: 5px;*/
 }
 
+#front_page #footer
+{
+	position: absolute;
+	bottom: 0;
+	text-align: center;
+	width: 100%;
+	padding: 4% 0%;
+	text-shadow: 1px 1px #000;
+	color: #999;
+}
+
 #footer
 {
+	text-align: center;
+	width: 100%;
 	padding: 4%;
 	text-shadow: 1px 1px #000;
 	color: #999;
@@ -777,7 +796,7 @@
 	text-align: center;
 }
 
-#myDropdown
+#main_dropdown_list
 {
 	text-align: center;
 	background-color: transparent;
@@ -785,30 +804,73 @@
 }
 
 /* The search field */
-#myInput 
+#main_input 
 {
 	display: inline-block;
 	width: 100%;
 	font-size: 16px;
 	border-bottom: 0px solid #ddd;
-	
 }
 
 /* The search field when it gets focus/clicked on */
-#myInput:focus {outline: 0px solid #ddd;}
+#main_input:focus {outline: 0px solid #ddd;}
 
 /* The container <div> - needed to position the dropdown content */
-#main_dropdown 
+#main_dropdown
+{
+	position: relative;
+}
+
+#main_dropdown .osga_dropdown_content
 {
 	text-align: center;
+	z-index: 9999;
+	padding-top: 30px;
+	padding-left: 25%
+	width: 50%;
 }
+
+#top_dropdown_list
+{
+	text-align: center;
+	background-color: transparent;
+	width: 100%;
+	margin: -15px 0px;
+	padding: 0px 20px;
+	z-index: 9999;
+	
+}
+
+/* The search field */
+#top_input 
+{
+	display: inline-block;
+	width: 100%;
+	font-size: 16px;
+	border-bottom: 1px solid #ddd;	
+}
+
+/* The search field when it gets focus/clicked on */
+#top_input:focus {outline: 0px solid #ddd;}
 
 
 @media (min-width: 700px)
 {
-	/* Dropdown Content (Hidden by Default) */
-	.dropdown-content 
+	/* The container <div> - needed to position the dropdown content */
+	.top_dropdown 
 	{
+		text-align: center;
+		width: 400px;
+		z-index: 9999;
+		position: relative;
+	}
+
+	/* Dropdown Content (Hidden by Default) */
+	.osga_dropdown_content 
+	{
+		position: absolute;
+		top: 0px;
+		left: 0px;
 		text-align: center;
 		width: 70%;
 		padding: 2% 30%;
@@ -816,27 +878,46 @@
 		color: black;
 		background-color: #f6f6f6;
 		overflow: auto;
-		z-index: 1;
+		z-index: 9999;
 	}
 
 	/* Links inside the dropdown */
-	.dropdown-content a 
+	.osga_dropdown_content a 
 	{
 		text-align: left;
 		color: black;
 		padding: 4px 10px;
-		background-color: white;
+		background-color: #eee;
+		border-left: 1px solid gray;
+		box-shadow: 2px 2px 2px #888;
 		text-decoration: none;
-		display: none;
+		display: none;	
+		overflow: auto;
+		z-index: 9999;
 	}
 }
 
 
 @media (max-width: 699px)
 {
-	/* Dropdown Content (Hidden by Default) */
-	.dropdown-content 
+	/* The container <div> - needed to position the dropdown content */
+	.top_dropdown 
 	{
+		position: relative;
+		text-align: center;
+		margin-top: 15px;
+		margin-bottom: 0px;
+		width: 300px;
+		z-index: 9999;
+		position: relative;
+	}
+
+	/* Dropdown Content (Hidden by Default) */
+	.osga_dropdown_content 
+	{
+		position: absolute;
+		top: 0px;
+		left: 0px;
 		text-align: center;
 		width: 89%;
 		padding: 11%;
@@ -844,22 +925,28 @@
 		color: black;
 		background-color: #f6f6f6;
 		overflow: auto;
-		z-index: 1;
+		z-index: 9999;
 	}
 
 	/* Links inside the dropdown */
-	.dropdown-content a 
+	.osga_dropdown_content a 
 	{
 		text-align: left;
 		color: black;
 		padding: 4px 10px;
-		background-color: white;
+		background-color: #eee;
+		border-left: 1px solid gray;
+		box-shadow: 2px 2px 2px #888;
 		text-decoration: none;
-		display: none;
+		display: none;	
+		overflow: auto;
+		z-index: 9999;
 	}
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #f1f1f1}
+.osga_dropdown_content a:hover {background-color: #f1f1f1}
 
 .show {display: block;}
+
+

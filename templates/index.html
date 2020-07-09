@@ -3,35 +3,50 @@
 {% block content %}
 
 <script>
-	/* Code from W3Schools for drop down search */
-	/* When the user clicks on the button,
-	toggle between hiding and showing the dropdown content */
-	function myFunction() 
+	function main_dropdown_function() 
 	{
-		document.getElementById("my").classList.toggle("show");
+		document.getElementById("main_input").classList.toggle("show");
 	}
 
-	function filterFunction() 
+	function filter_function() 
 	{
 		var input, filter, ul, li, a, i;
-		input = document.getElementById("myInput");
-		filter = input.value.toUpperCase();
-		div = document.getElementById("myDropdown");
+		input = document.getElementById("main_input");
+		div = document.getElementById("main_dropdown_list");
 		a = div.getElementsByTagName("a");
-
-		for (i = 0; i < a.length; i++) 
+			
+		if (input.value.length > 0)
 		{
-	    	txtValue = a[i].textContent || a[i].innerText;
-	    	if (txtValue.toUpperCase().indexOf(filter) > -1) 
-	    	{
-	    	  	a[i].style.display = "block";
-	    	} 
-	    	else 
-	    	{
-	      		a[i].style.display = "none";
-	    	}
-	  	}
+			filter = input.value.toUpperCase();
+			
+			var last_good_i = 0;
+
+			for (i = 0; i < a.length; i++) 
+			{
+		    	txtValue = a[i].textContent || a[i].innerText;
+		    	if (txtValue.toUpperCase().indexOf(filter) > -1) 
+		    	{
+		    	  	a[i].style.display = "block";
+		    	  	a[last_good_i].style.borderBottom = "none";
+		    	  	last_good_i = i;
+		    	} 
+		    	else 
+		    	{
+		      		a[i].style.display = "none";
+		    	}
+		  	}
+
+		  	a[last_good_i].style.borderBottom = "1px solid gray";
+		}
+		else
+		{			
+			for (i = 0; i < a.length; i++) 
+			{
+				a[i].style.display = "none"
+			}
+		}
 	}
+
 </script>
 
 <div>
@@ -89,13 +104,17 @@
 
 		<div id="osga_main_search">
 			<div id="main_dropdown">
-				<div id="myDropdown" class="dropdown-content" onclick="myFunction()">
-					<input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+				<div id="main_dropdown_list" class="osga_dropdown_content" onclick="main_dropdown_function()">
+					<input type="text" placeholder="Search for a show" id="main_input" onkeyup="filter_function()">
 					{% for show in shows %}
 						<a href="/cemetary/{{ show.id }}">{{ show.name }}</a>
 					{% endfor %}
 				</div>
 			</div>
+		</div>
+			
+		<div id="footer">
+		    <a href="/about">About</a> | <a href="/">Terms and Conditions</a> | <a href="/">Contact</a>
 		</div>
 
 	</div>

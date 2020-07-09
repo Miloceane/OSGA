@@ -169,6 +169,19 @@ def import_to_db():
 	return message
 
 
+@app.route("/get_shows_list")
+def get_shows_list():
+	""" Returns a shows list in JSON format """
+	show_query = Shows.query.all()
+	shows_list = []
+
+	for show in show_query:
+		show_item = { "id": show.id, "name": show.name }
+		shows_list.append(show_item)
+
+	return json.dumps(shows_list)
+
+
 #--------------------------------------------------------------------------------------------------
 ######################
 # CEMETARIES: ROUTES #
