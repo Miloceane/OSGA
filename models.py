@@ -25,6 +25,7 @@ class Shows(db.Model):
 	name = db.Column(db.String(128))
 	universe_id = db.Column(db.Integer, db.ForeignKey('shows_universes.id')) 
 	api_id = db.Column(db.String(128)) 
+	is_series = db.Column(db.Boolean, default=True)
 
 
 class FavouritedShows(db.Model):
@@ -63,10 +64,10 @@ class CharactersMessages(db.Model):
 class CharactersFlowers(db.Model):
 	__tablename__ = 'characters_flowers'
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-	flowertype_id = db.Column(db.Integer, db.ForeignKey('flower_types.id'))# , db.ForeignKey('flower_types.id'))  -> For some reason, complained about there being no constraints?
-	character_id = db.Column(db.Integer, db.ForeignKey('characters.id')) 
-	user_id = db.Column(db.Integer, db.ForeignKey('users.id')) 
 	date = db.Column(db.DateTime(timezone=True), server_default=func.now())
+	flowertype_id = db.Column(db.Integer, db.ForeignKey('flower_types.id'))# , db.ForeignKey('flower_types.id'))  -> For some reason, complained about there being no constraints?
+	user_id = db.Column(db.Integer, db.ForeignKey('users.id')) 
+	character_id = db.Column(db.Integer, db.ForeignKey('characters.id')) 
 	pos_x =  db.Column(db.Integer)
 	pos_y =  db.Column(db.Integer)	
 	character = relationship("Characters", back_populates="flowers")
@@ -99,16 +100,16 @@ class Users(db.Model):
 	display_activity = db.Column(db.Boolean, default=False)
 	flowers_left = db.Column(db.Integer, default=5)
 	blocked = db.Column(db.Boolean, default=False)
+	activated = db.Column(db.Boolean, default=False)
 	flowers = relationship(CharactersFlowers)
 	messages = relationship(CharactersMessages)
-# authenticated = db.Column(db.Boolean, default=False)
-
+	
 	def is_authenticated(self):
 		return True
 
 
 	def is_active(self):
-		return True
+		return self.activated
 
 
 	def is_anonymous(self):
@@ -117,9 +118,6 @@ class Users(db.Model):
 
 	def get_id(self):
 		return(self.id) 
-
-
-
 
 
 
