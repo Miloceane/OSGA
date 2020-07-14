@@ -41,13 +41,6 @@ class BlacklistedShows(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id')) 
 	show_id = db.Column(db.Integer, db.ForeignKey('shows.id'))
 
-
-class FlowerTypes(db.Model):
-	__tablename__ = 'flower_types'
-	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String(128))
-	user_lvl = db.Column(db.Integer)
-
 class CharactersMessages(db.Model):
 	__tablename__ = 'characters_messages'
 	id = db.Column(db.Integer, primary_key=True)
@@ -65,7 +58,7 @@ class CharactersFlowers(db.Model):
 	__tablename__ = 'characters_flowers'
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	date = db.Column(db.DateTime(timezone=True), server_default=func.now())
-	flowertype_id = db.Column(db.Integer, db.ForeignKey('flower_types.id'))# , db.ForeignKey('flower_types.id'))  -> For some reason, complained about there being no constraints?
+	flowertype_id = db.Column(db.Integer, default=0)# , db.ForeignKey('flower_types.id'))  -> For some reason, complained about there being no constraints?
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id')) 
 	character_id = db.Column(db.Integer, db.ForeignKey('characters.id')) 
 	pos_x =  db.Column(db.Integer)

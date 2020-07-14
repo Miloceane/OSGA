@@ -32,7 +32,7 @@
 						<ul>
 							{% for act in activity %}
 							<li>
-								[{{ act['date'] }}] {{ user.name }} left a {{ act['type'] }} on {{ act['character'] }}'s grave.
+								[{{ act['date'].strftime('%Y-%m-%d') }}] {{ user_profile_name }} left a {{ act.type }} on {{ act['character'].name }}'s grave.
 							</li>
 							{% endfor %}
 						</ul>
