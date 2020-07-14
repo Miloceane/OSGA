@@ -280,16 +280,20 @@ def delete_character_message(message_id):
 def save_flower(character_id, flowertype_id, pos_x, pos_y):
 	""" Saves the flower with flowertype flowertype_id and position (pos_x, pos_y) in database for character character_id. """
 
+	user_id = None
+
 	# Just in case the user tried to artificially insert JS to bypass blocked account and leave flower (idk who would do that, but who knows)
 	if current_user.is_authenticated:
 		user = Users.query.get(current_user.id)
 		if user.blocked:
 			return ""
 
+		user_id = user.id
+
 	curr_char = Characters.query.get(character_id)
 	curr_char.flower_count = curr_char.flower_count + 1
 
-	db.session.add(CharactersFlowers(flowertype_id=flowertype_id, character_id=character_id, pos_x=pos_x, pos_y=pos_y))	
+	db.session.add(CharactersFlowers(flowertype_id=flowertype_id, character_id=character_id, pos_x=pos_x, pos_y=pos_y, user_id=user_id))	
 	db.session.commit()
 	return ""
 
