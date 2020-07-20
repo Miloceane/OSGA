@@ -86,6 +86,7 @@ class Users(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(128))
 	password = db.Column(db.String(128))
+	password_salt = db.Column(db.String(128))
 	email = db.Column(db.String(128))
 	admin_level = db.Column(db.Integer, default=0)
 	registration_date = db.Column(db.DateTime(timezone=True), server_default=func.now())
@@ -94,6 +95,9 @@ class Users(db.Model):
 	flowers_left = db.Column(db.Integer, default=5)
 	blocked = db.Column(db.Boolean, default=False)
 	activated = db.Column(db.Boolean, default=False)
+	activation_code = db.Column(db.String(128))
+	activation_timelimit = db.Column(db.DateTime(timezone=True), server_default=func.now())
+
 	flowers = relationship(CharactersFlowers)
 	messages = relationship(CharactersMessages)
 	

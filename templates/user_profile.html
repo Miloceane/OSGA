@@ -30,7 +30,7 @@
 					<p>
 						{% if activity and activity|length > 0 %}
 						<ul>
-							{% for act in activity %}
+							{% for act in activity if act['show_id'] not in blacklist %}
 							<li>
 								[{{ act['date'].strftime('%Y-%m-%d') }}] {{ user_profile_name }} left a {{ act.type }} on {{ act['character'].name }}'s grave.
 							</li>

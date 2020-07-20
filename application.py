@@ -9,7 +9,10 @@
 import os
 import sys
 import json
+import base64, scrypt
+import random, string
 import hashlib
+from datetime import datetime, timedelta
 
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 from flask_session import Session
@@ -101,7 +104,6 @@ if g_is_local:
 	admin.add_view(ModelView(Shows, db.session))
 	admin.add_view(ModelView(FavouritedShows, db.session))
 	admin.add_view(ModelView(BlacklistedShows, db.session))
-	admin.add_view(ModelView(FlowerTypes, db.session))
 	admin.add_view(ModelView(Characters, db.session))
 	admin.add_view(ModelView(CharactersFlowers, db.session))
 	admin.add_view(ModelView(CharactersMessages, db.session))
@@ -148,32 +150,48 @@ def about():
 @app.route("/create_db")
 def create_db():
 	""" Creates tables based on db.model inherited classes in models.py """
+	#current_user.admin_level > 1 and g_is_local is True:
 	db.create_all()
 	return "Database created."
+
+# else:
+# 	abort(404)
 
 
 @app.route("/empty_db")
 def empty_db():
 	""" Deletes all tables and data in database, resets user session """
-	db.drop_all()
-	current_user.name = None
-	current_user.id = None
-	return "Database emptied."
+	if current_user.is_authenticated() and current_user.admin_level > 1 and g_is_local is True:
+		db.drop_all()
+		current_user.name = None
+		current_user.id = None
+		return "Database emptied."
 
+	else:
+		abort(404)
+	
 
 @app.route("/import_shows")
 def import_shows_to_db():
 	""" Reads CSV file and imports shows to database """
-	shows = ShowsList("Shows.csv")
-	message = shows.import_shows()
-	return message
+	if current_user.is_authenticated() and current_user.admin_level > 1 and g_is_local is True:
+		shows = ShowsList("Shows.csv")
+		message = shows.import_shows()
+		return message
+
+	else:
+		abort(404)
 
 @app.route("/import_characters")
 def import_to_db():
 	""" Reads CSV file and imports characters to database """
-	characters = CharactersList("Characters.csv")
-	message = characters.import_characters()
-	return message
+	if current_user.is_authenticated() and current_user.admin_level > 1 and g_is_local is True:
+		characters = CharactersList("Characters.csv")
+		message = characters.import_characters()
+		return message
+
+	else:
+		abort(404)
 
 
 @app.route("/get_shows_list")
@@ -344,8 +362,8 @@ def register():
 		if not username.isalnum():
 			error += "Your username can only contain letters or numbers. "
 		
-		if len(password) < 6:
-			error += "Your password must be at least 6 characters long. "	
+		if len(password) < 8:
+			error += "Your password must be at least 8 characters long. "	
 
 		if password != password_confirmation:
 			error += "Password and confirmation didn't match! "
@@ -354,27 +372,32 @@ def register():
 		if email != email_confirmation:
 			error += "Email and confirmation didn't match! "
 
-		email_exist_query = Users.query.filter_by(email=email).count()
-		if email_exist_query > 0:
-			error += "This email address is already taken!"
+		# email_exist_query = Users.query.filter_by(email=email).count()
+		# if email_exist_query > 0:
+		# 	error += "This email address is already taken!"
 
 		if error != "":
 			return render_template("register.html", error=error)
 
-		# TODO: apparently md5 isn't safe anymore? Check what to use instead.
-		password_hash = hashlib.md5(password.encode('utf-8')).hexdigest()
+		password_salt = base64.b64encode(os.urandom(64))[64:]
+		password_hash = base64.b64encode(scrypt.hash(password, password_salt))[128:]
 
-		new_user = Users(name=username, password=password_hash, email=email)
+		activation_code = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(16))
+		activation_date = datetime.now()
+		activation_latest = activation_date + timedelta(days=2)
+
+		new_user = Users(name=username, password=password_hash, password_salt=password_salt, email=email, activation_code=activation_code, activation_timelimit=activation_latest)
 		db.session.add(new_user)
 		db.session.commit()
 
 		confirmation_message_title = f"Registration on OSGA"
-		confirmation_message_html = f"Hello { username },<br><br>Thank you for registering on OSGA!"
+		confirmation_message_html = f"Hello { username },<br><br>Thank you for registering on OSGA!<br><br>Your activation code is: <b>{ activation_code }</b> (valid for 2 days). \
+		Fill it in on the confirmation page to activate your account!<br><br>Can't find the confirmation page? <a href=\"" + url_for("confirm_registration") + "\">Click here</a>!<br><br>We hope you have a good time on our site,<br><br>The OSGA maitenance team"
 		msg = Message(confirmation_message_title, sender="noreply@osga.com", recipients=[email])
 		msg.html = confirmation_message_html
 		mail.send(msg)
 
-		return render_template("layout_message.html", message="Thank you for registering. Your account has been created! You can now log-in and get access to more features.")
+		return render_template("confirm_registration.html", email=email, message="Thank you for registering. Your account has been created! You can now log-in and get access to more features.")
 	
 	return render_template("register.html")
 
@@ -391,17 +414,19 @@ def login():
 		# NOTE: isalnum() was used here to force usernames to contain only alphanumeric characters in order to protect against SQL injections,
 		# but SQLAlchemy already makes them technically impossible, so this is probably not necessary.
 		if username_input.isalnum():
-			password_hash = hashlib.md5(password_input.encode('utf-8')).hexdigest()
-			login_request = Users.query.filter(and_(Users.name == username_input, Users.password == password_hash))
+			login_request = Users.query.filter(and_(Users.name == username_input)).first()
+			password_input_hash = scrypt.hash(password_input, login_request.password_salt)[128:]
 
-			if login_request.count() == 0:
-				# TODO: either make a log-in page to redirect the user, or check this in JS, this is tiresome for users.
+			if password_input_hash != login_request.password:
 				flash("Username and password didn't match.")
 				return render_template("layout_message.html", error="Your username and password didn't match.")
 
 			
 			else:
-				user = login_request.first()
+				if login_request.activated is False:
+					return render_template("confirm_registration", email=login_request.email)
+
+				user = login_request
 				login_user(user, remember = not (request.form.get("remember_me") is None))
 				
 	return redirect(request.referrer)
@@ -412,16 +437,60 @@ def login():
 def logout():
 	""" Logs user out and redirects to currently visisted page """
 	logout_user()
-	# current_user.name = None
-	# current_user.id = None
 	return redirect(request.referrer)
 
 
-@app.route("/confirmation", methods=["GET"])
-def confirmation():
-	# Check this: https://realpython.com/handling-email-confirmation-in-flask/#register-view-function
-	pass
+@app.route("/confirm_registration", methods=["GET", "POST"])
+def confirm_registration():
 
+	email = request.form.get("email")
+
+	if email is not None:
+		
+		user = Users.query.filter_by(email=email).first()
+
+
+		if request.form.get("resend"):
+
+			activation_code = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(16))
+			activation_date = datetime.now()
+			activation_latest = activation_date + timedelta(days=2)
+
+			user.activation_code = activation_code
+			user.activation_timelimit = activation_latest
+			db.session.commit()
+
+			confirmation_message_title = f"Activation code for OSGA"
+			confirmation_message_html = f"Hello { username },<br><br>If you haven't requested a new activation code, please ignore this email!<br><br> Your new activation code is: <b>{ activation_code }</b> (valid until: { activation_latest.time() }. Fill it in on the confirmation page to activate your account!"
+			msg = Message(confirmation_message_title, sender="noreply@osga.com", recipients=[email])
+			msg.html = confirmation_message_html
+			mail.send(msg)
+
+			return render_template("confirm_registration.html", email=email)
+
+		# current_date needs to be timezozne aware to be compared
+		timezone = user.activation_timelimit.tzinfo
+		current_date = datetime.now(timezone)
+
+		if current_date > user.activation_timelimit:
+			return render_template("confirm_registration.html", error="Your activation code has expired! Please click on Resend here under to get a new one.", email=request.form.get("email"), resend=True)
+
+
+		activation_code = request.form.get("activation_code")
+		
+		if activation_code == user.activation_code:
+			user.activated = True
+			db.session.commit() 
+			login_user(user)
+			return render_template("confirm_registration.html", success="Your account has been activated! You can now manage your account and leave message and have access to all user features.")
+
+		else:
+			return render_template("confirm_registration.html", error="Your activation didn't match your email address. Please check it again!", email=email)
+
+
+	return render_template("confirm_registration.html", email=email)
+	# Check this: https://realpython.com/handling-email-confirmation-in-flask/#register-view-function
+	# https://security.stackexchange.com/questions/197004/what-should-a-verification-email-consist-of
 
 
 #--------------------------------------------------------------------------------------------------
@@ -453,13 +522,15 @@ def user_panel(page_type):
 		if request.form.get("password"):
 			if request.form.get("password") != request.form.get("password_confirmation"):
 				error_message += "Password and password confirmation didn't match! "
-			elif len(request.form.get("password")) < 6:
-				error_message += "Password should be at least 6 characters long. "
+			elif len(request.form.get("password")) < 8:
+				error_message += "Password should be at least 8 characters long. "
 			elif login_fresh() is False:
 				error_message += "You are using an old session, please log out and log in again to change your password."
 			else:
 				success_message += "Your password has been changed! "
-				user.password = hashlib.md5(request.form.get("password").encode('utf-8')).hexdigest()
+				
+				user.password_salt = base64.b64encode(os.urandom(64))[64:]
+				user.password = base64.b64encode(scrypt.hash(password, user.password_salt))[128:]
 				db.session.commit()
 		
 		if request.form.get("email"):
@@ -552,7 +623,13 @@ def user_profile(user_profile_id):
 		else:
 			act.type = "message"
 
-	return render_template("user_profile.html", user_profile_name=user_profile.name, user_profile_favourite_shows=user_favourite, activity=activity_total[:50])
+	if current_user.is_authenticated():
+		blacklisted_shows = BlacklistedShows.query.filter_by(user_id=current_user.id)
+		blacklist = []
+		for show in blacklisted_shows:
+			blacklist.append(show.id)
+
+	return render_template("user_profile.html", user_profile_name=user_profile.name, user_profile_favourite_shows=user_favourite, activity=activity_total[:50], blacklist=blacklist)
 
 
 
