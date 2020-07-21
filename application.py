@@ -379,20 +379,20 @@ def register():
 		# email_exist_query = Users.query.filter_by(email=email).count()
 		# if email_exist_query > 0:
 		# 	error += "This email address is already taken!"
-		logging.debug('Checking if error...')
+		# logging.debug('Checking if error...')
 
 		if error != "":
 			return render_template("register.html", error=error)
 
-		logging.debug('Registering user...')
+		# logging.debug('Registering user...')
 
 		password_salt = "blip" #base64.b64encode(os.urandom(64))[64:]
 
-		logging.debug('Password salt created...')
+		# logging.debug('Password salt created...')
 
 		password_hash = "blep" #base64.b64encode(scrypt.hash(password, password_salt))[128:]
 
-		logging.debug('Password hash created...')
+		# logging.debug('Password hash created...')
 
 
 		activation_code = "plop" #''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(16))
@@ -405,7 +405,7 @@ def register():
 
 		# activation_latest = activation_date + timedelta(days=2)
 
-		logging.debug('Activation date delta added..')
+		# logging.debug('Activation date delta added..')
 
 
 
@@ -413,7 +413,7 @@ def register():
 		db.session.add(new_user)
 		db.session.commit()
 
-		logging.debug('New user registered!')
+		# logging.debug('New user registered!')
 
 
 		# confirmation_message_title = f"Registration on OSGA"
