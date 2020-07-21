@@ -382,16 +382,14 @@ def register():
 		# logging.debug('Checking if error...')
 
 		if error != "":
-			return "error"
-			# return render_template("register.html", error=error)
+			return render_template("register.html", error=error)
 
 		# logging.debug('Registering user...')
-		return "no error"
-		# password_salt = "blip" #base64.b64encode(os.urandom(64))[64:]
+		password_salt = base64.b64encode(os.urandom(64))[64:]
 
 		# # logging.debug('Password salt created...')
 
-		# password_hash = "blep" #base64.b64encode(scrypt.hash(password, password_salt))[128:]
+		password_hash = base64.b64encode(scrypt.hash(password, password_salt))[128:]
 
 		# # logging.debug('Password hash created...')
 
@@ -424,6 +422,7 @@ def register():
 		# # msg.html = confirmation_message_html
 		# # mail.send(msg)
 
+		return "no error"
 		# return render_template("confirm_registration.html", email=email, message="Thank you for registering. Your account has been created! You can now log-in and get access to more features.")
 	
 	return render_template("register.html")
