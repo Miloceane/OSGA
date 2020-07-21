@@ -394,7 +394,7 @@ def register():
 		# # logging.debug('Password hash created...')
 
 
-		# activation_code = "plop" #''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(16))
+		activation_code = "plop" #''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(16))
 
 		# # logging.debug('Activation code created...')
 
@@ -422,7 +422,7 @@ def register():
 		# # msg.html = confirmation_message_html
 		# # mail.send(msg)
 
-		return "no error"
+		return "no error, password hashed, activation code made"
 		# return render_template("confirm_registration.html", email=email, message="Thank you for registering. Your account has been created! You can now log-in and get access to more features.")
 	
 	return render_template("register.html")
