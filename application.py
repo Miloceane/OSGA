@@ -40,7 +40,7 @@ from import_characters import CharactersList
 # IMPORTANT: Setting this variable to True allows anyone to access Flask Admin via /admin. Always set back to False before deploying!
 g_is_local = False
 
-logging.basicConfig(filename='osga.log',level=logging.DEBUG)
+logging.basicConfig(filename='./osga.log',level=logging.DEBUG)
 
 # TODO: Change global variable names to make them start with g_, as to show that they are global.
 
@@ -379,6 +379,7 @@ def register():
 		# email_exist_query = Users.query.filter_by(email=email).count()
 		# if email_exist_query > 0:
 		# 	error += "This email address is already taken!"
+		logging.debug('Checking if error...')
 
 		if error != "":
 			return render_template("register.html", error=error)
