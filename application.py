@@ -409,9 +409,9 @@ def register():
 
 
 
-		new_user = Users(name=username, password=password_hash, password_salt=password_salt, email=email, activation_code=activation_code, activation_timelimit=activation_latest)
-		db.session.add(new_user)
-		db.session.commit()
+		# new_user = Users(name=username, password=password_hash, password_salt=password_salt, email=email, activation_code=activation_code, activation_timelimit=activation_latest)
+		# db.session.add(new_user)
+		# db.session.commit()
 
 		# logging.debug('New user registered!')
 
