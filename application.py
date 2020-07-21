@@ -145,6 +145,12 @@ def about():
 	return render_template("about.html", title="OSGA: One Site to Grieve them All", shows=list_shows)
 
 
+@app.route("/terms")
+def terms():
+	""" Terms and conditions """
+	list_shows = Shows.query.all()
+	return render_template("terms.html", title="OSGA: One Site to Grieve them All", shows=list_shows)
+
 
 #--------------------------------------------------------------------------------------------------
 #######################
