@@ -398,11 +398,11 @@ def register():
 
 		# # logging.debug('Activation code created...')
 
-		# # activation_date = datetime.now()
+		activation_date = datetime.now()
 
 		# # logging.debug('Activation date created..')
 
-		# # activation_latest = activation_date + timedelta(days=2)
+		activation_latest = activation_date + timedelta(days=2)
 
 		# # logging.debug('Activation date delta added..')
 
@@ -422,7 +422,7 @@ def register():
 		# # msg.html = confirmation_message_html
 		# # mail.send(msg)
 
-		return "no error, password hashed, activation code made"
+		return "no error, password hashed, activation code made, activation date calculated"
 		# return render_template("confirm_registration.html", email=email, message="Thank you for registering. Your account has been created! You can now log-in and get access to more features.")
 	
 	return render_template("register.html")
