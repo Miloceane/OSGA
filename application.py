@@ -385,16 +385,16 @@ def register():
 
 		logging.debug('Registering user...')
 
-		password_salt = base64.b64encode(os.urandom(64))[64:]
+		password_salt = "blip" #base64.b64encode(os.urandom(64))[64:]
 
 		logging.debug('Password salt created...')
 
-		password_hash = base64.b64encode(scrypt.hash(password, password_salt))[128:]
+		password_hash = "blep" #base64.b64encode(scrypt.hash(password, password_salt))[128:]
 
 		logging.debug('Password hash created...')
 
 
-		activation_code = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(16))
+		activation_code = "plop" #''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(16))
 
 		logging.debug('Activation code created...')
 
