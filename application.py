@@ -366,7 +366,7 @@ def register():
 			error += "Your password must be at least 8 characters long. "	
 
 		if password != password_confirmation:
-			error += "Password and confirmation didn't match! "
+			error += "Password ("+ password + ") and confirmation ("+ password_confirmation + ") didn't match! "
 
 		# TODO: check email validity. Library? Regex?
 		if email != email_confirmation:
