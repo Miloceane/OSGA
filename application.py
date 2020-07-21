@@ -415,14 +415,14 @@ def register():
 		# # logging.debug('New user registered!')
 
 
-		# # confirmation_message_title = f"Registration on OSGA"
-		# # confirmation_message_html = f"Hello { username },<br><br>Thank you for registering on OSGA!<br><br>Your activation code is: <b>{ activation_code }</b> (valid for 2 days). \
-		# # Fill it in on the confirmation page to activate your account!<br><br>Can't find the confirmation page? <a href=\"" + url_for("confirm_registration") + "\">Click here</a>!<br><br>We hope you have a good time on our site,<br><br>The OSGA maitenance team"
-		# # msg = Message(confirmation_message_title, sender="noreply@osga.com", recipients=[email])
-		# # msg.html = confirmation_message_html
+		confirmation_message_title = f"Registration on OSGA"
+		confirmation_message_html = f"Hello { username },<br><br>Thank you for registering on OSGA!<br><br>Your activation code is: <b>{ activation_code }</b> (valid for 2 days). \
+		Fill it in on the confirmation page to activate your account!<br><br>Can't find the confirmation page? <a href=\"" + url_for("confirm_registration") + "\">Click here</a>!<br><br>We hope you have a good time on our site,<br><br>The OSGA maitenance team"
+		msg = Message(confirmation_message_title, sender="noreply@osga.com", recipients=[email])
+		msg.html = confirmation_message_html
 		# # mail.send(msg)
 
-		return "new user created"
+		return "new message created"
 		# return render_template("confirm_registration.html", email=email, message="Thank you for registering. Your account has been created! You can now log-in and get access to more features.")
 	
 	return render_template("register.html")
