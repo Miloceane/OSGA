@@ -6,6 +6,8 @@
 # (Universiteit van Amsterdam) #
 ################################
 
+import logging
+
 import os
 import sys
 import json
@@ -37,6 +39,8 @@ from import_characters import CharactersList
 
 # IMPORTANT: Setting this variable to True allows anyone to access Flask Admin via /admin. Always set back to False before deploying!
 g_is_local = False
+
+logging.basicConfig(filename='osga.log',level=logging.DEBUG)
 
 # TODO: Change global variable names to make them start with g_, as to show that they are global.
 
@@ -366,7 +370,7 @@ def register():
 			error += "Your password must be at least 8 characters long. "	
 
 		if password != password_confirmation:
-			error += "Password ("+ password + ") and confirmation ("+ password_confirmation + ") didn't match! "
+			error += "Password and confirmation didn't match! "
 
 		# TODO: check email validity. Library? Regex?
 		if email != email_confirmation:
@@ -379,16 +383,37 @@ def register():
 		if error != "":
 			return render_template("register.html", error=error)
 
+		logging.debug('Registering user...')
+
 		password_salt = base64.b64encode(os.urandom(64))[64:]
+
+		logging.debug('Password salt created...')
+
 		password_hash = base64.b64encode(scrypt.hash(password, password_salt))[128:]
 
+		logging.debug('Password hash created...')
+
+
 		activation_code = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(16))
+
+		logging.debug('Activation code created...')
+
 		activation_date = datetime.now()
+
+		logging.debug('Activation date created..')
+
 		activation_latest = activation_date + timedelta(days=2)
+
+		logging.debug('Activation date delta added..')
+
+
 
 		new_user = Users(name=username, password=password_hash, password_salt=password_salt, email=email, activation_code=activation_code, activation_timelimit=activation_latest)
 		db.session.add(new_user)
 		db.session.commit()
+
+		logging.debug('New user registered!')
+
 
 		confirmation_message_title = f"Registration on OSGA"
 		confirmation_message_html = f"Hello { username },<br><br>Thank you for registering on OSGA!<br><br>Your activation code is: <b>{ activation_code }</b> (valid for 2 days). \
