@@ -408,8 +408,8 @@ def register():
 
 
 
-		# # new_user = Users(name=username, password=password_hash, password_salt=password_salt, email=email, activation_code=activation_code, activation_timelimit=activation_latest)
-		# # db.session.add(new_user)
+		new_user = Users(name=username, password=password_hash, password_salt=password_salt, email=email, activation_code=activation_code, activation_timelimit=activation_latest)
+		db.session.add(new_user)
 		# # db.session.commit()
 
 		# # logging.debug('New user registered!')
@@ -422,7 +422,7 @@ def register():
 		# # msg.html = confirmation_message_html
 		# # mail.send(msg)
 
-		return "no error, password hashed, activation code made, activation date calculated"
+		return "new user created"
 		# return render_template("confirm_registration.html", email=email, message="Thank you for registering. Your account has been created! You can now log-in and get access to more features.")
 	
 	return render_template("register.html")
