@@ -199,3 +199,183 @@ INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:27:11] "GET /static/images/main_back
 INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:27:11] "GET /static/images/gravestone.png HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:27:12] "GET /favicon.ico HTTP/1.1" 404 -
 INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:56:28] "GET /cemetary/3 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:56:32] "GET /cemetary/3 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:56:32] "GET /cemetary/3?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:56:32] "GET /cemetary/3?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:56:32] "GET /cemetary/3?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:56:33] "GET /cemetary/3?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:56:33] "GET /cemetary/3?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:56:33] "GET /cemetary/3?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:56:49] "GET /cemetary/3 HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:56:58] "GET /cemetary/3?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:56:58] "GET /cemetary/3?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:56:58] "GET /cemetary/3?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:56:58] "GET /cemetary/3?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:56:58] "GET /cemetary/3?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:56:58] "GET /cemetary/3?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:57:16] "GET /cemetary/3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:57:18] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:57:28] "GET /cemetary/4 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:57:33] "GET /save_flower/222/0/32/38 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:57:41] "GET /save_flower/235/0/22/34 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:57:43] "GET /save_flower/241/0/88/69 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:57:46] "GET /save_flower/244/0/64/45 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:57:49] "GET /save_flower/249/0/51/30 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:57:50] "GET /save_flower/248/0/55/55 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:57:59] "GET /save_flower/250/0/68/8 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:58:18] "GET /cemetary/5 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:58:37] "GET /save_flower/267/0/33/29 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:58:45] "GET /save_flower/281/0/43/42 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:58:47] "GET /save_flower/280/0/49/76 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:58:50] "GET /save_flower/286/0/55/60 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:58:53] "GET /save_flower/288/0/20/30 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:58:58] "GET /save_flower/291/0/82/80 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:59:00] "GET /save_flower/293/0/42/42 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:59:13] "GET /save_flower/308/0/45/17 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:59:17] "GET /save_flower/310/0/11/32 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:59:26] "GET /save_flower/315/0/63/32 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:59:27] "GET /save_flower/316/0/41/33 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:59:47] "GET /save_flower/328/0/31/58 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:59:56] "GET /save_flower/340/0/29/27 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:00:04] "GET /save_flower/341/0/45/63 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:00:09] "GET /save_flower/348/0/66/28 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:00:33] "GET /cemetary/6 HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:22:43] "GET / HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:22:43] "GET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:22:44] "GET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:22:44] "GET /?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:22:45] "GET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:22:45] "GET /?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:22:45] "GET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:23:13] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:23:13] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:23:13] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:23:14] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:23:17] "GET /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:23:49] "GET /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:23:49] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:23:49] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:23:49] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:25:37] "GET /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:25:37] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:25:37] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:25:38] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:26:39] "GET /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:26:39] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:26:39] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:26:40] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:27:10] "GET /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:27:10] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:27:10] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:27:11] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:27:17] "GET /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:27:17] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:27:17] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:27:17] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:28:05] "GET /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:28:05] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:28:05] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:28:06] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:28:14] "GET /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:28:14] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:28:14] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:28:15] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:28:21] "GET /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:28:21] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:28:22] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:28:22] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:28:28] "GET /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:28:28] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:28:29] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:28:29] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:28:34] "GET /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:28:34] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:28:35] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:28:35] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:29:08] "GET /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:29:08] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:29:09] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:29:09] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:29:59] "GET /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:29:59] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:29:59] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:30:00] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:30:10] "GET /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:30:10] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:30:10] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:30:11] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:30:26] "GET /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:30:26] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:30:26] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:30:26] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:30:36] "GET /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:30:36] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:30:36] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:30:37] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:30:40] "GET /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:30:40] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:30:40] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:30:41] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:30:48] "GET /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:30:49] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:30:49] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:30:49] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:31:01] "GET /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:31:01] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:31:01] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:31:01] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:32:08] "GET /contact HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:32:08] "GET /contact?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:32:08] "GET /contact?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:32:08] "GET /contact?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:32:08] "GET /contact?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:32:09] "GET /contact?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:32:09] "GET /contact?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:32:19] "GET /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:32:19] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:32:19] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:32:19] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:32:22] "GET /get_shows_list HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:56:29] "POST /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:56:29] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:56:29] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:56:29] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:56:50] "POST /contact HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:56:51] "GET /contact?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:56:51] "GET /contact?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:56:51] "GET /contact?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:56:51] "GET /contact?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:56:51] "GET /contact?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:56:51] "GET /contact?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:57:39] "POST /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:57:39] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:57:39] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:57:40] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 14:59:53] "POST /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 15:02:41] "POST /contact HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 15:02:41] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 15:02:41] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 15:02:42] "GET /favicon.ico HTTP/1.1" 404 -

@@ -138,19 +138,41 @@ def index():
 	return render_template("index.html", title="OSGA: One Site to Grieve them All", shows=list_shows)
 
 
+#--------------------------------------------------------------------------------------------------
+###################
+# FOOTER FEATURES #
+###################
 
 @app.route("/about")
 def about():
 	""" About page """
-	list_shows = Shows.query.all()
-	return render_template("about.html", title="OSGA: One Site to Grieve them All", shows=list_shows)
+	return render_template("about.html", title="OSGA: One Site to Grieve them All")
 
 
 @app.route("/terms")
 def terms():
 	""" Terms and conditions """
-	list_shows = Shows.query.all()
-	return render_template("terms.html", title="OSGA: One Site to Grieve them All", shows=list_shows)
+	return render_template("terms.html", title="OSGA: One Site to Grieve them All")
+
+
+@app.route("/contact", methods=["GET", "POST"])
+def contact():
+	""" Terms and conditions """
+	if request.form.get("email") or request.form.get("subject") or request.form.get("message"):
+		if request.form.get("email") and request.form.get("subject") and request.form.get("message"):
+
+			admins = Users.query.filter(Users.admin_level > 0).all()
+			admins_email = [admin.email for admin in admins]
+
+			msg = Message("[OSGA - Message sent by: " + request.form.get("email") + "] "+ request.form.get("subject"), sender=request.form.get("email"), recipients=admins_email)
+			msg.html = "[OSGA - Message sent by: " + request.form.get("email") + "] <br><br>" + request.form.get("message")
+			mail.send(msg)
+			return render_template("layout_message.html", title="OSGA: One Site to Grieve them All", message="Your message has been sent to our staff and we will read it as soon as we receive it. Thanks for contacting us!")
+
+		else:
+			return render_template("contact.html", title="OSGA: One Site to Grieve them All", error="Please fill all the fields before submitting!")
+
+	return render_template("contact.html", title="OSGA: One Site to Grieve them All")
 
 
 #--------------------------------------------------------------------------------------------------

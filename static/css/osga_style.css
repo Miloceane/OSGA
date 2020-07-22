@@ -243,9 +243,9 @@
 }
 
 
-/*********/
-/* About */
-/*********/
+/*********************/
+/* About and Contact */
+/*********************/
 
 #about
 {
@@ -261,6 +261,17 @@
 #about li
 {
 	margin: 10px 5px;
+}
+
+#contact_desc input
+{
+	width: 30%;
+}
+
+#contact_desc textarea
+{
+	width: 80%;
+	height: 100px;
 }
 
 
