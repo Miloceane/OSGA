@@ -57,3 +57,36 @@ INFO:werkzeug:127.0.0.1 - - [21/Jul/2020 17:03:19] "GET /terms HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [21/Jul/2020 17:03:19] "GET /static/css/osga_style.css HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [21/Jul/2020 17:03:19] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [21/Jul/2020 17:03:20] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:43:52] "GET /register HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:43:52] "GET /static/css/osga_style.css HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:43:52] "GET /static/images/main_background.jpg HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:43:53] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:45:08] "GET /register HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:45:08] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:45:08] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:45:08] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:45:28] "GET /register HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:45:28] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:45:28] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:45:28] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:45:36] "GET /register HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:45:36] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:45:36] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:45:37] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:45:44] "GET /register HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:45:44] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:45:44] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:45:45] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:45:56] "GET /terms HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:47:02] "GET /register HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:47:02] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:47:03] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:47:03] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:51:17] "POST /register HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 12:51:38] "POST /register HTTP/1.1" 200 -

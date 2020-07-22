@@ -365,6 +365,7 @@ def register():
 		password_confirmation = request.form.get("password_confirmation")
 		email = request.form.get("email")
 		email_confirmation = request.form.get("email_confirmation")
+		read_terms = not (request.form.get("read_terms") is None)
 		error = ""
 
 		# NOTE: isalnum() was used here to force usernames to contain only alphanumeric characters in order to protect against SQL injections,
@@ -385,6 +386,9 @@ def register():
 		# email_exist_query = Users.query.filter_by(email=email).count()
 		# if email_exist_query > 0:
 		# 	error += "This email address is already taken!"
+
+		if read_terms is False:
+			error += "You can't register if you don't accept the terms and conditions! "
 
 		if error != "":
 			return render_template("register.html", error=error)
