@@ -31,6 +31,7 @@ from requests import get
 from models import *
 from helpers import *
 from import_characters import CharactersList
+from import_shows import ShowsList
 
 #--------------------------------------------------------------------------------------------------
 #########################
@@ -396,7 +397,7 @@ def register():
 		password_salt = base64.b64encode(os.urandom(64))[64:]
 		password_hash = base64.b64encode(scrypt.hash(password, password_salt))[128:]
 
-		activation_code = "plop" #''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(16))
+		activation_code = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(16))
 		activation_date = datetime.now()
 		activation_latest = activation_date + timedelta(days=2)
 

@@ -50,11 +50,11 @@ class ShowsList():
 				db.session.add(Universes(name=show_universe))
 				db.session.commit()
 
-			universe = Uiverses.query.filter_by(name=show_universe).first()
+			universe = Universes.query.filter_by(name=show_universe).first()
 			is_series = True if show_type == "series" else False
 
 			if check_shows.count() == 0:
-				db.session.add(Shows(name=show, uiverse_id=uiverse.id, is_series=is_series))
+				db.session.add(Shows(name=show, universe_id=universe.id, is_series=is_series))
 				db.session.commit()
 
 		return "Shows have been imported!"
