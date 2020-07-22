@@ -320,10 +320,18 @@ def save_flower(character_id, flowertype_id, pos_x, pos_y):
 		user_id = user.id
 
 	curr_char = Characters.query.get(character_id)
-	curr_char.flower_count = curr_char.flower_count + 1
 
-	db.session.add(CharactersFlowers(flowertype_id=flowertype_id, character_id=character_id, pos_x=pos_x, pos_y=pos_y, user_id=user_id))	
-	db.session.commit()
+	if (curr_char.flower_count < 2147483647): # Max integer value
+		curr_char.flower_count = curr_char.flower_count + 1
+
+		flower_count_query = CharactersFlowers.query.filter(and_(CharactersFlowers.character_id == character_id, CharactersFlowers.user_id == None))
+
+		if flower_count_query.count() > 99:
+			db.session.delete(flower_count_query.first())
+
+		db.session.add(CharactersFlowers(flowertype_id=flowertype_id, character_id=character_id, pos_x=pos_x, pos_y=pos_y, user_id=user_id))	
+		db.session.commit()
+	
 	return ""
 
 

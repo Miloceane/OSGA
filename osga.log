@@ -193,3 +193,9 @@ INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:25:57] "GET /save_flower/218/0/26/20
 INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:26:13] "GET /cemetary/1 HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:26:17] "GET /cemetary/1 HTTP/1.1" 200 -
 INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:27:11] "GET /cemetary/1 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:27:11] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:27:11] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:27:11] "GET /static/images/gravestone.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 13:27:12] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
