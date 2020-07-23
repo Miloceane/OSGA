@@ -74,9 +74,9 @@ headers = { 'Content-Type': 'application/json', 'trakt-api-key': '9cba8155f5e9c9
 # Configure mail
 # TODO: store credentials in db or somewhere else that's safe
 app.config["MAIL_SERVER"] = 'mail.privateemail.com'
-app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
-app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_USERNAME")
-app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
+app.config["MAIL_USERNAME"] = 'staff@osga-cemetery.com'
+app.config["MAIL_DEFAULT_SENDER"] = 'staff@osga-cemetery.com'
+app.config["MAIL_PASSWORD"] = 'OsgaLotta37'
 app.config["MAIL_PORT"] = 465
 app.config["MAIL_USE_TLS"] = False
 app.config["MAIL_USE_SSL"] = True
