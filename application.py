@@ -245,33 +245,33 @@ def get_shows_list():
 # CEMETARIES: ROUTES #
 ######################
 
-@app.route("/search_cemetary", methods=["GET", "POST"])
-def search_cemetary():
-	""" Searches show among shows with a cemetary in database """
+@app.route("/search_cemetery", methods=["GET", "POST"])
+def search_cemetery():
+	""" Searches show among shows with a cemetery in database """
 
-	show_name = request.form.get("cemetary_search")
+	show_name = request.form.get("cemetery_search")
 	show_query = Shows.query.filter_by(name=show_name)
 
 	if show_query.count() > 0:
-		return redirect(f"/cemetary/{ show_query.first().id }")
+		return redirect(f"/cemetery/{ show_query.first().id }")
 
-	return render_template("layout_message.html", error="There is no cemetary for this show (yet)!")
+	return render_template("layout_message.html", error="There is no cemetery for this show (yet)!")
 
 
-@app.route("/cemetary/<int:cemetary_id>", methods=["GET", "POST"])
-def cemetary(cemetary_id):
-	""" Displays cemetary """
+@app.route("/cemetery/<int:cemetery_id>", methods=["GET", "POST"])
+def cemetery(cemetery_id):
+	""" Displays cemetery """
 
-	show_query = Shows.query.filter_by(id=cemetary_id).first()
+	show_query = Shows.query.filter_by(id=cemetery_id).first()
 
 	if request.form.get("graves_sorting") == "popularity":
-		cemetary_query = Characters.query.filter_by(show_id=cemetary_id).order_by(Characters.flower_count.desc())
+		cemetery_query = Characters.query.filter_by(show_id=cemetery_id).order_by(Characters.flower_count.desc())
 	
 	else:
-		cemetary_query = Characters.query.filter_by(show_id=cemetary_id).order_by(Characters.id)
+		cemetery_query = Characters.query.filter_by(show_id=cemetery_id).order_by(Characters.id)
 
 
-	for character in cemetary_query:
+	for character in cemetery_query:
 		quick_sort_flowers(character.flowers, 0, len(character.flowers) - 1)
 
 	if current_user is None or current_user.is_authenticated is False:
@@ -279,10 +279,10 @@ def cemetary(cemetary_id):
 		is_spoiler = False
 	else:
 		is_blocked = current_user.blocked
-		spoiler_query = BlacklistedShows.query.filter(and_(BlacklistedShows.user_id == current_user.id, BlacklistedShows.show_id == cemetary_id)).first()
+		spoiler_query = BlacklistedShows.query.filter(and_(BlacklistedShows.user_id == current_user.id, BlacklistedShows.show_id == cemetery_id)).first()
 		is_spoiler = (spoiler_query != None)
 
-	return render_template("cemetary.html", graves_count=cemetary_query.count(), characters=cemetary_query.all(), show_title=show_query.name, show_id=show_query.id, is_blocked=is_blocked, is_spoiler=is_spoiler)
+	return render_template("cemetery.html", graves_count=cemetery_query.count(), characters=cemetery_query.all(), show_title=show_query.name, show_id=show_query.id, is_blocked=is_blocked, is_spoiler=is_spoiler)
 
 
 @app.route("/api", methods=["GET"])
@@ -728,7 +728,7 @@ def admin_panel(page_type):
 			db.session.add(new_character)
 			db.session.commit()
 
-			message=f"{ character } has been declared dead on season { season } episode { episode }. Their grave has been added to { show_title }'s cemetary."	
+			message=f"{ character } has been declared dead on season { season } episode { episode }. Their grave has been added to { show_title }'s cemetery."	
 
 		headers_index_search = headers
 		headers_index_search['X-Pagination-Limit'] = '30'

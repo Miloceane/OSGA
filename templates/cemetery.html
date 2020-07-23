@@ -144,15 +144,15 @@
 	}
 
 
-	function display_spoiler_cemetary() {
-		document.querySelector('#cemetary_grounds').style.display = "flex";
-		document.querySelector('#display_spoiler_cemetary').style.display = "none";			
+	function display_spoiler_cemetery() {
+		document.querySelector('#cemetery_grounds').style.display = "flex";
+		document.querySelector('#display_spoiler_cemetery').style.display = "none";			
 	}
 
 </script>
 
 
-<main id="cemetary_page" class="col-12" role="main">
+<main id="cemetery_page" class="col-12" role="main">
 	<h1>{{ show_title }}</h1>
 	<h2>Memorial Grounds</h2>
 
@@ -161,7 +161,7 @@
 		{% if is_blocked %}
 			Your account has been blocked: you can't leave public flowers nor messages on graves anymore. You can leave temporary flowers, they just won't be registered.
 		{% else %}
-			Welcome to {{ show_title }}'s cemetary. Here you can leave flowers or messages to your favourite characters. Messages will be reviewed by the maintenance of this cemetary for approval before they can be displayed to the public.
+			Welcome to {{ show_title }}'s cemetery. Here you can leave flowers or messages to your favourite characters. Messages will be reviewed by the maintenance of this cemetery for approval before they can be displayed to the public.
 			<br><br>
 			To select a different type of flower than the default red rose, or to leave a message, click on the picture of the item type you wish to use here under.
 			<br><br>
@@ -175,14 +175,14 @@
 			</div>
 		{% endif %}
 	{% else %}
-		Welcome to {{ show_title }}'s cemetary. You can click on a grave to leave a flower in memory of a character.
+		Welcome to {{ show_title }}'s cemetery. You can click on a grave to leave a flower in memory of a character.
 		<br>
 		Registered users can leave several types of flowers as well as messages.
 		<br>
 	
 	{% endif %}
 	<br>
-	<form action="{{ url_for('cemetary', cemetary_id=show_id) }}" method="post">
+	<form action="{{ url_for('cemetery', cemetery_id=show_id) }}" method="post">
 		Sort graves by: 
 		<select name="graves_sorting">
 			<option value="chronological">Chronological order</option>
@@ -197,7 +197,7 @@
 			<div class="modal-content">
 				<div class="modal-body">
 					<p>
-						Write here the message you want to leave. Other visitors will be able to see it once the cemetary maintenance will have approved it.<br>
+						Write here the message you want to leave. Other visitors will be able to see it once the cemetery maintenance will have approved it.<br>
 						<input type="text" id="message_text">
 						<br><br>
 						<button onclick="leave_message()">Leave message.</button>
@@ -208,14 +208,14 @@
 	</div>
 
 	{% if is_spoiler %}
-	<div id="display_spoiler_cemetary" display="block">
+	<div id="display_spoiler_cemetery" display="block">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-body">
 					<p>
-						This is the cemetary of a show in your spoilers blacklist! Are you sure you want to view it?<br>
+						This is the cemetery of a show in your spoilers blacklist! Are you sure you want to view it?<br>
 						<br>
-						<button onclick="display_spoiler_cemetary()">View anyway.</button>
+						<button onclick="display_spoiler_cemetery()">View anyway.</button>
 					</p>
 				</div>
 			</div>
@@ -223,7 +223,7 @@
 	</div>
 	{% endif %}
 
-	<div id="cemetary_grounds" align="center">
+	<div id="cemetery_grounds" align="center">
 			{% for i in range(graves_count) %}
 				{% if characters[i] %}
 				<div class="grave">
@@ -281,7 +281,7 @@
 	grave_plaque_width = graves_plaques[0].scrollWidth;
 
 	{% if is_spoiler %}
-		document.querySelector('#cemetary_grounds').style.display = "none";
+		document.querySelector('#cemetery_grounds').style.display = "none";
 	{% endif %}
 </script>
 </main>

@@ -628,7 +628,7 @@
 /* Cemetary */
 /************/
 
-#cemetary_grounds
+#cemetery_grounds
 {
 	display: flex;
 	flex-direction: row;
@@ -650,14 +650,14 @@
 	cursor: pointer;
 }
 
-#cemetary_grounds a:hover
+#cemetery_grounds a:hover
 {
 	text-decoration: none;
 }
 
 @media (min-width: 700px)
 {
-	#cemetary_grounds .grave_text a
+	#cemetery_grounds .grave_text a
 	{
 		font-weight: 450;
 		font-size: 16px;
@@ -725,14 +725,14 @@
 
 @media (max-width: 699px)
 {
-	#cemetary_grounds .grave_text a
+	#cemetery_grounds .grave_text a
 	{
 		font-size: 10px;
 		color: #667;
 		text-shadow: 0px -1px #112;
 	}
 
-	#cemetary_grounds .grave
+	#cemetery_grounds .grave
 	{
 		text-align: center;
 		margin: 10px 0px;
@@ -742,7 +742,7 @@
 		font-size: 10px;
 	}
 
-	#cemetary_grounds .grave td
+	#cemetery_grounds .grave td
 	{
 		/*background-color: gray;*/
 		width: 120px;
@@ -751,7 +751,7 @@
 		margin: 5px;
 	}
 
-	#cemetary_grounds .grave_plaque
+	#cemetery_grounds .grave_plaque
 	{
 		position: relative;
 		background-color: darkgray;
@@ -763,12 +763,12 @@
 		padding: 0px;
 	}
 
-	#cemetary_grounds .grave_plaque img
+	#cemetery_grounds .grave_plaque img
 	{
 		height: 15px;
 	}
 
-	#cemetary_grounds .grave_message .grave_message_text
+	#cemetery_grounds .grave_message .grave_message_text
 	{
 	  visibility: hidden;
 	  background-color: #fd8;
