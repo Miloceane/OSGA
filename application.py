@@ -414,9 +414,9 @@ def register():
 		if email != email_confirmation:
 			error += "Email and confirmation didn't match! "
 
-		# email_exist_query = Users.query.filter_by(email=email).count()
-		# if email_exist_query > 0:
-		# 	error += "This email address is already taken!"
+		email_exist_query = Users.query.filter_by(email=email).count()
+		if email_exist_query > 0:
+			error += "This email address is already taken!"
 
 		if read_terms is False:
 			error += "You can't register if you don't accept the terms and conditions! "
@@ -433,7 +433,7 @@ def register():
 
 		new_user = Users(name=username, password=password_hash, password_salt=password_salt, email=email, activation_code=activation_code, activation_timelimit=activation_latest)
 		db.session.add(new_user)
-		# # db.session.commit()
+		db.session.commit()
 
 		confirmation_message_title = f"Registration on OSGA"
 		confirmation_message_html = f"Hello { username },<br><br>Thank you for registering on OSGA!<br><br>Your activation code is: <b>{ activation_code }</b> (valid for 2 days). \
