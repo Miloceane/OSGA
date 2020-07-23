@@ -379,3 +379,77 @@ INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 15:02:41] "POST /contact HTTP/1.1" 200 
 INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 15:02:41] "GET /static/css/osga_style.css HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 15:02:41] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [22/Jul/2020 15:02:42] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:25:18] "GET /register HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:25:18] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:25:19] "GET /static/images/main_background.jpg HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:25:19] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:25:55] "POST /register HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:25:56] "GET /register?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:25:58] "GET /register?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:26:01] "GET /register?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:26:02] "GET /register?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:26:02] "GET /register?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:26:03] "GET /register?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:27:52] "POST /register HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:27:52] "GET /register?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:27:52] "GET /register?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:27:52] "GET /register?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:27:52] "GET /register?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:27:53] "GET /register?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:27:53] "GET /register?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:28:18] "POST /register HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:28:18] "GET /register?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:28:18] "GET /register?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:28:18] "GET /register?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:28:18] "GET /register?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:28:19] "GET /register?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:28:19] "GET /register?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:49:52] "POST /register HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:49:52] "GET /register?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:49:54] "GET /register?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:49:54] "GET /register?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:49:54] "GET /register?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:49:55] "GET /register?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:49:55] "GET /register?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:50:36] "POST /register HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:50:36] "GET /register?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:50:36] "GET /register?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:50:36] "GET /register?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:50:36] "GET /register?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:50:37] "GET /register?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:50:37] "GET /register?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:52:13] "POST /register HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:52:14] "GET /register?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:52:14] "GET /register?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:52:14] "GET /register?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:52:14] "GET /register?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:52:15] "GET /register?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:52:15] "GET /register?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:53:20] "POST /register HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:53:20] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:53:20] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:53:20] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:55:18] "POST /register HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:55:19] "GET /register?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:55:19] "GET /register?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:55:19] "GET /register?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:55:19] "GET /register?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:55:20] "GET /register?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:55:20] "GET /register?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 13:56:21] "POST /register HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat

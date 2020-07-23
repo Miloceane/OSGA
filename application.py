@@ -73,13 +73,13 @@ headers = { 'Content-Type': 'application/json', 'trakt-api-key': '9cba8155f5e9c9
 
 # Configure mail
 # TODO: store credentials in db or somewhere else that's safe
-app.config["MAIL_SERVER"] = 'smtp.gmail.com'
-app.config["MAIL_USERNAME"] = 'osga.staff@gmail.com'
-app.config["MAIL_DEFAULT_SENDER"] = 'osga.staff@gmail.com'
-app.config["MAIL_PASSWORD"] = 'dany0000'
-app.config["MAIL_PORT"] = 465
-app.config["MAIL_USE_TLS"] = False
-app.config["MAIL_USE_SSL"] = True
+app.config["MAIL_SERVER"] = 'mail.privateemail.com'
+app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
+app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_USERNAME")
+app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USE_SSL"] = False
 app.config["MAIL_DEBUG"] = True
 mail = Mail(app)
 
@@ -438,7 +438,7 @@ def register():
 		confirmation_message_title = f"Registration on OSGA"
 		confirmation_message_html = f"Hello { username },<br><br>Thank you for registering on OSGA!<br><br>Your activation code is: <b>{ activation_code }</b> (valid for 2 days). \
 		Fill it in on the confirmation page to activate your account!<br><br>Can't find the confirmation page? <a href=\"" + url_for("confirm_registration") + "\">Click here</a>!<br><br>We hope you have a good time on our site,<br><br>The OSGA maitenance team"
-		msg = Message(confirmation_message_title, sender="noreply@osga.com", recipients=[email])
+		msg = Message(confirmation_message_title, sender="staff@osga-cemetery.com", recipients=[email])
 		msg.html = confirmation_message_html
 		mail.send(msg)
 
