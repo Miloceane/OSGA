@@ -47,7 +47,7 @@ logging.basicConfig(filename='./osga.log',level=logging.DEBUG)
 
 # Configure Flask app
 app = Flask(__name__)
-app.secret_key = "dd9fadd2de6003bf66cbe5ecdb6551015150fd955811ba1e8217d76c21f5f974" #os.environ["SECRET_KEY"]
+app.secret_key = "dd9fadd2de6003bf66cbe5ecdb6551015150fd955811ba1e8217d76c21f5f974" #os.environ.get("SECRET_KEY")
 
 
 # Configure database
@@ -76,7 +76,7 @@ headers = { 'Content-Type': 'application/json', 'trakt-api-key': '9cba8155f5e9c9
 app.config["MAIL_SERVER"] = 'mail.privateemail.com'
 app.config["MAIL_USERNAME"] = 'staff@osga-cemetery.com'
 app.config["MAIL_DEFAULT_SENDER"] = 'staff@osga-cemetery.com'
-app.config["MAIL_PASSWORD"] = 'OsgaLotta37'
+app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
 app.config["MAIL_PORT"] = 465
 app.config["MAIL_USE_TLS"] = False
 app.config["MAIL_USE_SSL"] = True
