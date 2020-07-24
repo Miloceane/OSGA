@@ -10,11 +10,16 @@
 	let current_flower_id = 0;
 	let current_character_id = 0;
 
-	{% if session['user_id'] %}
-		let user_id = {{ session['user_id'] }};
+	// Initializes height and width of grave plaque. Actual value is given at the end of this page, after DOM is loaded.
+	var grave_plaque_height = 0;
+	var grave_plaque_width = 0;
+
+	{% if current_user.id %}
+		let user_id = {{ current_user.id }};
 	{% else %}
 		let user_id = -1;
 	{% endif %}
+
 	let last_click_pos = { x:0, y:0 }
 
 	function change_current_flower(flower_id)
@@ -25,8 +30,8 @@
 	function change_last_click(e) 
 	{
 		var rect = e.target.getBoundingClientRect();
-		var x = Math.round(e.clientX - rect.left);
-		var y = Math.round(e.clientY - rect.top);
+		var x = Math.round((e.clientX - rect.left) * 100 / grave_plaque_width);
+		var y = Math.round((e.clientY - rect.top) * 100 / grave_plaque_height);
 		last_click_pos = { x, y };
 		return { x,	y };
 	}
@@ -56,14 +61,18 @@
 		flower.src = "/static/images/flowers/"+current_flower_id+".png";
 		flower.alt = "flower";
 		flower.height = "20";
-		flower.position = "relative"
-		flower.top = last_click_pos.x + "px"
-		flower.left = last_click_pos.y + "px"
+		flower.style.position = "absolute"
+		flower.style.top = Math.min(last_click_pos.y - 15, 75) + "%"
+		flower.style.left = Math.max(0, Math.min(last_click_pos.x - 10, 90)) + "%"
+
 		document.querySelector('#grave_'+grave_id).appendChild(flower);
 	}
 
-	function add_to_grave(grave_id, character_id) 
+	function add_to_grave(e) 
 	{
+		grave_id = e.target.getAttribute('grave_id');
+		character_id = e.target.getAttribute('character_id');
+
 		if (current_flower_id == -1)
 		{
 			add_message(grave_id, character_id);
@@ -108,7 +117,6 @@
 		message_text.innerHTML = new_message;
 		document.querySelector('#grave_message'+grave_id).appendChild(message_text);
 
-		//document.querySelector('#grave_'+grave_id+'_count').innerHTML = counter_messages[grave_id];
 		let message = document.createElement("img");
 		message.src = "/static/images/flowers/scroll.png";
 		message.alt = "message";
@@ -136,24 +144,24 @@
 	}
 
 
-	function display_spoiler_cemetary() {
-		document.querySelector('#cemetary_grounds').style.display = "flex";
-		document.querySelector('#display_spoiler_cemetary').style.display = "none";			
+	function display_spoiler_cemetery() {
+		document.querySelector('#cemetery_grounds').style.display = "flex";
+		document.querySelector('#display_spoiler_cemetery').style.display = "none";			
 	}
 
 </script>
 
 
-<main id="cemetary_page" class="col-12" role="main">
+<main id="cemetery_page" class="col-12" role="main">
 	<h1>{{ show_title }}</h1>
 	<h2>Memorial Grounds</h2>
 
-	{% if session['username'] %}
+	{% if current_user.name %}
 		<br>
 		{% if is_blocked %}
 			Your account has been blocked: you can't leave public flowers nor messages on graves anymore. You can leave temporary flowers, they just won't be registered.
 		{% else %}
-			Welcome to {{ show_title }}'s cemetary. Here you can leave flowers or messages to your favourite characters. Messages will be reviewed by the maintenance of this cemetary for approval before they can be displayed to the public.
+			Welcome to {{ show_title }}'s cemetery. Here you can leave flowers or messages to your favourite characters. Messages will be reviewed by the maintenance of this cemetery for approval before they can be displayed to the public.
 			<br><br>
 			To select a different type of flower than the default red rose, or to leave a message, click on the picture of the item type you wish to use here under.
 			<br><br>
@@ -167,17 +175,29 @@
 			</div>
 		{% endif %}
 	{% else %}
-		Welcome to {{ show_title }}'s cemetary. You can click on a grave to leave a flower in memory of a character.
+		Welcome to {{ show_title }}'s cemetery. You can click on a grave to leave a flower in memory of a character.
 		<br>
 		Registered users can leave several types of flowers as well as messages.
+		<br>
+	
 	{% endif %}
-
+	<br>
+	<form action="{{ url_for('cemetery', cemetery_id=show_id) }}" method="post">
+		Sort graves by: 
+		<select name="graves_sorting">
+			<option value="chronological">Chronological order</option>
+			<option value="popularity">Popularity</option>
+		</select>
+		<button>Reload</button>
+	</form>
+	<br>
+	
 	<div id="add_message_box" class="modal" display="none">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-body">
 					<p>
-						Write here the message you want to leave. Other visitors will be able to see it once the cemetary maintenance will have approved it.<br>
+						Write here the message you want to leave. Other visitors will be able to see it once the cemetery maintenance will have approved it.<br>
 						<input type="text" id="message_text">
 						<br><br>
 						<button onclick="leave_message()">Leave message.</button>
@@ -188,14 +208,14 @@
 	</div>
 
 	{% if is_spoiler %}
-	<div id="display_spoiler_cemetary" display="block">
+	<div id="display_spoiler_cemetery" display="block">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-body">
 					<p>
-						This is the cemetary of a show in your spoilers blacklist! Are you sure you want to view it?<br>
+						This is the cemetery of a show in your spoilers blacklist! Are you sure you want to view it?<br>
 						<br>
-						<button onclick="display_spoiler_cemetary()">View anyway.</button>
+						<button onclick="display_spoiler_cemetery()">View anyway.</button>
 					</p>
 				</div>
 			</div>
@@ -203,22 +223,25 @@
 	</div>
 	{% endif %}
 
-	<div id="cemetary_grounds" align="center">
+	<div id="cemetery_grounds" align="center">
 			{% for i in range(graves_count) %}
 				{% if characters[i] %}
 				<div class="grave">
 					<table>
 						<tr class="grave_text">
 							<td>
-								{{ characters[i].name }}<br>
+								<a href="/character/{{ characters[i].id }}">{{ characters[i].name }}</a><br>
 								Season {{ characters[i].death_season }} Episode {{ characters[i].death_episode }}
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<div id="grave_{{ i }}" class="grave_plaque" onclick="add_to_grave({{ i }}, {{ characters[i].id }})">
+								<div id="grave_{{ i }}" class="grave_plaque" grave_id="{{ i }}", character_id="{{ characters[i].id }}">
 									{% for flower in characters[i].flowers %}
-										<img src="/static/images/flowers/{{ flower.flowertype_id }}.png" alt="flower">
+										<img src="/static/images/flowers/{{ flower.flowertype_id }}.png" alt="flower" style="position: absolute; 
+										left: {% if flower.pos_x > 90 %}90{% else %} {{ flower.pos_x - 5 }}{% endif %}%;
+										top: {% if flower.pos_y > 90 %}90{% else %} {{ flower.pos_y - 15 }}{% endif %}%
+										">
 									{% endfor %}
 									{% for message in characters[i].messages %}
 										{% if message.admin_id > 0 %}
@@ -245,14 +268,20 @@
 
 
 <script>
+
 	let graves_plaques = document.getElementsByClassName('grave_plaque');
 	for (var i = 0; i < graves_plaques.length; i++) 
 	{
-    	graves_plaques[i].addEventListener('click', change_last_click);
+		current_grave = graves_plaques[i];
+    	current_grave.addEventListener('click', change_last_click, true);
+    	current_grave.addEventListener('click', add_to_grave);
 	}
 
+	grave_plaque_height = graves_plaques[0].scrollHeight; 
+	grave_plaque_width = graves_plaques[0].scrollWidth;
+
 	{% if is_spoiler %}
-		document.querySelector('#cemetary_grounds').style.display = "none";
+		document.querySelector('#cemetery_grounds').style.display = "none";
 	{% endif %}
 </script>
 </main>

@@ -124,7 +124,7 @@
 			  			<tr>
 			  				<td>
 			  					Series: 
-		  						<select name="declare_death_show_search" id="declare_death_show_search" data-choice placeholder="Search for cemetary" class="search-query" width="400px">
+		  						<select name="declare_death_show_search" id="declare_death_show_search" data-choice placeholder="Search for cemetery" class="search-query" width="400px">
 									{% for show in shows %}
 									<option value="{{ show['title'] }}">{{ show['title'] }}</option>
 									{% endfor %}
@@ -149,7 +149,7 @@
 								</div>
 								<div class="modal-body">
 									<p>
-										Are you sure you want to declare <b id="character_name">Character 0</b> as dead? A grave will immediately appear in their universe's cemetary.
+										Are you sure you want to declare <b id="character_name">Character 0</b> as dead? A grave will immediately appear in their universe's cemetery.
 										<br><br>
 										<input type="submit" id="character" value="Yes, this character is dead.">
 										<button onclick="document.getElementById('validation_box').style.display='none'">Oh wait, no!</button>

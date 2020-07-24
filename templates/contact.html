@@ -1,0 +1,25 @@
+{% extends "layout_pages.html" %}
+
+{% block inside_row %}
+<main id="about" class="col-12" role="main">
+	{% if error %}<p class="alert alert-info">{{ error }}</p>{% endif %}
+	<h1>Contact form</h1>
+	<div id="contact_desc">
+		<p>For all suggestions regarding features or shows to add to OSGA, please use the suggestion form in your user panel! Suggestions registered using the suggestion form are saved in a specific folder that admins use when they have time to add new features to the website. So, suggestions have more chances to be used and not be forgotten if sent that way rather than via this contact form!<br><br></p>
+		<h2>Your message</h2>
+		<form action="{{ url_for('contact') }}" method="post">
+			<p><br>
+		
+				Your e-mail address (so that we can e-mail you back)<br>
+				<input type="text" name="email"><br><br>
+				Subject of your message<br>
+				<input type="text" name="subject"><br><br>
+				Write your message here<br>
+				<textarea name="message"></textarea><br><br>
+		    	<button>Submit</button>
+			    </div>
+			</p>
+		</form>
+	</div>
+</main>
+{% endblock %}

@@ -14,25 +14,10 @@ from sqlalchemy.sql import func
 
 db = SQLAlchemy()
 
-class Users(db.Model):
-	__tablename__ = 'users'
-	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String(128))
-	password = db.Column(db.String(128))
-	email = db.Column(db.String(128))
-	admin_level = db.Column(db.Integer, default=0)
-	registration_date = db.Column(db.DateTime(timezone=True), server_default=func.now())
-	display_fav = db.Column(db.Boolean, default=False)
-	display_activity = db.Column(db.Boolean, default=False)
-	flowers_left = db.Column(db.Integer, default=5)
-	blocked = db.Column(db.Boolean, default=False)
-
-
 class Universes(db.Model):
 	__tablename__ = 'shows_universes'
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(128))
-
 
 class Shows(db.Model):
 	__tablename__ = 'shows'
@@ -40,6 +25,7 @@ class Shows(db.Model):
 	name = db.Column(db.String(128))
 	universe_id = db.Column(db.Integer, db.ForeignKey('shows_universes.id')) 
 	api_id = db.Column(db.String(128)) 
+	is_series = db.Column(db.Boolean, default=True)
 
 
 class FavouritedShows(db.Model):
@@ -55,13 +41,6 @@ class BlacklistedShows(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id')) 
 	show_id = db.Column(db.Integer, db.ForeignKey('shows.id'))
 
-
-class FlowerTypes(db.Model):
-	__tablename__ = 'flower_types'
-	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String(128))
-	user_lvl = db.Column(db.Integer)
-
 class CharactersMessages(db.Model):
 	__tablename__ = 'characters_messages'
 	id = db.Column(db.Integer, primary_key=True)
@@ -72,17 +51,20 @@ class CharactersMessages(db.Model):
 	admin_id = db.Column(db.Integer, default=0) # Admin who validated the message 
 	pos_x =  db.Column(db.Integer, default=0)
 	pos_y =  db.Column(db.Integer, default=0)	
-	character = relationship("Characters", back_populates="messages")
+	character = relationship("Characters", back_populates="messages")	
+	user = relationship("Users", back_populates="messages")
 
 class CharactersFlowers(db.Model):
 	__tablename__ = 'characters_flowers'
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-	flowertype_id = db.Column(db.Integer)# , db.ForeignKey('flower_types.id'))  -> For some reason, complained about there being no constraints?
-	character_id = db.Column(db.Integer, db.ForeignKey('characters.id')) 
 	date = db.Column(db.DateTime(timezone=True), server_default=func.now())
+	flowertype_id = db.Column(db.Integer, default=0)# , db.ForeignKey('flower_types.id'))  -> For some reason, complained about there being no constraints?
+	user_id = db.Column(db.Integer, db.ForeignKey('users.id')) 
+	character_id = db.Column(db.Integer, db.ForeignKey('characters.id')) 
 	pos_x =  db.Column(db.Integer)
 	pos_y =  db.Column(db.Integer)	
 	character = relationship("Characters", back_populates="flowers")
+	user =	relationship("Users", back_populates="flowers")
 
 class Characters(db.Model):
 	__tablename__ = 'characters'
@@ -94,10 +76,45 @@ class Characters(db.Model):
 	death_season = db.Column(db.Integer)
 	death_episode = db.Column(db.Integer)
 	admin_id = db.Column(db.Integer, db.ForeignKey('users.id')) # Admin who declared death
-	flower_count = db.Column(db.Integer)
+	flower_count = db.Column(db.Integer, default=0)
 	flowers = relationship(CharactersFlowers)
 	messages = relationship(CharactersMessages)
 
+	
+class Users(db.Model):
+	__tablename__ = 'users'
+	id = db.Column(db.Integer, primary_key=True)
+	name = db.Column(db.String(128))
+	password = db.Column(db.String(128))
+	password_salt = db.Column(db.String(128))
+	email = db.Column(db.String(128))
+	admin_level = db.Column(db.Integer, default=0)
+	registration_date = db.Column(db.DateTime(timezone=True), server_default=func.now())
+	display_fav = db.Column(db.Boolean, default=False)
+	display_activity = db.Column(db.Boolean, default=False)
+	flowers_left = db.Column(db.Integer, default=5)
+	blocked = db.Column(db.Boolean, default=False)
+	activated = db.Column(db.Boolean, default=False)
+	activation_code = db.Column(db.String(128))
+	activation_timelimit = db.Column(db.DateTime(timezone=True), server_default=func.now())
+
+	flowers = relationship(CharactersFlowers)
+	messages = relationship(CharactersMessages)
+	
+	def is_authenticated(self):
+		return True
+
+
+	def is_active(self):
+		return self.activated
+
+
+	def is_anonymous(self):
+		return False
+
+
+	def get_id(self):
+		return(self.id) 
 
 
 

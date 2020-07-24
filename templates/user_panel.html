@@ -17,6 +17,9 @@
 	{% if error %}
 		<div class="alert alert-info">{{ error }}</div>
 	{% endif %}
+	{% if success %}
+		<div class="alert alert-success">{{ success }}</div>
+	{% endif %}
 	<div class="user_panel">
 		{% if selected_shows_settings %}
   		<table>
@@ -72,7 +75,7 @@
 						You haven't added any show to your blacklist.
 					{% endif %}
 				</td>
-				<td rowspan="2" width="35%" class="small_description">OSGA activity related to shows that are in your spoilers blacklist will be censored. If you open a cemetary page of one of these shows, you will be asked for confirmation before being able to see the page.</td>
+				<td rowspan="2" width="35%" class="small_description">OSGA activity related to shows that are in your spoilers blacklist will be censored. If you open a cemetery page of one of these shows, you will be asked for confirmation before being able to see the page.</td>
 			</tr>
 			<tr>
 				<td>Add to spoilers blacklist: </td>
@@ -95,31 +98,39 @@
   		<form action="#" method="post">
 	  		<div class="user_panel_flexrow">
 	  			<div class="user_panel_flexelement">Username:</div>
-  				<div class="user_panel_flexelement">{{ session['username'] }}</div>
-  				<div class="user_panel_flexelement"><a href="/user_profile/{{ session['user_id'] }}">See profile</a></div>
+  				<div class="user_panel_flexelement">{{ current_user.name }}</div>
+  				<div class="user_panel_flexelement"><a href="/user_profile/{{ current_user.id }}">See profile</a></div>
 			</div>
-			<div class="user_panel_flexrow">
-				<div class="user_panel_flexelement">Password:	</div>
-				<div class="user_panel_flexelement">
-		  			<input type="password" name="password" placeholder="New password">
-		  			<input type="password" name="password_confirmation" placeholder="Password (confirmation)">
-		  		</div>
-		  		<div class="user_panel_flexelement">
-		  			<button>Change password</button>
-		  		</div>
-		  	</div>
-  			<div class="user_panel_flexrow">
-  				<div class="user_panel_flexelement">E-mail address:</div>
-  				<div class="user_panel_flexelement"><input type="text" name="email" placeholder="New e-mail address">
-  					<input type="text" name="email_confirmation" placeholder="New e-mail address (confirmation)">
-  				</div>
-  				<div class="user_panel_flexelement">
-		  			<button>Change e-mail address</button>
-		  		</div>
-		  		<td width="20%" class="small_description"> 
-		  			Current address: {{ user_info.email }}
-		  		</div>
-  			</div>
+			{% if fresh_session %}
+				<div class="user_panel_flexrow">
+					<div class="user_panel_flexelement">Password:	</div>
+					<div class="user_panel_flexelement">
+			  			<input type="password" name="password" placeholder="New password">
+			  			<input type="password" name="password_confirmation" placeholder="Password (confirmation)">
+			  		</div>
+			  		<div class="user_panel_flexelement">
+			  			<button>Change password</button>
+			  		</div>
+			  	</div>
+	  			<div class="user_panel_flexrow">
+	  				<div class="user_panel_flexelement">E-mail address:</div>
+	  				<div class="user_panel_flexelement"><input type="text" name="email" placeholder="New e-mail address">
+	  					<input type="text" name="email_confirmation" placeholder="New e-mail address (confirmation)">
+	  				</div>
+	  				<div class="user_panel_flexelement">
+			  			<button>Change e-mail address</button>
+			  		</div>
+			  		<td width="20%" class="small_description"> 
+			  			Current address: {{ user_info.email }}
+			  		</div>
+	  			</div>
+	  		{% else %}
+	  			<div class="user_panel_flexrow">
+	  					If you want to change your password or e-mail address, please log out and log in again first. 
+	  					<br>This is to prevent the risk of someone using your old session to change your password and e-mail address!
+	  			</div>
+	  		{% endif %}
+
 			<input type="checkbox" name="display_favourite" {% if user_info.display_fav %}checked="checked"{% endif %}>
 			<label for="display_favourite"> Display favourite shows on profile</label><br>
 			<input type="checkbox" name="display_activity" {% if user_info.display_activity %}checked="checked"{% endif %}>
@@ -130,9 +141,9 @@
 
   		{% else %}
   		<form action="#" method="post">
-	  		Shows only have a cemetary if at least one of their characters died. We use a large database of shows, but it is possible that less known shows were forgotten. We don't want to let anyone in pain of mourning their favourite character, so feel free to suggest shows to add to our database!<br><br>
+	  		Shows only have a cemetery if at least one of their characters died. We use a large database of shows, but it is possible that less known shows were forgotten. We don't want to let anyone in pain of mourning their favourite character, so feel free to suggest shows to add to our database!<br><br>
 
-	  		Show that doesn't have a cemetary yet:<br>
+	  		Show that doesn't have a cemetery yet:<br>
 			<input type="text" name="suggest_show" placeholder="Type a show's name.">
 			<button>Suggest</button><br><br>
 			

@@ -6,12 +6,17 @@
 # (Universiteit van Amsterdam) #
 ################################
 
+import logging
+
 import os
 import sys
 import json
+import base64, scrypt
+import random, string
 import hashlib
+from datetime import datetime, timedelta
 
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, flash
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -19,11 +24,14 @@ from flask_basicauth import BasicAuth
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_mail import Mail, Message
+from flask_login import LoginManager, login_user, logout_user, login_required, login_fresh, current_user
 from sqlalchemy import and_
 from requests import get
 
 from models import *
+from helpers import *
 from import_characters import CharactersList
+from import_shows import ShowsList
 
 #--------------------------------------------------------------------------------------------------
 #########################
@@ -33,11 +41,13 @@ from import_characters import CharactersList
 # IMPORTANT: Setting this variable to True allows anyone to access Flask Admin via /admin. Always set back to False before deploying!
 g_is_local = False
 
+logging.basicConfig(filename='./osga.log',level=logging.DEBUG)
+
 # TODO: Change global variable names to make them start with g_, as to show that they are global.
 
 # Configure Flask app
 app = Flask(__name__)
-app.secret_key = "dd9fadd2de6003bf66cbe5ecdb6551015150fd955811ba1e8217d76c21f5f974" #os.environ["SECRET_KEY"]
+app.secret_key = "dd9fadd2de6003bf66cbe5ecdb6551015150fd955811ba1e8217d76c21f5f974" #os.environ.get("SECRET_KEY")
 
 
 # Configure database
@@ -47,7 +57,7 @@ if not os.getenv("DATABASE_URL"):
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
-
+migrate = Migrate(app, db)
 
 # Configure session, use filesystem
 app.config["SESSION_PERMANENT"] = False
@@ -63,15 +73,25 @@ headers = { 'Content-Type': 'application/json', 'trakt-api-key': '9cba8155f5e9c9
 
 # Configure mail
 # TODO: store credentials in db or somewhere else that's safe
-app.config["MAIL_SERVER"] = 'smtp.gmail.com'
-app.config["MAIL_USERNAME"] = 'osga.staff@gmail.com'
-app.config["MAIL_DEFAULT_SENDER"] = 'noreply@osga.com'
-app.config["MAIL_PASSWORD"] = 'dany0000'
+app.config["MAIL_SERVER"] = 'mail.privateemail.com'
+app.config["MAIL_USERNAME"] = 'staff@osga-cemetery.com'
+app.config["MAIL_DEFAULT_SENDER"] = 'staff@osga-cemetery.com'
+app.config["MAIL_PASSWORD"] = 'OsgaLotta37'
 app.config["MAIL_PORT"] = 465
 app.config["MAIL_USE_TLS"] = False
 app.config["MAIL_USE_SSL"] = True
 app.config["MAIL_DEBUG"] = True
 mail = Mail(app)
+
+# Configure Flask login
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.session_protection = "strong"
+login_manager.login_view = "/"
+
+@login_manager.user_loader
+def load_user(user_id):
+    return Users.query.get(int(user_id))
 
 
 #--------------------------------------------------------------------------------------------------
@@ -89,7 +109,6 @@ if g_is_local:
 	admin.add_view(ModelView(Shows, db.session))
 	admin.add_view(ModelView(FavouritedShows, db.session))
 	admin.add_view(ModelView(BlacklistedShows, db.session))
-	admin.add_view(ModelView(FlowerTypes, db.session))
 	admin.add_view(ModelView(Characters, db.session))
 	admin.add_view(ModelView(CharactersFlowers, db.session))
 	admin.add_view(ModelView(CharactersMessages, db.session))
@@ -119,6 +138,42 @@ def index():
 	return render_template("index.html", title="OSGA: One Site to Grieve them All", shows=list_shows)
 
 
+#--------------------------------------------------------------------------------------------------
+###################
+# FOOTER FEATURES #
+###################
+
+@app.route("/about")
+def about():
+	""" About page """
+	return render_template("about.html", title="OSGA: One Site to Grieve them All")
+
+
+@app.route("/terms")
+def terms():
+	""" Terms and conditions """
+	return render_template("terms.html", title="OSGA: One Site to Grieve them All")
+
+
+@app.route("/contact", methods=["GET", "POST"])
+def contact():
+	""" Terms and conditions """
+	if request.form.get("email") or request.form.get("subject") or request.form.get("message"):
+		if request.form.get("email") and request.form.get("subject") and request.form.get("message"):
+
+			admins = Users.query.filter(Users.admin_level > 0).all()
+			admins_email = [admin.email for admin in admins]
+
+			msg = Message("[OSGA - Message sent by: " + request.form.get("email") + "] "+ request.form.get("subject"), sender=request.form.get("email"), recipients=admins_email)
+			msg.html = "[OSGA - Message sent by: " + request.form.get("email") + "] <br><br>" + request.form.get("message")
+			mail.send(msg)
+			return render_template("layout_message.html", title="OSGA: One Site to Grieve them All", message="Your message has been sent to our staff and we will read it as soon as we receive it. Thanks for contacting us!")
+
+		else:
+			return render_template("contact.html", title="OSGA: One Site to Grieve them All", error="Please fill all the fields before submitting!")
+
+	return render_template("contact.html", title="OSGA: One Site to Grieve them All")
+
 
 #--------------------------------------------------------------------------------------------------
 #######################
@@ -128,25 +183,61 @@ def index():
 @app.route("/create_db")
 def create_db():
 	""" Creates tables based on db.model inherited classes in models.py """
+	#current_user.admin_level > 1 and g_is_local is True:
 	db.create_all()
 	return "Database created."
+
+# else:
+# 	abort(404)
 
 
 @app.route("/empty_db")
 def empty_db():
 	""" Deletes all tables and data in database, resets user session """
-	db.drop_all()
-	session["username"] = None
-	session["user_id"] = None
-	return "Database emptied."
+	if current_user.is_authenticated() and current_user.admin_level > 1 and g_is_local is True:
+		db.drop_all()
+		current_user.name = None
+		current_user.id = None
+		return "Database emptied."
 
+	else:
+		abort(404)
+	
+
+@app.route("/import_shows")
+def import_shows_to_db():
+	""" Reads CSV file and imports shows to database """
+	if current_user.is_authenticated() and current_user.admin_level > 1 and g_is_local is True:
+		shows = ShowsList("Shows.csv")
+		message = shows.import_shows()
+		return message
+
+	else:
+		abort(404)
 
 @app.route("/import_characters")
 def import_to_db():
 	""" Reads CSV file and imports characters to database """
-	characters = CharactersList("Characters.csv")
-	message = characters.import_characters()
-	return message
+	if current_user.is_authenticated() and current_user.admin_level > 1 and g_is_local is True:
+		characters = CharactersList("Characters.csv")
+		message = characters.import_characters()
+		return message
+
+	else:
+		abort(404)
+
+
+@app.route("/get_shows_list")
+def get_shows_list():
+	""" Returns a shows list in JSON format """
+	show_query = Shows.query.all()
+	shows_list = []
+
+	for show in show_query:
+		show_item = { "id": show.id, "name": show.name }
+		shows_list.append(show_item)
+
+	return json.dumps(shows_list)
 
 
 #--------------------------------------------------------------------------------------------------
@@ -154,44 +245,81 @@ def import_to_db():
 # CEMETARIES: ROUTES #
 ######################
 
-@app.route("/search_cemetary", methods=["GET", "POST"])
-def search_cemetary():
-	""" Searches show among shows with a cemetary in database """
+@app.route("/search_cemetery", methods=["GET", "POST"])
+def search_cemetery():
+	""" Searches show among shows with a cemetery in database """
 
-	show_name = request.form.get("cemetary_search")
+	show_name = request.form.get("cemetery_search")
 	show_query = Shows.query.filter_by(name=show_name)
 
 	if show_query.count() > 0:
-		return redirect(f"/cemetary/{ show_query.first().id }")
+		return redirect(f"/cemetery/{ show_query.first().id }")
 
-	return render_template("layout_message.html", error="There is no cemetary for this show (yet)!")
+	return render_template("layout_message.html", error="There is no cemetery for this show (yet)!")
 
 
-@app.route("/cemetary/<int:cemetary_id>", methods=["GET", "POST"])
-def cemetary(cemetary_id):
-	""" Displays cemetary """
+@app.route("/cemetery/<int:cemetery_id>", methods=["GET", "POST"])
+def cemetery(cemetery_id):
+	""" Displays cemetery """
 
-	user = Users.query.get(session.get("user_id"))
-		
-	show_query = Shows.query.filter_by(id=cemetary_id).first()
-	cemetary_query = Characters.query.filter_by(show_id=cemetary_id).order_by(Characters.id)
+	show_query = Shows.query.filter_by(id=cemetery_id).first()
 
-	if user is None:
+	if request.form.get("graves_sorting") == "popularity":
+		cemetery_query = Characters.query.filter_by(show_id=cemetery_id).order_by(Characters.flower_count.desc())
+	
+	else:
+		cemetery_query = Characters.query.filter_by(show_id=cemetery_id).order_by(Characters.id)
+
+
+	for character in cemetery_query:
+		quick_sort_flowers(character.flowers, 0, len(character.flowers) - 1)
+
+	if current_user is None or current_user.is_authenticated is False:
 		is_blocked = False
 		is_spoiler = False
 	else:
-		is_blocked = user.blocked
-		spoiler_query = BlacklistedShows.query.filter(and_(BlacklistedShows.user_id == session.get("user_id"), BlacklistedShows.show_id == cemetary_id)).first()
+		is_blocked = current_user.blocked
+		spoiler_query = BlacklistedShows.query.filter(and_(BlacklistedShows.user_id == current_user.id, BlacklistedShows.show_id == cemetery_id)).first()
 		is_spoiler = (spoiler_query != None)
 
-	return render_template("cemetary.html", graves_count=cemetary_query.count(), characters=cemetary_query.all(), show_title=show_query.name, is_blocked=is_blocked, is_spoiler=is_spoiler)
+	return render_template("cemetery.html", graves_count=cemetery_query.count(), characters=cemetery_query.all(), show_title=show_query.name, show_id=show_query.id, is_blocked=is_blocked, is_spoiler=is_spoiler)
 
 
 @app.route("/api", methods=["GET"])
 def api():
 	""" Page for api tests """
 	api_request = get('https://api.trakt.tv/shows/popular', headers=headers).json()
-	return api_request
+	return 	
+
+
+@app.route("/character/<int:character_id>", methods=["GET"])
+def character(character_id):
+	""" Displays character info """
+
+	character = Characters.query.get(character_id)
+	show = Shows.query.get(character.show_id)
+	show_characters = Characters.query.filter_by(show_id=show.id).order_by(Characters.id)
+
+	if current_user is None or current_user.is_authenticated is False:
+		is_spoiler = False
+	else:
+		spoiler_query = BlacklistedShows.query.filter(and_(BlacklistedShows.user_id == current_user.id, BlacklistedShows.show_id == show.id)).first()
+		is_spoiler = (spoiler_query != None)
+
+	return render_template("character.html", character=character, show=show, is_spoiler=is_spoiler, show_characters=show_characters)
+
+
+@app.route("/delete_character_message/<int:message_id>", methods=["GET"])
+def delete_character_message(message_id):
+	""" Deletes CharactersMessage with id message_id """
+
+	message = CharactersMessages.query.get(message_id)
+	
+	if current_user.is_authenticated and current_user.id == message.user_id:
+		db.session.delete(message)
+		db.session.commit()
+
+	return
 
 
 #--------------------------------------------------------------------------------------------------
@@ -203,29 +331,39 @@ def api():
 def save_flower(character_id, flowertype_id, pos_x, pos_y):
 	""" Saves the flower with flowertype flowertype_id and position (pos_x, pos_y) in database for character character_id. """
 
+	user_id = None
+
 	# Just in case the user tried to artificially insert JS to bypass blocked account and leave flower (idk who would do that, but who knows)
-	user = Users.query.get(session.get("user_id"))
-	if (user and user.blocked):
-		return ""
+	if current_user.is_authenticated:
+		user = Users.query.get(current_user.id)
+		if user.blocked:
+			return ""
+
+		user_id = user.id
 
 	curr_char = Characters.query.get(character_id)
 
-	if not curr_char.flower_count:
-		curr_char.flower_count = 0
+	if (curr_char.flower_count < 2147483647): # Max integer value
+		curr_char.flower_count = curr_char.flower_count + 1
 
-	curr_char.flower_count = curr_char.flower_count + 1
+		flower_count_query = CharactersFlowers.query.filter(and_(CharactersFlowers.character_id == character_id, CharactersFlowers.user_id == None))
 
-	db.session.add(CharactersFlowers(flowertype_id=flowertype_id, character_id=character_id, pos_x=pos_x, pos_y=pos_y))
-	db.session.commit()
+		if flower_count_query.count() > 99:
+			db.session.delete(flower_count_query.first())
+
+		db.session.add(CharactersFlowers(flowertype_id=flowertype_id, character_id=character_id, pos_x=pos_x, pos_y=pos_y, user_id=user_id))	
+		db.session.commit()
+	
 	return ""
 
 
 @app.route("/save_message", methods=["POST"])
+@login_required
 def save_message():
 	""" Saves message sent via POST in database. """
 
 	# Just in case the user tried to artificially insert JS to bypass blocked account and leave message
-	user = Users.query.get(session.get("user_id"))
+	user = Users.query.get(current_user.id)
 	if (user and user.blocked):
 		return ""
 
@@ -246,12 +384,9 @@ def save_message():
 @app.route("/register", methods=["GET", "POST"])
 def register():
 	""" Registers the user based on POST data sent from register.html """
-	
-	username = "" if session is None else session.get("username")
-	userid = session.get("user_id")
 
 	# User is already registered + logged_in
-	if username:
+	if current_user.is_authenticated:
 		return redirect(url_for('index'))
 
 	# Receiving registration form
@@ -261,6 +396,7 @@ def register():
 		password_confirmation = request.form.get("password_confirmation")
 		email = request.form.get("email")
 		email_confirmation = request.form.get("email_confirmation")
+		read_terms = not (request.form.get("read_terms") is None)
 		error = ""
 
 		# NOTE: isalnum() was used here to force usernames to contain only alphanumeric characters in order to protect against SQL injections,
@@ -268,13 +404,13 @@ def register():
 		if not username.isalnum():
 			error += "Your username can only contain letters or numbers. "
 		
-		if len(password) < 6:
-			error += "Your password must be at least 6 characters long. "	
+		if len(password) < 8:
+			error += "Your password must be at least 8 characters long. "	
 
 		if password != password_confirmation:
 			error += "Password and confirmation didn't match! "
 
-		# TODO: check email validity. Library? Regex? Maybe Flask-login already does this?
+		# TODO: check email validity. Library? Regex?
 		if email != email_confirmation:
 			error += "Email and confirmation didn't match! "
 
@@ -282,23 +418,31 @@ def register():
 		if email_exist_query > 0:
 			error += "This email address is already taken!"
 
+		if read_terms is False:
+			error += "You can't register if you don't accept the terms and conditions! "
+
 		if error != "":
 			return render_template("register.html", error=error)
 
-		# TODO: apparently md5 isn't safe anymore? Check what to use instead.
-		password_hash = hashlib.md5(password.encode('utf-8')).hexdigest()
+		password_salt = base64.b64encode(os.urandom(64))[64:]
+		password_hash = base64.b64encode(scrypt.hash(password, password_salt))[128:]
 
-		new_user = Users(name=username, password=password_hash, email=email)
+		activation_code = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(16))
+		activation_date = datetime.now()
+		activation_latest = activation_date + timedelta(days=2)
+
+		new_user = Users(name=username, password=password_hash, password_salt=password_salt, email=email, activation_code=activation_code, activation_timelimit=activation_latest)
 		db.session.add(new_user)
 		db.session.commit()
 
 		confirmation_message_title = f"Registration on OSGA"
-		confirmation_message_html = f"Hello { username },<br><br>Thank you for registering on OSGA!"
-		msg = Message(confirmation_message_title, sender="noreply@osga.com", recipients=[email])
+		confirmation_message_html = f"Hello { username },<br><br>Thank you for registering on OSGA!<br><br>Your activation code is: <b>{ activation_code }</b> (valid for 2 days). \
+		Fill it in on the confirmation page to activate your account!<br><br>Can't find the confirmation page? <a href=\"" + url_for("confirm_registration") + "\">Click here</a>!<br><br>We hope you have a good time on our site,<br><br>The OSGA maitenance team"
+		msg = Message(confirmation_message_title, sender="staff@osga-cemetery.com", recipients=[email])
 		msg.html = confirmation_message_html
 		mail.send(msg)
 
-		return render_template("layout_message.html", message="Thank you for registering. Your account has been created! You can now log-in and get access to more features.")
+		return render_template("confirm_registration.html", email=email, message="Thank you for registering. Your account has been created! You can now log-in and get access to more features.")
 	
 	return render_template("register.html")
 
@@ -315,18 +459,21 @@ def login():
 		# NOTE: isalnum() was used here to force usernames to contain only alphanumeric characters in order to protect against SQL injections,
 		# but SQLAlchemy already makes them technically impossible, so this is probably not necessary.
 		if username_input.isalnum():
-			password_hash = hashlib.md5(password_input.encode('utf-8')).hexdigest()
-			login_request = Users.query.filter(and_(Users.name == username_input, Users.password == password_hash))
+			login_request = Users.query.filter(and_(Users.name == username_input)).first()
+			password_input_hash = scrypt.hash(password_input, login_request.password_salt)[128:]
 
-			if login_request.count() == 0:
-				# TODO: either make a log-in page to redirect the user, or check this in JS, this is tiresome for users.
-				return render_template("layout_message.html", error="Username and password didn't match.")
+			if password_input_hash != login_request.password:
+				flash("Username and password didn't match.")
+				return render_template("layout_message.html", error="Your username and password didn't match.")
+
 			
 			else:
-				user = login_request.first()
-				session["username"] = username_input
-				session["user_id"] = user.id
-	
+				if login_request.activated is False:
+					return render_template("confirm_registration", email=login_request.email)
+
+				user = login_request
+				login_user(user, remember = not (request.form.get("remember_me") is None))
+				
 	return redirect(request.referrer)
 
 
@@ -334,10 +481,61 @@ def login():
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
 	""" Logs user out and redirects to currently visisted page """
-	session["username"] = None
-	session["user_id"] = None
+	logout_user()
 	return redirect(request.referrer)
 
+
+@app.route("/confirm_registration", methods=["GET", "POST"])
+def confirm_registration():
+
+	email = request.form.get("email")
+
+	if email is not None:
+		
+		user = Users.query.filter_by(email=email).first()
+
+
+		if request.form.get("resend"):
+
+			activation_code = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(16))
+			activation_date = datetime.now()
+			activation_latest = activation_date + timedelta(days=2)
+
+			user.activation_code = activation_code
+			user.activation_timelimit = activation_latest
+			db.session.commit()
+
+			confirmation_message_title = f"Activation code for OSGA"
+			confirmation_message_html = f"Hello { username },<br><br>If you haven't requested a new activation code, please ignore this email!<br><br> Your new activation code is: <b>{ activation_code }</b> (valid until: { activation_latest.time() }. Fill it in on the confirmation page to activate your account!"
+			msg = Message(confirmation_message_title, sender="noreply@osga.com", recipients=[email])
+			msg.html = confirmation_message_html
+			mail.send(msg)
+
+			return render_template("confirm_registration.html", email=email)
+
+		# current_date needs to be timezozne aware to be compared
+		timezone = user.activation_timelimit.tzinfo
+		current_date = datetime.now(timezone)
+
+		if current_date > user.activation_timelimit:
+			return render_template("confirm_registration.html", error="Your activation code has expired! Please click on Resend here under to get a new one.", email=request.form.get("email"), resend=True)
+
+
+		activation_code = request.form.get("activation_code")
+		
+		if activation_code == user.activation_code:
+			user.activated = True
+			db.session.commit() 
+			login_user(user)
+			return render_template("confirm_registration.html", success="Your account has been activated! You can now manage your account and leave message and have access to all user features.")
+
+		else:
+			return render_template("confirm_registration.html", error="Your activation didn't match your email address. Please check it again!", email=email)
+
+
+	return render_template("confirm_registration.html", email=email)
+	# Check this: https://realpython.com/handling-email-confirmation-in-flask/#register-view-function
+	# https://security.stackexchange.com/questions/197004/what-should-a-verification-email-consist-of
 
 
 #--------------------------------------------------------------------------------------------------
@@ -346,36 +544,47 @@ def logout():
 #############
 
 @app.route("/user_panel", methods=["GET"])
+@login_required
 def user_panel_default():
 	""" Returns default user panel tab """	
 	return user_panel("")
 
 
 @app.route("/user_panel/<string:page_type>", methods=["GET", "POST"])
+@login_required
 def user_panel(page_type):
 	""" Returns specified user panel page if it exists, otherwise default. """
 
-	if session.get("user_id") is None:
+	if current_user.id is None:
 		return redirect("/")
 
-	user = Users.query.get(session.get("user_id"))
+	user = Users.query.get(current_user.id)
 	error_message = ""
+	success_message = ""
 
 	#---- Display User settings tab ----#
 	if page_type == "user_settings": 
 		if request.form.get("password"):
 			if request.form.get("password") != request.form.get("password_confirmation"):
 				error_message += "Password and password confirmation didn't match! "
-			elif len(request.form.get("password")) < 6:
-				error_message += "Password should be at least 6 characters long. "
+			elif len(request.form.get("password")) < 8:
+				error_message += "Password should be at least 8 characters long. "
+			elif login_fresh() is False:
+				error_message += "You are using an old session, please log out and log in again to change your password."
 			else:
-				user.password = hashlib.md5(request.form.get("password").encode('utf-8')).hexdigest()
+				success_message += "Your password has been changed! "
+				
+				user.password_salt = base64.b64encode(os.urandom(64))[64:]
+				user.password = base64.b64encode(scrypt.hash(password, user.password_salt))[128:]
 				db.session.commit()
 		
 		if request.form.get("email"):
 			if request.form.get("email") != request.form.get("email_confirmation"):
 				error_message += "E-mail address and confirmation didn't match! "
+			elif login_fresh() is False:
+				error_message += "You are using an old session, please log out and log in again to change your e-mail address."
 			else:
+				success_message += "Your e-mail address has been changed! "
 				user.email = request.form.get("email")
 				db.session.commit()
 
@@ -384,7 +593,7 @@ def user_panel(page_type):
 			user.display_activity = not (request.form.get("display_activity") is None)
 			db.session.commit()
 
-		return render_template("user_panel.html", selected_user_settings="active", user_info=user, error=error_message)
+		return render_template("user_panel.html", selected_user_settings="active", user_info=user, error=error_message, success=success_message, fresh_session=login_fresh())
 
 
 	#---- Display Suggestions tab ----#
@@ -396,7 +605,7 @@ def user_panel(page_type):
 		if request.form.get("suggest_show") or request.form.get("other_suggestion"):
 			show = request.form.get("suggest_show")
 			other_suggestion = request.form.get("other_suggestion")
-			db.session.add(Suggestions(user_id=session.get("user_id"), show=show, content=other_suggestion))
+			db.session.add(Suggestions(user_id=current_user.id, show=show, content=other_suggestion))
 			db.session.commit()
 
 			confirmation = "Your suggestion has been registered and the cemetaries' maintenance will review it, thanks!"
@@ -448,8 +657,24 @@ def user_profile(user_profile_id):
 
 	if user_profile.display_fav:
 		user_favourite = Shows.query.join(FavouritedShows, FavouritedShows.show_id == Shows.id, isouter=True).filter(FavouritedShows.user_id == user_profile.id)
-		
-	return render_template("user_profile.html", user_profile_name=user_profile.name, user_profile_favourite_shows=user_favourite)
+	
+	activity_total = []	
+	activity_total = user_profile.flowers + user_profile.messages
+	activity_total.sort(key=lambda x: x.date, reverse=True)
+
+	for act in activity_total:
+		if isinstance(act, CharactersFlowers):
+			act.type = "flower"
+		else:
+			act.type = "message"
+
+	if current_user.is_authenticated():
+		blacklisted_shows = BlacklistedShows.query.filter_by(user_id=current_user.id)
+		blacklist = []
+		for show in blacklisted_shows:
+			blacklist.append(show.id)
+
+	return render_template("user_profile.html", user_profile_name=user_profile.name, user_profile_favourite_shows=user_favourite, activity=activity_total[:50], blacklist=blacklist)
 
 
 
@@ -459,19 +684,21 @@ def user_profile(user_profile_id):
 ##################
 
 @app.route("/admin_panel", methods=["GET"])
+@login_required
 def admin_panel_default():
 	""" Returns default admin panel tab """
 	return admin_panel("")
 
 
 @app.route("/admin_panel/<string:page_type>", methods=["GET", "POST"])
+@login_required
 def admin_panel(page_type):
 	""" Returns specified admin panel tab if it exists, otherwise default. """
 
-	if not session.get("user_id"):
+	if not current_user.id:
 		return redirect("/")
 
-	user_request = Users.query.filter_by(id=session['user_id']).first()
+	user_request = Users.query.filter_by(id=current_user.id).first()
 	if user_request.admin_level < 1:
 		return redirect("/")		
 
@@ -497,11 +724,11 @@ def admin_panel(page_type):
 				db.session.commit()
 				show_request = Shows.query.filter_by(name=show_title)
 
-			new_character = Characters(name=character, show_id=show_request.first().id, admin_id=session['user_id'], death_season=season, death_episode=episode)
+			new_character = Characters(name=character, show_id=show_request.first().id, admin_id=current_user.id, death_season=season, death_episode=episode)
 			db.session.add(new_character)
 			db.session.commit()
 
-			message=f"{ character } has been declared dead on season { season } episode { episode }. Their grave has been added to { show_title }'s cemetary."	
+			message=f"{ character } has been declared dead on season { season } episode { episode }. Their grave has been added to { show_title }'s cemetery."	
 
 		headers_index_search = headers
 		headers_index_search['X-Pagination-Limit'] = '30'
@@ -554,19 +781,20 @@ def admin_panel(page_type):
 
 
 @app.route("/moderate_comment/<int:comment_id>", methods=["GET", "POST"])
+@login_required
 def moderate_comment(comment_id):
 	""" Manages comment with id comment_id based on action received via POST data """
-	if not session['user_id']:
+	if not current_user.id:
 		return redirect("/")
 
-	user_request = Users.query.filter_by(id=session['user_id']).first()
+	user_request = Users.query.filter_by(id=current_user.id).first()
 	if user_request.admin_level < 1:
 		return redirect("/")		
 
 	comment = CharactersMessages.query.get(comment_id)
 
 	if request.form.get("validate"):
-		comment.admin_id = session.get("user_id")			
+		comment.admin_id = current_user.id			
 		db.session.commit()
 
 	if request.form.get("refuse"):
@@ -584,13 +812,14 @@ def moderate_comment(comment_id):
 
 
 @app.route("/manage_suggestions/<int:suggestion_id>", methods=["GET", "POST"])
+@login_required
 def manage_suggestion(suggestion_id):
 	""" Manages suggestion with id suggestion_id based on action received via POST data. """
 
-	if not session['user_id']:
+	if not current_user.id:
 		return redirect("/")
 
-	user_request = Users.query.filter_by(id=session['user_id']).first()
+	user_request = Users.query.filter_by(id=current_user.id).first()
 	if user_request.admin_level < 1:
 		return redirect("/")		
 

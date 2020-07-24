@@ -48,7 +48,7 @@
 		text-align: center;
 		vertical-align: center;
 		padding-top: 10%;
-		padding-bottom: 10%;
+		padding-bottom: 0%;
 		color: #333;
 		text-shadow: 1px 1px #aaa;
 	}
@@ -128,6 +128,11 @@
 
 @media (min-width: 770px)
 {
+	.navbar
+	{
+		padding:  3px 0px;
+	}
+
 	.nav-item
 	{
 		padding-left: 5px;
@@ -142,8 +147,9 @@
 	nav .navbar-brand
 	{
 		font-size: 25px;
-		padding-top: 0%;
+		padding-top: 10px;
 		padding-left: 0px;
+		padding-bottom: 15px;
 	}
 
 	form
@@ -203,6 +209,75 @@
 	/*margin-top: 5px;*/
 }
 
+#front_page #footer
+{
+	position: absolute;
+	bottom: 0;
+	text-align: center;
+	width: 100%;
+	padding: 4% 0%;
+	text-shadow: 1px 1px #000;
+	color: #999;
+}
+
+#footer
+{
+	text-align: center;
+	width: 100%;
+	padding: 4%;
+	text-shadow: 1px 1px #000;
+	color: #999;
+}
+
+#footer a
+{
+	color: #999;
+	text-shadow: 1px 1px #000;
+	padding: 1%;
+}
+
+#footer a:hover
+{
+	text-shadow: 1px 1px #000;
+	color: #ccc;
+}
+
+
+/*********************/
+/* About and Contact */
+/*********************/
+
+#about
+{
+	text-align: left;
+	padding: 15px 20px;
+}
+
+#about p
+{
+	margin-top: 15px;
+}
+
+#about li
+{
+	margin: 10px 5px;
+}
+
+#contact_desc input
+{
+	width: 30%;
+}
+
+#contact_desc textarea
+{
+	width: 80%;
+	height: 100px;
+}
+
+
+/************************/
+/* User and admin panel */
+/************************/
 
 #user_panel form
 {
@@ -367,11 +442,193 @@
 	}
 }
 
+
+/*******************/
+/* Character page */
+/*******************/
+
+#character_page .grave
+{
+	justify-content: center;
+	margin: auto;
+}
+
+#character_page a
+{
+	color: #777;
+}
+
+@media (min-width: 800px)
+{
+	#character_info
+	{
+		float: left;
+		width: 80%;
+	}
+}
+
+@media (max-width: 799px)
+{
+	#character_info
+	{
+		width: 100%;
+		justify-content: center;
+		text-align: center;
+	}
+}
+
+#character_info .character_name
+{
+	font-weight: 450;
+	font-size: 16px;
+	color: #667;
+	text-shadow: 0px -1px #112;
+}
+
+
+#character_info .grave
+{
+	padding: 10px 5px;
+	margin-bottom: 10px;
+	justify-content: center;
+	text-align: center;
+	background-image: url("/static/images/gravestone.png");
+	background-size: 170px 150px;
+	background-repeat: no-repeat;
+	background-position-x: center;
+	width: 90%;
+	color: #778;
+	font-size: 14px;
+	text-shadow: 0px -1px #334;
+
+}
+
+#character_info .grave_text
+{
+	padding-left: 15%;
+}
+
+#character_info .grave table
+{
+	margin: auto;
+	text-align: center;
+	justify-content: center;
+}
+
+#character_info .grave td
+{
+	width: 180px;
+	height: 100px;
+	justify-content: center;
+}
+
+#character_info .grave_plaque
+{
+	position: relative;
+	background-color: darkgray;
+	border:3px solid #808080;
+	border-bottom: 20px solid #808080;
+	border-left: 8px solid #808080;
+	height: 100px;
+	width: 170px;
+	padding: 2px;
+	margin: auto;
+}
+
+#character_info .grave_plaque img
+{
+	height: 20px;
+}
+
+#character_info .grave_message .grave_message_text
+{
+  visibility: hidden;
+  background-color: #fd8;
+  color: #222;
+  font-size: 14px;
+  text-align: center;
+  padding: 2px 5px;
+  border-radius: 6px;
+ 
+  position: absolute;
+  z-index: 2;
+}
+
+#character_messages
+{
+	text-align: left;
+	padding: 2% 0%;
+}
+
+#character_messages_list
+{
+	display:flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: left;
+}
+
+.character_message
+{
+	margin-top: 2%;
+	margin-right: 2%;
+	padding: 12px;
+	border: 1px solid #aaa;
+}
+
+.character_message_header
+{
+	color: #444;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.character_message_content
+{
+	padding-top: 1%;	
+}
+
+@media (min-width: 800px)
+{
+	#other_characters
+	{
+		text-align: left;
+		float: right;
+		width: 20%;
+		margin-top: 2%;
+		padding-left: 2%;
+		border-left: 1px solid gray;
+	}
+
+	#other_characters a
+	{
+		margin: 0px 5px;
+	}
+}
+
+@media (max-width: 799px)
+{
+	#other_characters
+	{
+		width: 0%;
+		display: none;
+	}
+}
+
+
+.delete_message img
+{
+	max-height: 16px;
+	margin-left: 5px;
+	margin-bottom: 3px;
+	cursor: pointer;
+}
+
 /************/
 /* Cemetary */
 /************/
 
-#cemetary_grounds
+#cemetery_grounds
 {
 	display: flex;
 	flex-direction: row;
@@ -393,8 +650,20 @@
 	cursor: pointer;
 }
 
+#cemetery_grounds a:hover
+{
+	text-decoration: none;
+}
+
 @media (min-width: 700px)
 {
+	#cemetery_grounds .grave_text a
+	{
+		font-weight: 450;
+		font-size: 16px;
+		color: #667;
+		text-shadow: 0px -1px #112;
+	}
 
 	.grave
 	{
@@ -407,21 +676,29 @@
 		width: 180px;
 	}
 
+	.grave_text
+	{
+		color: #778;
+		font-size: 14px;
+		text-shadow: 0px -1px #334;
+	}
+
 	.grave td
 	{
 		/*background-color: gray;*/
 		width: 180px;
-		height: 120px;
+		height: 100px;
 		padding-left: 0px;
 	}
 
 	.grave_plaque
 	{
+		position: relative;
 		background-color: darkgray;
 		border:3px solid #808080;
 		border-bottom: 20px solid #808080;
 		border-left: 8px solid #808080;
-		height: 80px;
+		height: 100px;
 		width: 170px;
 		padding: 2px;
 	}
@@ -442,48 +719,56 @@
 	  border-radius: 6px;
 	 
 	  position: absolute;
-	  z-index: 1;
+	  z-index: 2;
 	}
 }
 
 @media (max-width: 699px)
 {
-	.grave
+	#cemetery_grounds .grave_text a
+	{
+		font-size: 10px;
+		color: #667;
+		text-shadow: 0px -1px #112;
+	}
+
+	#cemetery_grounds .grave
 	{
 		text-align: center;
-		padding-right: 5%;
-		margin: 10px 5px;
+		margin: 10px 0px;
 		background-image: url("/static/images/gravestone.png");
 		background-size: 110px 100px;
 		background-repeat: no-repeat;
 		font-size: 10px;
 	}
 
-	.grave td
+	#cemetery_grounds .grave td
 	{
 		/*background-color: gray;*/
 		width: 120px;
-		height: 70px;
+		height: 60px;
 		padding-left: 0px;
+		margin: 5px;
 	}
 
-	.grave_plaque
+	#cemetery_grounds .grave_plaque
 	{
+		position: relative;
 		background-color: darkgray;
 		border:2px solid #808080;
 		border-bottom: 10px solid #808080;
 		border-left: 5px solid #808080;
-		height: 60px;
+		height: 75px;
 		width: 110px;
 		padding: 0px;
 	}
 
-	.grave_plaque img
+	#cemetery_grounds .grave_plaque img
 	{
 		height: 15px;
 	}
 
-	.grave_message .grave_message_text
+	#cemetery_grounds .grave_message .grave_message_text
 	{
 	  visibility: hidden;
 	  background-color: #fd8;
@@ -522,7 +807,7 @@
 	text-align: center;
 }
 
-#myDropdown
+#main_dropdown_list
 {
 	text-align: center;
 	background-color: transparent;
@@ -530,30 +815,73 @@
 }
 
 /* The search field */
-#myInput 
+#main_input 
 {
 	display: inline-block;
 	width: 100%;
 	font-size: 16px;
 	border-bottom: 0px solid #ddd;
-	
 }
 
 /* The search field when it gets focus/clicked on */
-#myInput:focus {outline: 0px solid #ddd;}
+#main_input:focus {outline: 0px solid #ddd;}
 
 /* The container <div> - needed to position the dropdown content */
-#main_dropdown 
+#main_dropdown
+{
+	position: relative;
+}
+
+#main_dropdown .osga_dropdown_content
 {
 	text-align: center;
+	z-index: 9999;
+	padding-top: 30px;
+	padding-left: 25%
+	width: 50%;
 }
+
+#top_dropdown_list
+{
+	text-align: center;
+	background-color: transparent;
+	width: 100%;
+	margin: -15px 0px;
+	padding: 0px 20px;
+	z-index: 9999;
+	
+}
+
+/* The search field */
+#top_input 
+{
+	display: inline-block;
+	width: 100%;
+	font-size: 16px;
+	border-bottom: 1px solid #ddd;	
+}
+
+/* The search field when it gets focus/clicked on */
+#top_input:focus {outline: 0px solid #ddd;}
 
 
 @media (min-width: 700px)
 {
-	/* Dropdown Content (Hidden by Default) */
-	.dropdown-content 
+	/* The container <div> - needed to position the dropdown content */
+	.top_dropdown 
 	{
+		text-align: center;
+		width: 400px;
+		z-index: 9999;
+		position: relative;
+	}
+
+	/* Dropdown Content (Hidden by Default) */
+	.osga_dropdown_content 
+	{
+		position: absolute;
+		top: 0px;
+		left: 0px;
 		text-align: center;
 		width: 70%;
 		padding: 2% 30%;
@@ -561,27 +889,46 @@
 		color: black;
 		background-color: #f6f6f6;
 		overflow: auto;
-		z-index: 1;
+		z-index: 9999;
 	}
 
 	/* Links inside the dropdown */
-	.dropdown-content a 
+	.osga_dropdown_content a 
 	{
 		text-align: left;
 		color: black;
 		padding: 4px 10px;
-		background-color: white;
+		background-color: #eee;
+		border-left: 1px solid gray;
+		box-shadow: 2px 2px 2px #888;
 		text-decoration: none;
-		display: none;
+		display: none;	
+		overflow: auto;
+		z-index: 9999;
 	}
 }
 
 
 @media (max-width: 699px)
 {
-	/* Dropdown Content (Hidden by Default) */
-	.dropdown-content 
+	/* The container <div> - needed to position the dropdown content */
+	.top_dropdown 
 	{
+		position: relative;
+		text-align: center;
+		margin-top: 15px;
+		margin-bottom: 0px;
+		width: 300px;
+		z-index: 9999;
+		position: relative;
+	}
+
+	/* Dropdown Content (Hidden by Default) */
+	.osga_dropdown_content 
+	{
+		position: absolute;
+		top: 0px;
+		left: 0px;
 		text-align: center;
 		width: 89%;
 		padding: 11%;
@@ -589,22 +936,28 @@
 		color: black;
 		background-color: #f6f6f6;
 		overflow: auto;
-		z-index: 1;
+		z-index: 9999;
 	}
 
 	/* Links inside the dropdown */
-	.dropdown-content a 
+	.osga_dropdown_content a 
 	{
 		text-align: left;
 		color: black;
 		padding: 4px 10px;
-		background-color: white;
+		background-color: #eee;
+		border-left: 1px solid gray;
+		box-shadow: 2px 2px 2px #888;
 		text-decoration: none;
-		display: none;
+		display: none;	
+		overflow: auto;
+		z-index: 9999;
 	}
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #f1f1f1}
+.osga_dropdown_content a:hover {background-color: #f1f1f1}
 
 .show {display: block;}
+
+
