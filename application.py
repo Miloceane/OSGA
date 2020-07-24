@@ -424,8 +424,8 @@ def register():
 		if error != "":
 			return render_template("register.html", error=error)
 
-		password_salt = base64.b64encode(os.urandom(64))[64:]
-		password_hash = base64.b64encode(scrypt.hash(password, password_salt))[128:]
+		password_salt = os.urandom(64).hex()[64:]
+		password_hash = scrypt.hash(password, password_salt).hex()[64:]
 
 		activation_code = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(16))
 		activation_date = datetime.now()
@@ -460,10 +460,14 @@ def login():
 		# but SQLAlchemy already makes them technically impossible, so this is probably not necessary.
 		if username_input.isalnum():
 			login_request = Users.query.filter(and_(Users.name == username_input)).first()
-			password_input_hash = scrypt.hash(password_input, login_request.password_salt)[128:]
+
+			if login_request is None:
+				return render_template("layout_message.html", error="This username doesn't exist in our database.")
+
+			password_input_hash = scrypt.hash(password_input, login_request.password_salt).hex()[64:]
+			print(password_input_hash)
 
 			if password_input_hash != login_request.password:
-				flash("Username and password didn't match.")
 				return render_template("layout_message.html", error="Your username and password didn't match.")
 
 			
@@ -538,6 +542,61 @@ def confirm_registration():
 	# https://security.stackexchange.com/questions/197004/what-should-a-verification-email-consist-of
 
 
+@app.route("/new_password", methods=["GET", "POST"])
+def new_password():
+
+	email = request.form.get("email")
+
+	if email is not None:
+		
+		user = Users.query.filter_by(email=email).first()
+
+		password = request.form.get("password")
+		password_confirmation = request.form.get("password_confirmation")
+
+		if password is None:
+
+			activation_code = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(16))
+			activation_date = datetime.now()
+			activation_latest = activation_date + timedelta(days=2)
+
+			user.activation_code = activation_code
+			user.activation_timelimit = activation_latest
+			db.session.commit()
+
+			confirmation_message_title = f"New password confirmation code for OSGA"
+			confirmation_message_html = f"Hello { user.name },<br><br>If you haven't requested a password change, please ignore this email!<br><br> Your confirmation code is: <b>{ activation_code }</b>. Fill it in on the confirmation page to create a new password!"
+			msg = Message(confirmation_message_title, sender="staff@osga-cemetery.com", recipients=[email])
+			msg.html = confirmation_message_html
+			mail.send(msg)
+
+			return render_template("new_password.html", email=email, resent=True)
+
+		# current_date needs to be timezone aware to be compared
+		timezone = user.activation_timelimit.tzinfo
+		current_date = datetime.now(timezone)
+
+		if current_date > user.activation_timelimit:
+			return render_template("new_password.html", error="Your activation code has expired! Please click on Resend here under to get a new one.", email=request.form.get("email"), resent=True)
+
+
+		activation_code = request.form.get("activation_code")
+		
+		if activation_code == user.activation_code:
+			password_salt = os.urandom(64).hex()[64:]
+			password_hash = scrypt.hash(password, password_salt).hex()[64:]
+			user.password_salt = password_salt
+			user.password = password_hash
+			db.session.commit() 
+			login_user(user)
+			return render_template("new_password.html", success="You password has successfully been changed!")
+
+		else:
+			return render_template("new_password.html", error="Your confirmation code didn't match your email address. Please check it again!", email=email, resent=True)
+
+
+	return render_template("new_password.html", email="E-mail address")
+
 #--------------------------------------------------------------------------------------------------
 #############
 # USER INFO #
@@ -574,8 +633,8 @@ def user_panel(page_type):
 			else:
 				success_message += "Your password has been changed! "
 				
-				user.password_salt = base64.b64encode(os.urandom(64))[64:]
-				user.password = base64.b64encode(scrypt.hash(password, user.password_salt))[128:]
+				user.password_salt = base64.b64encode(os.urandom(64))[64:	]
+				user.password = base64.b64encode(scrypt.hash(password, user.password_salt))[64:]
 				db.session.commit()
 		
 		if request.form.get("email"):

@@ -453,3 +453,266 @@ INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Mi
 INFO:werkzeug: * Restarting with stat
 INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
 INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 15:02:39] "POST /register HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 15:02:39] "GET /register?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 15:02:39] "GET /register?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 15:02:41] "GET /register?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 15:02:42] "GET /register?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 15:02:42] "GET /register?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 15:02:42] "GET /register?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 15:04:05] "POST /register HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 15:04:06] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:02:16] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:02:42] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:02:42] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:02:43] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:02:43] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:03:02] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:03:02] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:03:02] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:03:03] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:03:20] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:03:20] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:03:20] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:03:21] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:03:32] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:03:32] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:03:32] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:03:33] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:04:07] "GET /cemetary/1 HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:04:10] "GET /cemetary/1 HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:04:34] "GET /cemetery/1 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:04:43] "GET /cemetery/1 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:04:44] "GET /static/images/flowers/0.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:04:44] "GET /static/images/gravestone.png HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:05:37] "GET /cemetery/3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:05:37] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:05:41] "GET /cemetery/1 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:05:53] "GET /cemetery/3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:05:53] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:05:53] "GET /static/images/flowers/0.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:05:53] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:05:53] "GET /static/images/gravestone.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:05:53] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [23/Jul/2020 16:05:58] "GET /newpassword HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:10:06] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:10:07] "GET /static/css/osga_style.css HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:10:07] "GET /static/images/main_background.jpg HTTP/1.1" 304 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:10:08] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:10:17] "GET /newpassword HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:10:17] "GET /newpassword?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:10:17] "GET /newpassword?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:10:17] "GET /newpassword?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:10:18] "GET /newpassword?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:10:19] "GET /newpassword?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:10:19] "GET /newpassword?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:11:19] "GET /newpassword HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:11:22] "GET /newpassword HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:11:38] "GET /newpassword HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:11:39] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:11:48] "GET /newpassword HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:12:02] "GET /newpassword HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:12:06] "GET /newpassword HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:12:19] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:12:20] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:12:20] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:12:20] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:12:23] "GET /new_password HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:12:37] "GET /new_password HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:12:37] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:12:37] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:12:38] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:13:21] "GET /new_password HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:13:21] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:13:21] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:13:22] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:13:46] "GET /new_password HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:13:46] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:13:47] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:13:47] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:14:40] "GET /new_password HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:14:40] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:14:41] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:14:41] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:15:03] "GET /new_password HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:15:03] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:15:04] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:15:04] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:15:27] "GET /new_password HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:15:27] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:15:28] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:15:29] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:16:05] "GET /new_password HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:16:05] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:16:05] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:16:06] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:16:14] "GET /new_password HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:16:14] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:16:14] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:16:15] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:20:51] "GET /new_password HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:20:51] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:20:51] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:20:52] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:21:01] "POST /new_password HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:21:01] "GET /new_password?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:21:01] "GET /new_password?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:21:02] "GET /new_password?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:21:02] "GET /new_password?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:21:02] "GET /new_password?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:21:02] "GET /new_password?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:22:08] "POST /new_password HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:22:08] "GET /new_password?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:22:08] "GET /new_password?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:22:08] "GET /new_password?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:22:09] "GET /new_password?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:22:09] "GET /new_password?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:22:09] "GET /new_password?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:22:18] "POST /new_password HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:22:19] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:22:19] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:22:19] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:22:25] "POST /new_password HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:22:29] "POST /new_password HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:24:10] "POST /new_password HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:24:11] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:24:11] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:24:11] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:24:44] "POST /new_password HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:24:44] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:24:44] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:24:45] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:25:10] "POST /new_password HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:25:37] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:25:40] "GET /logout HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:25:40] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:25:53] "POST /login HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:26:03] "POST /login HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:33:39] "GET /new_password HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:33:47] "POST /new_password HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:34:18] "POST /new_password HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:34:18] "GET /new_password?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:34:18] "GET /new_password?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:34:19] "GET /new_password?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:34:19] "GET /new_password?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:34:19] "GET /new_password?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:34:19] "GET /new_password?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:40:01] "POST /new_password HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:40:01] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:40:02] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:40:03] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:40:12] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:40:15] "GET /logout HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:40:16] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:40:24] "POST /login HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:41:33] "POST /login HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:41:33] "GET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:41:33] "GET /login?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:41:33] "GET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:41:33] "GET /login?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:41:33] "GET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:41:33] "GET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:41:50] "POST /login HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:41:51] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:41:51] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:41:52] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:42:25] "POST /login HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:42:25] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:42:26] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:42:26] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:47:41] "POST /login HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:47:42] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:47:42] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:47:43] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:48:14] "GET /new_password HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:48:20] "POST /new_password HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:48:45] "POST /new_password HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:48:50] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:48:53] "GET /logout HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:48:54] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:49:04] "POST /login HTTP/1.1" 500 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:49:04] "GET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:49:04] "GET /login?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:49:04] "GET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:49:04] "GET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:49:04] "GET /login?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:49:04] "GET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:49:19] "POST /login HTTP/1.1" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:49:20] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 15:49:24] "GET /user_profile/24 HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading
+INFO:werkzeug: * Restarting with stat
