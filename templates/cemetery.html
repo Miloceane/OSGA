@@ -25,11 +25,12 @@
 	function change_current_flower(flower_id)
 	{
 		current_flower_id = flower_id;
-		let plaques = document.getElementsByClassName("graves_plaques");
+		let plaques = document.getElementsByClassName('grave_plaque');
 
 		for (var i = 0; i < plaques.length; i++)
 		{
-			plaques[i].style.cursor = "url('/static/imgages/flowers/" + current_flower_id + ".png'), pointer";
+			let current_plaque = plaques[i]
+			current_plaque.style.cursor = "url('/static/images/flowers/" + current_flower_id + "_small.png'), url('/static/images/flowers/scroll_small.png'), pointer";
 		}
 	}
 

@@ -707,7 +707,7 @@
 		height: 100px;
 		width: 170px;
 		padding: 2px;
-		cursor: url('/static/images/flowers/0.png'), pointer;
+		cursor: url('/static/images/flowers/0_small.png'), pointer;
 	}
 
 	.grave_plaque img
@@ -769,7 +769,7 @@
 		height: 75px;
 		width: 110px;
 		padding: 0px;
-		cursor: url('/static/imgages/flowers/0.png'), pointer;
+		cursor: url('/static/imgages/flowers/0_small.png'), pointer;
 	}
 
 	#cemetery_grounds .grave_plaque img
