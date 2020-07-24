@@ -945,3 +945,27 @@ INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:17:54] "GET /static/images/flowers/-
 INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:17:54] "GET /static/images/flowers/scroll_small.png HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:18:24] "GET /save_flower/209/3/60/127 HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:18:34] "POST /cemetery/3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:05] "POST /cemetery/3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:11] "POST /cemetery/3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:12] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:12] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:13] "GET /static/images/flowers/0.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:13] "GET /static/images/flowers/0_small.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:13] "GET /static/images/flowers/scroll.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:13] "GET /static/images/flowers/2.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:13] "GET /static/images/flowers/1.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:14] "GET /static/images/flowers/3.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:14] "GET /static/images/gravestone.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:14] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:25] "POST /cemetery/3 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:25] "GET /static/images/flowers/3.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:25] "GET /static/images/flowers/scroll.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:25] "GET /static/images/flowers/2.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:26] "GET /static/css/osga_style.css HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:26] "GET /static/images/flowers/0_small.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:27] "GET /static/images/flowers/1.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:27] "GET /static/images/main_background.jpg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:27] "GET /static/images/flowers/0.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:27] "GET /static/images/gravestone.png HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jul/2020 17:23:28] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug: * Detected change in 'C:\\Users\\Charlotte\\Documents\\Jaar 3\\Minor\\WebApp\\final\\online_repo\\OSGA\\application.py', reloading

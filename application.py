@@ -6,7 +6,7 @@
 # (Universiteit van Amsterdam) #
 ################################
 
-import logging
+# import logging
 
 import os
 import sys
@@ -41,7 +41,7 @@ from import_shows import ShowsList
 # IMPORTANT: Setting this variable to True allows anyone to access Flask Admin via /admin. Always set back to False before deploying!
 g_is_local = False
 
-logging.basicConfig(filename='./osga.log',level=logging.DEBUG)
+# logging.basicConfig(filename='./osga.log',level=logging.DEBUG)
 
 # TODO: Change global variable names to make them start with g_, as to show that they are global.
 
