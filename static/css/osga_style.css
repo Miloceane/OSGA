@@ -668,6 +668,7 @@
 		font-size: 16px;
 		color: #667;
 		text-shadow: 0px -1px #112;
+		cursor: pointer;
 	}
 
 	.grave
@@ -706,6 +707,7 @@
 		height: 100px;
 		width: 170px;
 		padding: 2px;
+		cursor: url('/static/images/flowers/0.png'), pointer;
 	}
 
 	.grave_plaque img
@@ -735,6 +737,7 @@
 		font-size: 10px;
 		color: #667;
 		text-shadow: 0px -1px #112;
+		cursor: pointer;
 	}
 
 	#cemetery_grounds .grave
@@ -766,6 +769,7 @@
 		height: 75px;
 		width: 110px;
 		padding: 0px;
+		cursor: url('/static/imgages/flowers/0.png'), pointer;
 	}
 
 	#cemetery_grounds .grave_plaque img
