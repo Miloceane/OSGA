@@ -201,6 +201,11 @@
 	margin-top: 2%;
 }
 
+#login_box
+{
+	z-index: 3;
+}
+
 .container
 {
 	border-bottom: 1px solid gray;
@@ -835,7 +840,7 @@
 #main_dropdown .osga_dropdown_content
 {
 	text-align: center;
-	z-index: 9999;
+	z-index: 2;
 	padding-top: 30px;
 	padding-left: 25%
 	width: 50%;
@@ -848,7 +853,7 @@
 	width: 100%;
 	margin: -15px 0px;
 	padding: 0px 20px;
-	z-index: 9999;
+	z-index: 2;
 	
 }
 
@@ -872,7 +877,7 @@
 	{
 		text-align: center;
 		width: 400px;
-		z-index: 9999;
+		z-index: 2;
 		position: relative;
 	}
 
@@ -889,7 +894,7 @@
 		color: black;
 		background-color: #f6f6f6;
 		overflow: auto;
-		z-index: 9999;
+		z-index: 2;
 	}
 
 	/* Links inside the dropdown */
@@ -904,7 +909,7 @@
 		text-decoration: none;
 		display: none;	
 		overflow: auto;
-		z-index: 9999;
+		z-index: 2;
 	}
 }
 
@@ -936,7 +941,7 @@
 		color: black;
 		background-color: #f6f6f6;
 		overflow: auto;
-		z-index: 9999;
+		z-index: 2;
 	}
 
 	/* Links inside the dropdown */
@@ -951,7 +956,7 @@
 		text-decoration: none;
 		display: none;	
 		overflow: auto;
-		z-index: 9999;
+		z-index: 2;
 	}
 }
 
