@@ -114,8 +114,12 @@
 			  	</div>
 	  			<div class="user_panel_flexrow">
 	  				<div class="user_panel_flexelement">E-mail address:</div>
-	  				<div class="user_panel_flexelement"><input type="text" name="email" placeholder="New e-mail address">
-	  					<input type="text" name="email_confirmation" placeholder="New e-mail address (confirmation)">
+	  				<div class="user_panel_flexelement">
+	  					<input type="text" name="email" placeholder="New e-mail address" {% if new_email_address %} value="{{ new_email_address }}" {% endif %}>
+	  					<input type="text" name="email_confirmation" placeholder="New e-mail address (confirmation)" {% if new_email_address %} value="{{ new_email_address }}" {% endif %}>
+	  					{% if new_email %}
+	  						<input type="text" class="green_form" name="email_confirmation_code" placeholder="Confirmation code">
+	  					{% endif %}
 	  				</div>
 	  				<div class="user_panel_flexelement">
 			  			<button>Change e-mail address</button>

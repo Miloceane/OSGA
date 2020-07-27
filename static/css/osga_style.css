@@ -295,6 +295,11 @@
 	height: 100px;
 }
 
+.green_form
+{
+	border: 2px solid #5c7;
+}
+
 @media (min-width: 700px)
 {
 	#user_panel

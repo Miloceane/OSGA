@@ -551,6 +551,9 @@ def new_password():
 		
 		user = Users.query.filter_by(email=email).first()
 
+		if user is None:
+			return render_template("new_password.html", email="E-mail address", error="There is no user with this e-mail address on OSGA.")
+
 		password = request.form.get("password")
 		password_confirmation = request.form.get("password_confirmation")
 
@@ -620,6 +623,7 @@ def user_panel(page_type):
 	user = Users.query.get(current_user.id)
 	error_message = ""
 	success_message = ""
+	new_email = False
 
 	#---- Display User settings tab ----#
 	if page_type == "user_settings": 
@@ -633,26 +637,74 @@ def user_panel(page_type):
 			else:
 				success_message += "Your password has been changed! "
 				
-				user.password_salt = base64.b64encode(os.urandom(64))[64:	]
+				user.password_salt = base64.b64encode(os.urandom(64))[64:]
 				user.password = base64.b64encode(scrypt.hash(password, user.password_salt))[64:]
 				db.session.commit()
 		
+		###  E-mail Change  ###
 		if request.form.get("email"):
-			if request.form.get("email") != request.form.get("email_confirmation"):
+
+			new_email_address = request.form.get("email")
+			email_exist_query = Users.query.filter_by(email=new_email_address).count()
+
+			if new_email_address != request.form.get("email_confirmation"):
 				error_message += "E-mail address and confirmation didn't match! "
+
 			elif login_fresh() is False:
 				error_message += "You are using an old session, please log out and log in again to change your e-mail address."
+
+			elif email_exist_query > 0:
+				error_message += "This email address is already taken!"
+
+			elif request.form.get("email_confirmation_code"):
+				# current_date needs to be timezozne aware to be compared
+				timezone = user.activation_timelimit.tzinfo
+				current_date = datetime.now(timezone)
+
+				if current_date > user.activation_timelimit:
+					error_message += "Your activation code has expired! Please click on Resend here under to get a new one."
+
+				else:
+					activation_code = request.form.get("email_confirmation_code")
+					
+					if activation_code == user.activation_code:
+						user.email = new_email_address
+						db.session.commit() 
+						login_user(user)
+						success_message += "Your email has successfully been updated!"
+
+					else:
+						error_message += "Your confirmation code didn't work, try copy-pasting it from your confirmation e-mail!"
+						new_email = True
+
 			else:
-				success_message += "Your e-mail address has been changed! "
-				user.email = request.form.get("email")
-				db.session.commit()
+				activation_code = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(16))
+				activation_date = datetime.now()
+				activation_latest = activation_date + timedelta(days=2)
+				
+				user.activation_code = activation_code
+				user.activation_timelimit = activation_latest
+				db.session.commit() 
+						
+				confirmation_message_title = f"New e-mail address on OSGA"
+				confirmation_message_html = f"Hello { user.name },<br><br>Your request to change your e-mail address on OSGA has been received!<br><br>Your confirmation code is: <b>{ activation_code }</b> (valid for 2 days). \
+				Fill it in on the user panel!<br><br>We hope you have a good time on our site,<br><br>The OSGA maitenance team"
+				msg = Message(confirmation_message_title, sender="staff@osga-cemetery.com", recipients=[new_email_address])
+				msg.html = confirmation_message_html
+				mail.send(msg)
+
+				success_message += "Your request to change your e-mail address has been taken into account. In order to control that you entered a valid e-mail address, we sent \
+				you a confirmation e-mail. Please add the confirmation code you received via email under your e-mail address in the form hereunder!"
+
+				new_email = True
+
 
 		if request.form.get("update_pref"):
 			user.display_fav = not (request.form.get("display_favourite") is None)
 			user.display_activity = not (request.form.get("display_activity") is None)
 			db.session.commit()
 
-		return render_template("user_panel.html", selected_user_settings="active", user_info=user, error=error_message, success=success_message, fresh_session=login_fresh())
+		return render_template("user_panel.html", selected_user_settings="active", user_info=user, error=error_message, success=success_message, fresh_session=login_fresh(), new_email=new_email, new_email_address=new_email_address)
 
 
 	#---- Display Suggestions tab ----#
@@ -765,8 +817,6 @@ def admin_panel(page_type):
 
 	#---- Declare character death ----#
 	if page_type == "declare_death":
-		# TODO: Add a way to make import of dead characters in database faster because really for newly added series this takes forever
-		# and I don't know if I can trust other admins enough to let them use the .csv import.
 
 		if request.form.get("character"): # Receive death declaration
 			# TODO: Add some protection against injections here in case an admin suddenly decides to hack the website (been there)
