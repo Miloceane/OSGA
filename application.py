@@ -268,7 +268,7 @@ def cemetery(cemetery_id):
 		cemetery_query = Characters.query.filter_by(show_id=cemetery_id).order_by(Characters.flower_count.desc())
 	
 	else:
-		cemetery_query = Characters.query.filter_by(show_id=cemetery_id).order_by(Characters.id)
+		cemetery_query = Characters.query.filter_by(show_id=cemetery_id).order_by(Characters.death_season, Characters.death_episode)
 
 
 	for character in cemetery_query:
