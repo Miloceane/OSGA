@@ -10,7 +10,7 @@
 					<div class="user_panel_flexrow">
 	  					<div class="user_panel_flexelement">Username</div>
 						<div class="user_panel_flexelement">
-							<input type="text" name="username" placeholder="Username">
+							<input type="text" name="username" {% if username != "" %}value="{{ username }}"{% endif %} placeholder="Username">
 						</div>
 						<div class="user_panel_flexelement">
 							(Can only contain letters and numbers)</div>
@@ -18,20 +18,24 @@
 					<div class="user_panel_flexrow">
 	  					<div class="user_panel_flexelement">Password</div>
 							<div class="user_panel_flexelement">
-								<input type="password" name="password" placeholder="Password"></div>
+								<input type="password" name="password"  {% if password != "" %}value="{{ password }}"{% endif %} placeholder="Password"></div>
 							<div class="user_panel_flexelement">
-								<input type="password" name="password_confirmation" placeholder="Password (confirmation)"></div>
+								<input type="password" name="password_confirmation"  {% if password != "" %}value="{{ password }}"{% endif %}  placeholder="Password (confirmation)"></div>
 							<div class="user_panel_flexelement">
 								(Must be at least 8 characters long)</div>
 						</div>
 					<div class="user_panel_flexrow">
   						<div class="user_panel_flexelement">E-mail address</div>
-						<div class="user_panel_flexelement"><input type="text" name="email" placeholder="E-mail address"></div><br>
+						<div class="user_panel_flexelement"><input type="text" name="email" {% if email != "" %}value="{{ email }}"{% endif %} placeholder="E-mail address"></div><br>
 		    			<div class="user_panel_flexelement">
-							<input type="text" name="email_confirmation" placeholder="E-mail confirmation"></div>
+							<input type="text" name="email_confirmation" {% if email != "" %}value="{{ email }}"{% endif %} placeholder="E-mail confirmation"></div>
 		    		</div>
-		    		<input type="checkbox" name="read_terms"> I confirm that I have read and accepted the <a href="/terms" target="_blank">Terms and Conditions</a> (you can also find them at the bottom of each page anytime)<br><br>
-		    		<button>Submit</button>
+		    		<br>
+		    		<input type="checkbox" name="read_terms" {% if read_terms %}checked="checked"{% endif %}> I confirm that I have read and accepted the <a href="/terms" target="_blank">Terms and Conditions</a> (you can also find them at the bottom of each page anytime)<br><br>
+		    		CAPTCHA verification, please type the code hereunder in the following form field:<br>
+					{{ captcha() }}
+					<input type="text" name="captcha"><br><br><br>
+			    	<button>Confirm registration</button><br><br>
 			    </div>
 			</form>
 		</p>

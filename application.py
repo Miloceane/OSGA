@@ -419,16 +419,27 @@ def register():
 		# NOTE: isalnum() was used here to force usernames to contain only alphanumeric characters in order to protect against SQL injections,
 		# but SQLAlchemy already makes them technically impossible, so this is probably not necessary.
 		if not username.isalnum():
+			username = ""
 			error += "Your username can only contain letters or numbers. "
 		
+		username_exist_query = Users.query.filter_by(name=username).count()
+		if username_exist_query > 0:
+			username = ""
+			error += "This username is already taken! "
+		
 		if len(password) < 8:
+			password = ""
 			error += "Your password must be at least 8 characters long. "	
 
 		if password != password_confirmation:
+			password = ""
+			password_confirmation = ""
 			error += "Password and confirmation didn't match! "
 
 		# TODO: check email validity. Library? Regex?
 		if email != email_confirmation:
+			email = ""
+			email_confirmation = ""
 			error += "Email and confirmation didn't match! "
 
 		email_exist_query = Users.query.filter_by(email=email).count()
@@ -438,8 +449,11 @@ def register():
 		if read_terms is False:
 			error += "You can't register if you don't accept the terms and conditions! "
 
+		if not captcha.validate():
+			error += "The CAPTCHA verification didn't work, please try again. "
+
 		if error != "":
-			return render_template("register.html", error=error)
+			return render_template("register.html", error=error, username=username, password=password, password_confirmation=password_confirmation, email=email, read_terms=read_terms)
 
 		password_salt = os.urandom(64).hex()[64:]
 		password_hash = scrypt.hash(password, password_salt).hex()[64:]
@@ -454,7 +468,7 @@ def register():
 
 		confirmation_message_title = f"Registration on OSGA"
 		confirmation_message_html = f"Hello { username },<br><br>Thank you for registering on OSGA!<br><br>Your activation code is: <b>{ activation_code }</b> (valid for 2 days). \
-		Fill it in on the confirmation page to activate your account!<br><br>Can't find the confirmation page? <a href=\"" + url_for("confirm_registration") + "\">Click here</a>!<br><br>We hope you have a good time on our site,<br><br>The OSGA maitenance team"
+		Fill it in on the confirmation page to activate your account!<br>Can't find the confirmation page? <a href=\"http://www.osga-cemetery.com/confirm_registration\">Click here</a>!<br><br>We hope you have a good time on our site,<br><br>The OSGA maitenance team"
 		msg = Message(confirmation_message_title, sender="staff@osga-cemetery.com", recipients=[email])
 		msg.html = confirmation_message_html
 		mail.send(msg)

@@ -411,21 +411,6 @@
 	}
 }
 
-.register_panel table
-{
-	text-align: center;
-	margin-left: 1%;
-}
-
-.register_panel td,.register_panel th
-{
-	text-align: left;
-	border: 0px solid gray;
-	padding: 10px;
-	width: 5%;
-	height: 0px;
-}
-
 .important_suggestion table
 {
 	border: 2px solid #444;
@@ -438,6 +423,26 @@
 
 @media (min-width: 700px)
 {
+	.register_panel 
+	{
+		text-align: left;
+	}
+
+	.register_panel_center
+	{
+		text-align: center;
+	}
+
+	.register_panel .user_panel_flexrow
+	{
+		padding: 10px;
+	}
+
+	.register_panel .user_panel_flexelement input
+	{
+		width: 80%;
+	}
+
 	.small_description
 	{
 		font-size: 14px;
