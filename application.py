@@ -487,7 +487,7 @@ def login():
 
 		username_input = request.form.get("username")
 		password_input = request.form.get("password")
-		
+
 		# NOTE: isalnum() was used here to force usernames to contain only alphanumeric characters in order to protect against SQL injections,
 		# but SQLAlchemy already makes them technically impossible, so this is probably not necessary.
 		if username_input.isalnum():
@@ -654,6 +654,7 @@ def user_panel(page_type):
 	error_message = ""
 	success_message = ""
 	new_email = False
+	new_email_address = ""
 
 	#---- Display User settings tab ----#
 	if page_type == "user_settings": 
