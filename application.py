@@ -16,7 +16,7 @@ import random, string
 import hashlib
 from datetime import datetime, timedelta
 
-from flask import Flask, render_template, request, session, redirect, url_for, flash
+from flask import Flask, render_template, request, session, redirect, url_for, flash, escape
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -26,6 +26,7 @@ from flask_admin.contrib.sqla import ModelView
 from flask_mail import Mail, Message
 from flask_login import LoginManager, login_user, logout_user, login_required, login_fresh, current_user
 from flask_session_captcha import FlaskSessionCaptcha
+from flaskext.csrf import csrf, csrf_exempt
 from sqlalchemy import and_
 from requests import get
 
@@ -100,6 +101,9 @@ app.config['CAPTCHA_WIDTH'] = 160
 app.config['CAPTCHA_HEIGHT'] = 60
 captcha = FlaskSessionCaptcha(app)
 
+# Configure CSRF
+csrf(app)
+
 
 
 #--------------------------------------------------------------------------------------------------
@@ -162,7 +166,7 @@ def terms():
 	""" Terms and conditions """
 	return render_template("terms.html", title="OSGA: One Site to Grieve them All")
 
-
+@csrf_exempt
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
 	""" Terms and conditions """
@@ -178,8 +182,12 @@ def contact():
 				admins = Users.query.filter(Users.admin_level > 0).all()
 				admins_email = [admin.email for admin in admins]
 
-				msg = Message("[OSGA - Message sent by: " + request.form.get("email") + "] "+ request.form.get("subject"), sender="staff@osga-cemetery.com", recipients=admins_email)
-				msg.html = "[OSGA - Message sent by: " + request.form.get("email") + "] <br><br>" + request.form.get("message")
+				sent_email = escape(request.form.get("email"))
+				sent_subject = escape(request.form.get("subject"))
+				sent_message = escape(request.form.get("message"))
+
+				msg = Message("[OSGA - Message sent by: " + sent_email + "] "+ sent_subject, sender="staff@osga-cemetery.com", recipients=admins_email)
+				msg.html = sent_message
 				mail.send(msg)
 				return render_template("layout_message.html", title="OSGA: One Site to Grieve them All", message="Your message has been sent to our staff and we will read it as soon as we receive it. Thanks for contacting us!")
 
