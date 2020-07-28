@@ -74,9 +74,9 @@ headers = { 'Content-Type': 'application/json', 'trakt-api-key': '9cba8155f5e9c9
 # Configure mail
 # TODO: store credentials in db or somewhere else that's safe
 app.config["MAIL_SERVER"] = 'mail.privateemail.com'
-app.config["MAIL_USERNAME"] = 'staff@osga-cemetery.com'
-app.config["MAIL_DEFAULT_SENDER"] = 'staff@osga-cemetery.com'
-app.config["MAIL_PASSWORD"] = 'OsgaLotta37'
+app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
+app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_USERNAME")
+app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
 app.config["MAIL_PORT"] = 465
 app.config["MAIL_USE_TLS"] = False
 app.config["MAIL_USE_SSL"] = True
@@ -164,7 +164,7 @@ def contact():
 			admins = Users.query.filter(Users.admin_level > 0).all()
 			admins_email = [admin.email for admin in admins]
 
-			msg = Message("[OSGA - Message sent by: " + request.form.get("email") + "] "+ request.form.get("subject"), sender=request.form.get("email"), recipients=admins_email)
+			msg = Message("[OSGA - Message sent by: " + request.form.get("email") + "] "+ request.form.get("subject"), sender="staff@osga-cemetery.com", recipients=admins_email)
 			msg.html = "[OSGA - Message sent by: " + request.form.get("email") + "] <br><br>" + request.form.get("message")
 			mail.send(msg)
 			return render_template("layout_message.html", title="OSGA: One Site to Grieve them All", message="Your message has been sent to our staff and we will read it as soon as we receive it. Thanks for contacting us!")
@@ -511,7 +511,7 @@ def confirm_registration():
 
 			confirmation_message_title = f"Activation code for OSGA"
 			confirmation_message_html = f"Hello { username },<br><br>If you haven't requested a new activation code, please ignore this email!<br><br> Your new activation code is: <b>{ activation_code }</b> (valid until: { activation_latest.time() }. Fill it in on the confirmation page to activate your account!"
-			msg = Message(confirmation_message_title, sender="noreply@osga.com", recipients=[email])
+			msg = Message(confirmation_message_title, sender="staff@osga-cemetery.com", recipients=[email])
 			msg.html = confirmation_message_html
 			mail.send(msg)
 
