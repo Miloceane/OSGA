@@ -497,8 +497,7 @@ def login():
 				return render_template("layout_message.html", error="This username doesn't exist in our database.")
 
 			password_input_hash = scrypt.hash(password_input, login_request.password_salt).hex()[64:]
-			print(password_input_hash)
-
+			
 			if password_input_hash != login_request.password:
 				return render_template("layout_message.html", error="Your username and password didn't match.")
 
@@ -509,10 +508,8 @@ def login():
 
 				user = login_request
 				login_user(user, remember = not (request.form.get("remember_me") is None))
-				return render_template("index.html")
 			
-	return redirect(referrer)
-
+	return render_template("index.html")
 
 
 @app.route("/logout", methods=["GET", "POST"])
