@@ -482,6 +482,7 @@ def register():
 @app.route("/login", methods=["GET", "POST"])
 def login():
 	""" Logs user in and redirects to currently visited page """
+
 	if request.form.get("username") and request.form.get("password"):
 
 		username_input = request.form.get("username")
@@ -508,8 +509,9 @@ def login():
 
 				user = login_request
 				login_user(user, remember = not (request.form.get("remember_me") is None))
-				
-	return redirect(request.referrer)
+				return render_template("index.html")
+			
+	return redirect(referrer)
 
 
 
@@ -517,8 +519,8 @@ def login():
 def logout():
 	""" Logs user out and redirects to currently visisted page """
 	logout_user()
-	return redirect(request.referrer)
-
+	return render_template("index.html")
+			
 
 @app.route("/confirm_registration", methods=["GET", "POST"])
 def confirm_registration():
