@@ -25,6 +25,7 @@ from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_mail import Mail, Message
 from flask_login import LoginManager, login_user, logout_user, login_required, login_fresh, current_user
+from flask_session_captcha import FlaskSessionCaptcha
 from sqlalchemy import and_
 from requests import get
 
@@ -72,7 +73,6 @@ api_key = 'e2e38b259acb59d88cd855a3af7a9f60c8dab289592f73ee1f1bdba9877dda5d'
 headers = { 'Content-Type': 'application/json', 'trakt-api-key': '9cba8155f5e9c914ace595df9e6e57efc8bf073b3e69de3aba717a147a634a27', 'trakt-api-version': '2'}
 
 # Configure mail
-# TODO: store credentials in db or somewhere else that's safe
 app.config["MAIL_SERVER"] = 'mail.privateemail.com'
 app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
 app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_USERNAME")
@@ -92,6 +92,14 @@ login_manager.login_view = "/"
 @login_manager.user_loader
 def load_user(user_id):
     return Users.query.get(int(user_id))
+
+# Configure CAPTCHA
+app.config['CAPTCHA_ENABLE'] = True
+app.config['CAPTCHA_LENGTH'] = 5
+app.config['CAPTCHA_WIDTH'] = 160
+app.config['CAPTCHA_HEIGHT'] = 60
+captcha = FlaskSessionCaptcha(app)
+
 
 
 #--------------------------------------------------------------------------------------------------
@@ -158,21 +166,30 @@ def terms():
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
 	""" Terms and conditions """
+
+	error_message = ""
+
 	if request.form.get("email") or request.form.get("subject") or request.form.get("message"):
-		if request.form.get("email") and request.form.get("subject") and request.form.get("message"):
 
-			admins = Users.query.filter(Users.admin_level > 0).all()
-			admins_email = [admin.email for admin in admins]
+		if captcha.validate():
 
-			msg = Message("[OSGA - Message sent by: " + request.form.get("email") + "] "+ request.form.get("subject"), sender="staff@osga-cemetery.com", recipients=admins_email)
-			msg.html = "[OSGA - Message sent by: " + request.form.get("email") + "] <br><br>" + request.form.get("message")
-			mail.send(msg)
-			return render_template("layout_message.html", title="OSGA: One Site to Grieve them All", message="Your message has been sent to our staff and we will read it as soon as we receive it. Thanks for contacting us!")
+			if request.form.get("email") and request.form.get("subject") and request.form.get("message"):
+
+				admins = Users.query.filter(Users.admin_level > 0).all()
+				admins_email = [admin.email for admin in admins]
+
+				msg = Message("[OSGA - Message sent by: " + request.form.get("email") + "] "+ request.form.get("subject"), sender="staff@osga-cemetery.com", recipients=admins_email)
+				msg.html = "[OSGA - Message sent by: " + request.form.get("email") + "] <br><br>" + request.form.get("message")
+				mail.send(msg)
+				return render_template("layout_message.html", title="OSGA: One Site to Grieve them All", message="Your message has been sent to our staff and we will read it as soon as we receive it. Thanks for contacting us!")
+
+			else:
+				error_message += "Please fill all the fields before submitting! "
 
 		else:
-			return render_template("contact.html", title="OSGA: One Site to Grieve them All", error="Please fill all the fields before submitting!")
+		    error_message += "The CAPTCHA verification didn't work, please try again!"
 
-	return render_template("contact.html", title="OSGA: One Site to Grieve them All")
+	return render_template("contact.html", title="OSGA: One Site to Grieve them All", error=error_message, email=request.form.get("email"), subject=request.form.get("subject"), message=request.form.get("message"))
 
 
 #--------------------------------------------------------------------------------------------------

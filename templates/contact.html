@@ -11,11 +11,14 @@
 			<p><br>
 		
 				Your e-mail address (so that we can e-mail you back)<br>
-				<input type="text" name="email"><br><br>
+				<input type="text" name="email" value="{{ email }}"><br><br>
 				Subject of your message<br>
-				<input type="text" name="subject"><br><br>
+				<input type="text" name="subject" value="{{ subject }}"><br><br>
 				Write your message here<br>
-				<textarea name="message"></textarea><br><br>
+				<textarea name="message">{{ message }}</textarea><br><br>
+				CAPTCHA verification, please type the code hereunder in the following form field:<br>
+				{{ captcha() }} <br>
+				<input type="text" name="captcha"><br><br>
 		    	<button>Submit</button>
 			    </div>
 			</p>

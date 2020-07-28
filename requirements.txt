@@ -1,3 +1,4 @@
+flask_session_captcha==1.2.0
 Flask_Mail==0.9.1
 Flask_Login==0.5.0
 requests==2.23.0
