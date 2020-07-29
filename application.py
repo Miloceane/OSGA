@@ -255,7 +255,7 @@ def import_to_db():
 @app.route("/get_shows_list")
 def get_shows_list():
 	""" Returns a shows list in JSON format """
-	show_query = Shows.query.all()
+	show_query = Shows.query.order_by(Shows.name).all()
 	shows_list = []
 
 	for show in show_query:
