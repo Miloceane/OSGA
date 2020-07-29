@@ -829,18 +829,18 @@ def user_profile(user_profile_id):
 	activity_total = user_profile.flowers + user_profile.messages
 	activity_total.sort(key=lambda x: x.date, reverse=True)
 
-	# for act in activity_total:
-	# 	if isinstance(act, CharactersFlowers):
-	# 		act.type = "flower"
-	# 	else:
-	# 		act.type = "message"
+	for act in activity_total:
+		if isinstance(act, CharactersFlowers):
+			act.type = "flower"
+		else:
+			act.type = "message"
 
 	# if current_user.is_authenticated():
 	# 	blacklisted_shows = BlacklistedShows.query.filter_by(user_id=current_user.id)
 	# 	for show in blacklisted_shows:
 	# 		blacklist.append(show.id)
 
-	return render_template("user_profile.html")#, user_profile_name=user_profile.name, user_profile_favourite_shows=user_favourite, activity=activity_total[:50], blacklist=blacklist)
+	return render_template("user_profile.html", title="OSGA - ")#, user_profile_name=user_profile.name, user_profile_favourite_shows=user_favourite, activity=activity_total[:50], blacklist=blacklist)
 
 
 
