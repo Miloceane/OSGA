@@ -835,7 +835,7 @@ def user_profile(user_profile_id):
 		else:
 			act.type = "message"
 
-	if current_user.is_authenticated():
+	if current_user is not None and current_user.is_authenticated():
 		blacklisted_shows = BlacklistedShows.query.filter_by(user_id=current_user.id)
 		# for show in blacklisted_shows:
 		# 	blacklist.append(show.id)
