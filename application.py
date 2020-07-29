@@ -811,6 +811,7 @@ def user_panel(page_type):
 		return render_template("user_panel.html", selected_shows_settings="active", shows=shows, favourite_shows=user_favourite, favourite_shows_count=user_favourite.count(), blacklisted_shows=user_blacklist, blacklisted_shows_count=user_blacklist.count())
 
 
+@csrf_exempt
 @app.route("/user_profile/<int:user_profile_id>", methods=["GET"])
 def user_profile(user_profile_id):	
 	""" Displays user profile information """
