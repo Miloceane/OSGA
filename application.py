@@ -821,8 +821,8 @@ def user_profile(user_profile_id):
 	if not user_profile:
 		return redirect(request.referrer)
 
-	# if user_profile.display_fav:
-	# 	user_favourite = Shows.query.join(FavouritedShows, FavouritedShows.show_id == Shows.id, isouter=True).filter(FavouritedShows.user_id == user_profile.id)
+	if user_profile.display_fav:
+		user_favourite = Shows.query.join(FavouritedShows, FavouritedShows.show_id == Shows.id, isouter=True).filter(FavouritedShows.user_id == user_profile.id)
 	
 	# activity_total = []	
 	# activity_total = user_profile.flowers + user_profile.messages
