@@ -270,6 +270,7 @@ def get_shows_list():
 # CEMETARIES: ROUTES #
 ######################
 
+@csrf_exempt
 @app.route("/search_cemetery", methods=["GET", "POST"])
 def search_cemetery():
 	""" Searches show among shows with a cemetery in database """
@@ -381,7 +382,7 @@ def save_flower(character_id, flowertype_id, pos_x, pos_y):
 	
 	return ""
 
-
+@csrf_exempt
 @app.route("/save_message", methods=["POST"])
 @login_required
 def save_message():
@@ -488,6 +489,7 @@ def register():
 
 
 
+@csrf_exempt
 @app.route("/login", methods=["GET", "POST"])
 def login():
 	""" Logs user in and redirects to currently visited page """
@@ -528,6 +530,7 @@ def logout():
 	return render_template("index.html")
 			
 
+@csrf_exempt
 @app.route("/confirm_registration", methods=["GET", "POST"])
 def confirm_registration():
 
@@ -580,7 +583,7 @@ def confirm_registration():
 	# Check this: https://realpython.com/handling-email-confirmation-in-flask/#register-view-function
 	# https://security.stackexchange.com/questions/197004/what-should-a-verification-email-consist-of
 
-
+@csrf_exempt
 @app.route("/new_password", methods=["GET", "POST"])
 def new_password():
 
@@ -644,6 +647,7 @@ def new_password():
 # USER INFO #
 #############
 
+@csrf_exempt
 @app.route("/user_panel", methods=["GET"])
 @login_required
 def user_panel_default():
@@ -651,6 +655,7 @@ def user_panel_default():
 	return user_panel("")
 
 
+@csrf_exempt
 @app.route("/user_panel/<string:page_type>", methods=["GET", "POST"])
 @login_required
 def user_panel(page_type):
@@ -841,6 +846,7 @@ def admin_panel_default():
 	return admin_panel("")
 
 
+@csrf_exempt
 @app.route("/admin_panel/<string:page_type>", methods=["GET", "POST"])
 @login_required
 def admin_panel(page_type):
@@ -929,6 +935,7 @@ def admin_panel(page_type):
 
 
 
+@csrf_exempt
 @app.route("/moderate_comment/<int:comment_id>", methods=["GET", "POST"])
 @login_required
 def moderate_comment(comment_id):
@@ -960,6 +967,7 @@ def moderate_comment(comment_id):
 
 
 
+@csrf_exempt
 @app.route("/manage_suggestions/<int:suggestion_id>", methods=["GET", "POST"])
 @login_required
 def manage_suggestion(suggestion_id):
