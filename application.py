@@ -840,7 +840,7 @@ def user_profile(user_profile_id):
 		for show in blacklisted_shows:
 			blacklist.append(show.id)
 
-	return render_template("user_profile.html", user_profile_name=user_profile.name, user_profile_favourite_shows=user_favourite, activity=activity_total[:50], blacklist=blacklist)
+	return render_template("user_profile.html")#, user_profile_name=user_profile.name, user_profile_favourite_shows=user_favourite, activity=activity_total[:50], blacklist=blacklist)
 
 
 
