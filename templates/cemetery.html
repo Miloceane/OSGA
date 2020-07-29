@@ -90,9 +90,27 @@
 
 			// Sends AJAX request to save flower
 			var xhttp = new XMLHttpRequest();
-			ajax_url = "/save_flower/"+character_id+"/"+current_flower_id+"/"+last_click_pos.x+"/"+last_click_pos.y;
-			xhttp.open("GET", ajax_url, true);
-			xhttp.send();
+			ajax_url = "/save_flower";
+			xhttp.open("POST", ajax_url, true);
+			xhttp.setRequestHeader("Content-Type", "application/json");
+			
+	        xhttp.onreadystatechange = function () 
+	        {
+	            if (xhttp.readyState === 4 && xhttp.status === 200) 
+	            {
+	                var jsonData = JSON.parse(xhttp.response);
+	                console.log(jsonData);
+	            }
+	        };
+
+	        var data = JSON.stringify({
+	        	"flowertype_id": current_flower_id,
+	        	"character_id": character_id,
+	        	"pos_x": last_click_pos.x, 
+	        	"pos_y": last_click_pos.y });
+
+	        console.log(data);
+	        xhttp.send(data);
 		} 
 	}
 
@@ -143,6 +161,7 @@
                 console.log(jsonData);
             }
         };
+        
         var data = JSON.stringify({"message": new_message, "user_id": user_id, "character_id": current_character_id });
         console.log(data);
         xhttp.send(data);

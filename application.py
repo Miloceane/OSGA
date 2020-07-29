@@ -290,6 +290,9 @@ def cemetery(cemetery_id):
 
 	show_query = Shows.query.filter_by(id=cemetery_id).first()
 
+	if show_query is None:
+		return redirect("/")
+
 	if request.form.get("graves_sorting") == "popularity":
 		cemetery_query = Characters.query.filter_by(show_id=cemetery_id).order_by(Characters.flower_count.desc())
 	
@@ -307,6 +310,8 @@ def cemetery(cemetery_id):
 		is_blocked = current_user.blocked
 		spoiler_query = BlacklistedShows.query.filter(and_(BlacklistedShows.user_id == current_user.id, BlacklistedShows.show_id == cemetery_id)).first()
 		is_spoiler = (spoiler_query != None)
+
+	page_title = "OSGA - " + show_query.name + "'s' Cemetery"
 
 	return render_template("cemetery.html", graves_count=cemetery_query.count(), characters=cemetery_query.all(), show_title=show_query.name, show_id=show_query.id, is_blocked=is_blocked, is_spoiler=is_spoiler)
 
@@ -353,12 +358,19 @@ def delete_character_message(message_id):
 # CEMETARIES: AJAX #
 ####################
 
-@app.route("/save_flower/<int:character_id>/<int:flowertype_id>/<int:pos_x>/<int:pos_y>", methods=["GET"])
-def save_flower(character_id, flowertype_id, pos_x, pos_y):
+@csrf_exempt
+@app.route("/save_flower", methods=["GET", "POST"])
+def save_flower():
 	""" Saves the flower with flowertype flowertype_id and position (pos_x, pos_y) in database for character character_id. """
 
 	user_id = None
 
+	message = request.get_json()
+	character_id = message.get("character_id")
+	flowertype_id = message.get("flowertype_id")
+	pos_x = message.get("pos_x")
+	pos_y = message.get("pos_y")
+	
 	# Just in case the user tried to artificially insert JS to bypass blocked account and leave flower (idk who would do that, but who knows)
 	if current_user.is_authenticated:
 		user = Users.query.get(current_user.id)
@@ -520,14 +532,14 @@ def login():
 				user = login_request
 				login_user(user, remember = not (request.form.get("remember_me") is None))
 			
-	return render_template("index.html")
+	return redirect("/")
 
 
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
 	""" Logs user out and redirects to currently visisted page """
 	logout_user()
-	return render_template("index.html")
+	return redirect("/")
 			
 
 @csrf_exempt
