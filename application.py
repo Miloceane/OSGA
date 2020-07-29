@@ -818,8 +818,8 @@ def user_profile(user_profile_id):
 	user_profile = Users.query.get(user_profile_id)
 	user_favourite = []
 
-	# if not user_profile:
-	# 	return redirect(request.referrer)
+	if not user_profile:
+		return redirect(request.referrer)
 
 	# if user_profile.display_fav:
 	# 	user_favourite = Shows.query.join(FavouritedShows, FavouritedShows.show_id == Shows.id, isouter=True).filter(FavouritedShows.user_id == user_profile.id)
