@@ -54,7 +54,7 @@
 							{% for flower in character.flowers %}
 								<img src="/static/images/flowers/{{ flower.flowertype_id }}.png" alt="flower" style="position: absolute; 
 								left: {% if flower.pos_x > 90 %}90{% else %} {{ flower.pos_x - 5 }}{% endif %}%;
-								top: {% if flower.pos_y > 90 %}90{% else %} {{ flower.pos_y - 15 }}{% endif %}%
+								top: {% if flower.pos_y > 75 %}75{% else %} {{ flower.pos_y - 15 }}{% endif %}%
 								">
 							{% endfor %}
 							{% for message in character.messages %}
