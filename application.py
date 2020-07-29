@@ -401,15 +401,13 @@ def save_message():
 	""" Saves message sent via POST in database. """
 
 	# Just in case the user tried to artificially insert JS to bypass blocked account and leave message
-	user = Users.query.get(current_user.id)
-	if (user and user.blocked):
+	if (current_user.blocked):
 		return ""
 
 	message = request.get_json()
 	message_content = message.get("message")
-	message_user_id = message.get("user_id")
 	character_id = message.get("character_id")
-	db.session.add(CharactersMessages(user_id=message_user_id, character_id=character_id, content=message_content))
+	db.session.add(CharactersMessages(user_id=current_user.id, character_id=character_id, content=message_content))
 	db.session.commit()
 	return message
 	

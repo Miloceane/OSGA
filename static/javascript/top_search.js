@@ -1,3 +1,9 @@
+/********************************/
+/* OSGA - top_search.js         */
+/* Written by Charlotte Lafage  */
+/* (GitHub: Miloceane)          */
+/********************************/
+
 var json_shows_list = ""
 
 function get_top_search_options(e) 

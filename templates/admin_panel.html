@@ -1,13 +1,7 @@
 {% extends "layout_pages.html" %}
 
 {% block inside_row %}
-<script>
-	function declare_death_box()
-	{
-		document.getElementById('character_name').innerHTML=document.getElementById('character').value;
-		document.getElementById('validation_box').style.display='block';
-	}
-</script>
+<script src="/static/javascript/declare_death_box.js"></script>
 
 <main id="admin_panel" class="col-12" role="main">
 	<h1>Admin panel</h1>

@@ -1,3 +1,9 @@
+/********************************/
+/* OSGA - main_search.js        */
+/* Written by Charlotte Lafage  */
+/* (GitHub: Miloceane)          */
+/********************************/
+
 function main_dropdown_function() 
 {
 	document.getElementById("main_input").classList.toggle("show");
