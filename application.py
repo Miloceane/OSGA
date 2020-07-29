@@ -825,9 +825,9 @@ def user_profile(user_profile_id):
 	if user_profile.display_fav:
 		user_favourite = Shows.query.join(FavouritedShows, FavouritedShows.show_id == Shows.id, isouter=True).filter(FavouritedShows.user_id == user_profile.id)
 	
-	# activity_total = []	
-	# activity_total = user_profile.flowers + user_profile.messages
-	# activity_total.sort(key=lambda x: x.date, reverse=True)
+	activity_total = []	
+	activity_total = user_profile.flowers + user_profile.messages
+	activity_total.sort(key=lambda x: x.date, reverse=True)
 
 	# for act in activity_total:
 	# 	if isinstance(act, CharactersFlowers):
