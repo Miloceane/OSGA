@@ -5,7 +5,7 @@
 	<h1>Create an account</h1>
 		{% if error %}<p class="alert alert-info">{{ error }}</p>{% endif %}
 		<p>Please fill the form below to register.
-			<form action="{{ url_for('register') }}" method="post">
+			<form action="/register" method="post">
 				<div class="register_panel">
 					<div class="user_panel_flexrow">
 	  					<div class="user_panel_flexelement">Username</div>
@@ -18,9 +18,9 @@
 					<div class="user_panel_flexrow">
 	  					<div class="user_panel_flexelement">Password</div>
 							<div class="user_panel_flexelement">
-								<input type="password" name="password"  {% if password != "" %}value="{{ password }}"{% endif %} placeholder="Password"></div>
+								<input type="password" name="password" {% if password != "" %}value="{{ password }}"{% endif %} placeholder="Password"></div>
 							<div class="user_panel_flexelement">
-								<input type="password" name="password_confirmation"  {% if password != "" %}value="{{ password }}"{% endif %}  placeholder="Password (confirmation)"></div>
+								<input type="password" name="password_confirmation" {% if password != "" %}value="{{ password }}"{% endif %}  placeholder="Password (confirmation)"></div>
 							<div class="user_panel_flexelement">
 								(Must be at least 8 characters long)</div>
 						</div>

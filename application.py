@@ -406,6 +406,7 @@ def save_message():
 ########################
 
 # Register
+@csrf_exempt
 @app.route("/register", methods=["GET", "POST"])
 def register():
 	""" Registers the user based on POST data sent from register.html """
@@ -413,7 +414,7 @@ def register():
 	# User is already registered + logged_in
 	if current_user.is_authenticated:
 		return redirect(url_for('index'))
-
+	
 	# Receiving registration form
 	if request.form.get("username"):
 		username = request.form.get("username")
@@ -472,7 +473,7 @@ def register():
 
 		new_user = Users(name=username, password=password_hash, password_salt=password_salt, email=email, activation_code=activation_code, activation_timelimit=activation_latest)
 		db.session.add(new_user)
-		db.session.commit()
+		# db.session.commit()
 
 		confirmation_message_title = f"Registration on OSGA"
 		confirmation_message_html = f"Hello { username },<br><br>Thank you for registering on OSGA!<br><br>Your activation code is: <b>{ activation_code }</b> (valid for 2 days). \
