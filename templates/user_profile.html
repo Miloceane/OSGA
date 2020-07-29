@@ -1,7 +1,7 @@
 {% extends "layout_pages.html" %}
 
 {% block inside_row %}
-<main id="user_panel" class="col-12" role="main">
+<main id="user_profile" class="col-12" role="main">
 	<div class="user_panel">
 		<table>
 			<tr>
@@ -32,7 +32,7 @@
 						<ul>
 							{% for act in activity if act['show_id'] not in blacklist %}
 							<li>
-								[{{ act['date'].strftime('%Y-%m-%d') }}] {{ user_profile_name }} left a {{ act.type }} on {{ act['character'].name }}'s grave.
+								[{{ act['date'].strftime('%Y-%m-%d') }}] {{ user_profile_name }} left a {{ act.type }} on <a href="/character/{{ act['character'].id }}">{{ act['character'].name }}</a>'s grave.
 							</li>
 							{% endfor %}
 						</ul>

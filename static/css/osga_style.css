@@ -284,6 +284,11 @@
 /* User and admin panel */
 /************************/
 
+#user_profile a
+{
+	color: #777;
+}
+
 #user_panel form
 {
 	margin: 1%;
