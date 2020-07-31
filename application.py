@@ -162,7 +162,7 @@ def about():
 
 
 @app.route("/contribute")
-def about():
+def contribute():
 	""" Contribute page """
 	return render_template("contribute.html", title="OSGA: One Site to Grieve them All")
 
