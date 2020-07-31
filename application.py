@@ -147,7 +147,15 @@ if __name__ == "__main__":
 def index():
 	""" Index page """
 	list_shows = Shows.query.all()
-	return render_template("index.html", title="OSGA: One Site to Grieve them All", shows=list_shows)
+
+	list_complete = []
+
+	for show in list_shows:
+		graves_count = Characters.query.filter_by(show_id=show.id).count()
+		if graves_count > 0:
+			list_complete.append(show)
+
+	return render_template("index.html", title="OSGA: One Site to Grieve them All", shows=list_complete)
 
 
 #--------------------------------------------------------------------------------------------------
@@ -265,8 +273,10 @@ def get_shows_list():
 	shows_list = []
 
 	for show in show_query:
-		show_item = { "id": show.id, "name": show.name }
-		shows_list.append(show_item)
+		graves_count = Characters.query.filter_by(show_id=show.id).count()
+		if graves_count > 0:
+			show_item = { "id": show.id, "name": show.name }
+			shows_list.append(show_item)
 
 	return json.dumps(shows_list)
 
