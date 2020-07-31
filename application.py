@@ -281,7 +281,7 @@ def search_cemetery():
 	if show_query.count() > 0:
 		return redirect(f"/cemetery/{ show_query.first().id }")
 
-	return render_template("layout_message.html", error="There is no cemetery for this show (yet)!")
+	return render_template("layout_message.html", title="OSGA: One Site to Grieve them All", error="There is no cemetery for this show (yet)!")
 
 
 @app.route("/cemetery/<int:cemetery_id>", methods=["GET", "POST"])
@@ -313,7 +313,7 @@ def cemetery(cemetery_id):
 
 	page_title = "OSGA - " + show_query.name + "'s' Cemetery"
 
-	return render_template("cemetery.html", graves_count=cemetery_query.count(), characters=cemetery_query.all(), show_title=show_query.name, show_id=show_query.id, is_blocked=is_blocked, is_spoiler=is_spoiler)
+	return render_template("cemetery.html", title=page_title, graves_count=cemetery_query.count(), characters=cemetery_query.all(), show_title=show_query.name, show_id=show_query.id, is_blocked=is_blocked, is_spoiler=is_spoiler)
 
 
 @app.route("/api", methods=["GET"])
@@ -337,7 +337,7 @@ def character(character_id):
 		spoiler_query = BlacklistedShows.query.filter(and_(BlacklistedShows.user_id == current_user.id, BlacklistedShows.show_id == show.id)).first()
 		is_spoiler = (spoiler_query != None)
 
-	return render_template("character.html", character=character, show=show, is_spoiler=is_spoiler, show_characters=show_characters)
+	return render_template("character.html", title="OSGA: One Site to Grieve them All", character=character, show=show, is_spoiler=is_spoiler, show_characters=show_characters)
 
 
 @app.route("/delete_character_message/<int:message_id>", methods=["GET"])
@@ -473,7 +473,7 @@ def register():
 			error += "The CAPTCHA verification didn't work, please try again. "
 
 		if error != "":
-			return render_template("register.html", error=error, username=username, password=password, password_confirmation=password_confirmation, email=email, read_terms=read_terms)
+			return render_template("register.html", title="OSGA: One Site to Grieve them All", error=error, username=username, password=password, password_confirmation=password_confirmation, email=email, read_terms=read_terms)
 
 		password_salt = os.urandom(64).hex()[64:]
 		password_hash = scrypt.hash(password, password_salt).hex()[64:]
@@ -484,7 +484,7 @@ def register():
 
 		new_user = Users(name=username, password=password_hash, password_salt=password_salt, email=email, activation_code=activation_code, activation_timelimit=activation_latest)
 		db.session.add(new_user)
-		# db.session.commit()
+		db.session.commit()
 
 		confirmation_message_title = f"Registration on OSGA"
 		confirmation_message_html = f"Hello { username },<br><br>Thank you for registering on OSGA!<br><br>Your activation code is: <b>{ activation_code }</b> (valid for 2 days). \
@@ -495,7 +495,7 @@ def register():
 
 		return render_template("confirm_registration.html", email=email, message="Thank you for registering. Your account has been created! You can now log-in and get access to more features.")
 	
-	return render_template("register.html")
+	return render_template("register.html", title="OSGA: One Site to Grieve them All")
 
 
 
@@ -515,17 +515,17 @@ def login():
 			login_request = Users.query.filter(and_(Users.name == username_input)).first()
 
 			if login_request is None:
-				return render_template("layout_message.html", error="This username doesn't exist in our database.")
+				return render_template("layout_message.html", title="OSGA: One Site to Grieve them All", error="This username doesn't exist in our database.")
 
 			password_input_hash = scrypt.hash(password_input, login_request.password_salt).hex()[64:]
 			
 			if password_input_hash != login_request.password:
-				return render_template("layout_message.html", error="Your username and password didn't match.")
+				return render_template("layout_message.html", title="OSGA: One Site to Grieve them All", error="Your username and password didn't match.")
 
 			
 			else:
 				if login_request.activated is False:
-					return render_template("confirm_registration", email=login_request.email)
+					return render_template("confirm_registration", title="OSGA: One Site to Grieve them All", email=login_request.email)
 
 				user = login_request
 				login_user(user, remember = not (request.form.get("remember_me") is None))
@@ -567,14 +567,14 @@ def confirm_registration():
 			msg.html = confirmation_message_html
 			mail.send(msg)
 
-			return render_template("confirm_registration.html", email=email)
+			return render_template("confirm_registration.html", title="OSGA: One Site to Grieve them All", email=email)
 
 		# current_date needs to be timezozne aware to be compared
 		timezone = user.activation_timelimit.tzinfo
 		current_date = datetime.now(timezone)
 
 		if current_date > user.activation_timelimit:
-			return render_template("confirm_registration.html", error="Your activation code has expired! Please click on Resend here under to get a new one.", email=request.form.get("email"), resend=True)
+			return render_template("confirm_registration.html", title="OSGA: One Site to Grieve them All", error="Your activation code has expired! Please click on Resend here under to get a new one.", email=request.form.get("email"), resend=True)
 
 
 		activation_code = request.form.get("activation_code")
@@ -583,15 +583,14 @@ def confirm_registration():
 			user.activated = True
 			db.session.commit() 
 			login_user(user)
-			return render_template("confirm_registration.html", success="Your account has been activated! You can now manage your account and leave message and have access to all user features.")
+			return render_template("confirm_registration.html", title="OSGA: One Site to Grieve them All", success="Your account has been activated! You can now manage your account and leave message and have access to all user features.")
 
 		else:
-			return render_template("confirm_registration.html", error="Your activation didn't match your email address. Please check it again!", email=email)
+			return render_template("confirm_registration.html", title="OSGA: One Site to Grieve them All", error="Your activation didn't match your email address. Please check it again!", email=email)
 
 
-	return render_template("confirm_registration.html", email=email)
-	# Check this: https://realpython.com/handling-email-confirmation-in-flask/#register-view-function
-	# https://security.stackexchange.com/questions/197004/what-should-a-verification-email-consist-of
+	return render_template("confirm_registration.html", title="OSGA: One Site to Grieve them All", email=email)
+	
 
 @csrf_exempt
 @app.route("/new_password", methods=["GET", "POST"])
@@ -604,7 +603,7 @@ def new_password():
 		user = Users.query.filter_by(email=email).first()
 
 		if user is None:
-			return render_template("new_password.html", email="E-mail address", error="There is no user with this e-mail address on OSGA.")
+			return render_template("new_password.html", title="OSGA: One Site to Grieve them All", email="E-mail address", error="There is no user with this e-mail address on OSGA.")
 
 		password = request.form.get("password")
 		password_confirmation = request.form.get("password_confirmation")
@@ -625,14 +624,14 @@ def new_password():
 			msg.html = confirmation_message_html
 			mail.send(msg)
 
-			return render_template("new_password.html", email=email, resent=True)
+			return render_template("new_password.html", title="OSGA: One Site to Grieve them All", email=email, resent=True)
 
 		# current_date needs to be timezone aware to be compared
 		timezone = user.activation_timelimit.tzinfo
 		current_date = datetime.now(timezone)
 
 		if current_date > user.activation_timelimit:
-			return render_template("new_password.html", error="Your activation code has expired! Please click on Resend here under to get a new one.", email=request.form.get("email"), resent=True)
+			return render_template("new_password.html", title="OSGA: One Site to Grieve them All", error="Your activation code has expired! Please click on Resend here under to get a new one.", email=request.form.get("email"), resent=True)
 
 
 		activation_code = request.form.get("activation_code")
@@ -644,13 +643,13 @@ def new_password():
 			user.password = password_hash
 			db.session.commit() 
 			login_user(user)
-			return render_template("new_password.html", success="You password has successfully been changed!")
+			return render_template("new_password.html", title="OSGA: One Site to Grieve them All", success="You password has successfully been changed!")
 
 		else:
-			return render_template("new_password.html", error="Your confirmation code didn't match your email address. Please check it again!", email=email, resent=True)
+			return render_template("new_password.html", title="OSGA: One Site to Grieve them All", error="Your confirmation code didn't match your email address. Please check it again!", email=email, resent=True)
 
 
-	return render_template("new_password.html", email="E-mail address")
+	return render_template("new_password.html", title="OSGA: One Site to Grieve them All", email="E-mail address")
 
 #--------------------------------------------------------------------------------------------------
 #############
@@ -740,7 +739,7 @@ def user_panel(page_type):
 				user.activation_code = activation_code
 				user.activation_timelimit = activation_latest
 				db.session.commit() 
-						
+					
 				confirmation_message_title = f"New e-mail address on OSGA"
 				confirmation_message_html = f"Hello { user.name },<br><br>Your request to change your e-mail address on OSGA has been received!<br><br>Your confirmation code is: <b>{ activation_code }</b> (valid for 2 days). \
 				Fill it in on the user panel!<br><br>We hope you have a good time on our site,<br><br>The OSGA maitenance team"
@@ -759,7 +758,7 @@ def user_panel(page_type):
 			user.display_activity = not (request.form.get("display_activity") is None)
 			db.session.commit()
 
-		return render_template("user_panel.html", selected_user_settings="active", user_info=user, error=error_message, success=success_message, fresh_session=login_fresh(), new_email=new_email, new_email_address=new_email_address)
+		return render_template("user_panel.html", title="OSGA: One Site to Grieve them All", selected_user_settings="active", user_info=user, error=error_message, success=success_message, fresh_session=login_fresh(), new_email=new_email, new_email_address=new_email_address)
 
 
 	#---- Display Suggestions tab ----#
@@ -776,7 +775,7 @@ def user_panel(page_type):
 
 			confirmation = "Your suggestion has been registered and the cemetaries' maintenance will review it, thanks!"
 
-		return render_template("user_panel.html", selected_suggestions="active", error=confirmation)
+		return render_template("user_panel.html", title="OSGA: One Site to Grieve them All", selected_suggestions="active", error=confirmation)
 
 
 	#---- Display Shows settings tab ----#
