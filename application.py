@@ -300,6 +300,7 @@ def search_cemetery():
 	return render_template("layout_message.html", title="OSGA: One Site to Grieve them All", error="There is no cemetery for this show (yet)!")
 
 
+@csrf_exempt
 @app.route("/cemetery/<int:cemetery_id>", methods=["GET", "POST"])
 def cemetery(cemetery_id):
 	""" Displays cemetery """
