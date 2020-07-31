@@ -222,12 +222,12 @@ def contact():
 @app.route("/create_db")
 def create_db():
 	""" Creates tables based on db.model inherited classes in models.py """
-	#current_user.admin_level > 1 and g_is_local is True:
+	current_user.admin_level > 1 and g_is_local is True:
 	db.create_all()
 	return "Database created."
 
-# else:
-# 	abort(404)
+ else:
+ 	abort(404)
 
 
 @app.route("/empty_db")
