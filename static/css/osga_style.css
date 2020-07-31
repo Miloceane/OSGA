@@ -222,7 +222,7 @@
 	width: 100%;
 	padding: 4% 0%;
 	text-shadow: 1px 1px #000;
-	color: #999;
+	color: #eee;
 }
 
 #footer
@@ -231,12 +231,12 @@
 	width: 100%;
 	padding: 4%;
 	text-shadow: 1px 1px #000;
-	color: #999;
+	color: #eee;
 }
 
 #footer a
 {
-	color: #999;
+	color: #eee;
 	text-shadow: 1px 1px #000;
 	padding: 1%;
 }
