@@ -161,6 +161,12 @@ def about():
 	return render_template("about.html", title="OSGA: One Site to Grieve them All")
 
 
+@app.route("/contribute")
+def about():
+	""" Contribute page """
+	return render_template("contribute.html", title="OSGA: One Site to Grieve them All")
+
+
 @app.route("/terms")
 def terms():
 	""" Terms and conditions """
