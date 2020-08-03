@@ -106,7 +106,19 @@ captcha = FlaskSessionCaptcha(app)
 csrf(app)
 
 # Configure Talisman (to force https)
-Talisman(app)
+csp = {
+ 'default-src': [
+        '\'self\'',
+        '\'unsafe-inline\'',
+        'cdnjs.cloudflare.com'
+        'stackpath.bootstrapcdn.com'
+        'ajax.googleapis.com'
+        'maxcdn.bootstrapcdn.com'
+        'osga-cemetery.com'
+    ]
+}
+
+talisman = Talisman(app, content_security_policy=csp)
 
 
 
