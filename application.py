@@ -115,7 +115,8 @@ csp = {
         'ajax.googleapis.com',
         'maxcdn.bootstrapcdn.com',
         'osga-cemetery.com'
-    ]
+    ],
+	'img-src': '*'
 }
 
 talisman = Talisman(app, content_security_policy=csp)
