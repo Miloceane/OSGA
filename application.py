@@ -120,6 +120,7 @@ csp = {
 		'\'self\'',
 		'*',
 		'data:'
+	]
 }
 
 talisman = Talisman(app, content_security_policy=csp)
