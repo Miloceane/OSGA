@@ -729,8 +729,8 @@ def user_panel(page_type):
 			else:
 				success_message += "Your password has been changed! "
 				
-				user.password_salt = base64.b64encode(os.urandom(64))[64:]
-				user.password = base64.b64encode(scrypt.hash(request.form.get("password"), user.password_salt))[64:]
+				user.password_salt = os.urandom(64).hex()[64:]
+				user.password = scrypt.hash(request.form.get("password"), user.password_salt).hex()[64:]
 				db.session.commit()
 		
 		###  E-mail Change  ###
