@@ -348,6 +348,24 @@
 		width: 150px;
 	}
 
+	.register_panel_flexrow
+	{
+		display: flex;
+		flex-wrap: wrap;
+		padding: 2% 0%;
+	}
+
+	.register_panel_flexelement
+	{
+		width: 40%;
+		min-width: 200px;
+	}
+
+	.register_panel_flexelement button
+	{
+		width: 150px;
+	}
+
 	.admin_panel table, .admin_panel td
 	{
 		text-align: left;
@@ -401,6 +419,27 @@
 	}
 
 	.user_panel_flexelement button
+	{
+		width: 150px;
+	}
+
+	.register_panel_flexrow
+	{
+		display: flex;
+		flex-direction: column;
+		padding: 5% 0%;
+		justify-content: center;
+	}
+
+	.register_panel_flexelement
+	{
+		width: 100%;
+		min-width: 200px;
+
+		justify-content: center;
+	}
+
+	.register_panel_flexelement button
 	{
 		width: 150px;
 	}
