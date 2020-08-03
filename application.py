@@ -27,6 +27,7 @@ from flask_mail import Mail, Message
 from flask_login import LoginManager, login_user, logout_user, login_required, login_fresh, current_user
 from flask_session_captcha import FlaskSessionCaptcha
 from flaskext.csrf import csrf, csrf_exempt
+from flask_talisman import Talisman
 from sqlalchemy import and_
 from requests import get
 
@@ -103,6 +104,9 @@ captcha = FlaskSessionCaptcha(app)
 
 # Configure CSRF
 csrf(app)
+
+# Configure Talisman (to force https)
+Talisman(app)
 
 
 
