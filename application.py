@@ -27,7 +27,7 @@ from flask_mail import Mail, Message
 from flask_login import LoginManager, login_user, logout_user, login_required, login_fresh, current_user
 from flask_session_captcha import FlaskSessionCaptcha
 from flaskext.csrf import csrf, csrf_exempt
-# from flask_talisman import Talisman
+from flask_talisman import Talisman
 from sqlalchemy import and_
 from requests import get
 
@@ -106,19 +106,19 @@ captcha = FlaskSessionCaptcha(app)
 csrf(app)
 
 # Configure Talisman (to force https)
-# csp = {
-#  'default-src': [
-#         '\'self\'',
-#         '\'unsafe-inline\'',
-#         'cdnjs.cloudflare.com',
-#         'stackpath.bootstrapcdn.com',
-#         'ajax.googleapis.com',
-#         'maxcdn.bootstrapcdn.com',
-#         'osga-cemetery.com'
-#     ]
-# }
+csp = {
+ 'default-src': [
+        '\'self\'',
+        '\'unsafe-inline\'',
+        'cdnjs.cloudflare.com',
+        'stackpath.bootstrapcdn.com',
+        'ajax.googleapis.com',
+        'maxcdn.bootstrapcdn.com',
+        'osga-cemetery.com'
+    ]
+}
 
-# talisman = Talisman(app, content_security_policy=csp)
+talisman = Talisman(app, content_security_policy=csp)
 
 
 
