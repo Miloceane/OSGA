@@ -116,7 +116,10 @@ csp = {
         'maxcdn.bootstrapcdn.com',
         'osga-cemetery.com'
     ],
-	'img-src': '*'
+	'img-src': [
+		'\'self\'',
+		'*',
+		'data:'
 }
 
 talisman = Talisman(app, content_security_policy=csp)
