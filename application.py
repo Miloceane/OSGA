@@ -10,7 +10,7 @@
 
 import os
 import sys
-# import json
+import json
 import base64, scrypt
 import random, string
 import hashlib
@@ -27,7 +27,7 @@ from flask_mail import Mail, Message
 from flask_login import LoginManager, login_user, logout_user, login_required, login_fresh, current_user
 from flask_session_captcha import FlaskSessionCaptcha
 from flaskext.csrf import csrf, csrf_exempt
-# from flask_talisman import Talisman
+from flask_talisman import Talisman
 from sqlalchemy import and_
 from requests import get
 
@@ -64,18 +64,18 @@ migrate = Migrate(app, db)
 
 # Configure session, use filesystem
 app.config["SESSION_PERMANENT"] = False
-# app.config["SESSION_TYPE"] = "filesystem"
-# Session(app)
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 
-# # Configure API connexion
-# # Note: this would probably be better put somewhere safer such as in the database
-# api_id = '9cba8155f5e9c914ace595df9e6e57efc8bf073b3e69de3aba717a147a634a27'
-# api_key = 'e2e38b259acb59d88cd855a3af7a9f60c8dab289592f73ee1f1bdba9877dda5d'
-# headers = { 'Content-Type': 'application/json', 'trakt-api-key': '9cba8155f5e9c914ace595df9e6e57efc8bf073b3e69de3aba717a147a634a27', 'trakt-api-version': '2'}
+# Configure API connexion
+# Note: this would probably be better put somewhere safer such as in the database
+api_id = '9cba8155f5e9c914ace595df9e6e57efc8bf073b3e69de3aba717a147a634a27'
+api_key = 'e2e38b259acb59d88cd855a3af7a9f60c8dab289592f73ee1f1bdba9877dda5d'
+headers = { 'Content-Type': 'application/json', 'trakt-api-key': '9cba8155f5e9c914ace595df9e6e57efc8bf073b3e69de3aba717a147a634a27', 'trakt-api-version': '2'}
 
-# # Configure mail
-# app.config["MAIL_SERVER"] = 'mail.privateemail.com'
+# Configure mail
+app.config["MAIL_SERVER"] = 'mail.privateemail.com'
 app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
 app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_USERNAME")
 app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
@@ -106,17 +106,17 @@ captcha = FlaskSessionCaptcha(app)
 csrf(app)
 
 # Configure Talisman (to force https)
-# csp = {
-#  'default-src': [
-#         '\'self\'',
-#         '\'unsafe-inline\'',
-#         'cdnjs.cloudflare.com'
-#         'stackpath.bootstrapcdn.com'
-#         'ajax.googleapis.com'
-#         'maxcdn.bootstrapcdn.com'
-#         'osga-cemetery.com'
-#     ]
-# }
+csp = {
+ 'default-src': [
+        '\'self\'',
+        '\'unsafe-inline\'',
+        'cdnjs.cloudflare.com',
+        'stackpath.bootstrapcdn.com',
+        'ajax.googleapis.com',
+        'maxcdn.bootstrapcdn.com',
+        'osga-cemetery.com'
+    ]
+}
 
 #talisman = Talisman(app, content_security_policy=csp)
 
