@@ -141,7 +141,3 @@ def cookie_check(route):
         return response
 
     return cookie_check_wrapper
-
-
-# def osga_retrieve_remember_cookie(response):
-#      return cookies
