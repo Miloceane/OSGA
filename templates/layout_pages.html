@@ -21,7 +21,7 @@
 
 			<ul class="navbar navbar-nav osga_right_nav">
 
-				{% if current_user.name %}
+				{% if current_user.is_authenticated %}
 		  		<li class="nav-item">	
 		      		<div class="dropdown">
 						<button type="button" class="btn dropdown-toggle" data-toggle="dropdown">

@@ -16,7 +16,7 @@
 	<h1>{{ show_title }}</h1>
 	<h2>Memorial Grounds</h2>
 
-	{% if current_user.name %}
+	{% if current_user.is_authenticated %}
 		<br>
 		{% if is_blocked %}
 			Your account has been blocked: you can't leave public flowers nor messages on graves anymore. You can leave temporary flowers, they just won't be registered.

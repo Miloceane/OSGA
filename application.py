@@ -86,6 +86,7 @@ app.config["MAIL_DEBUG"] = True
 mail = Mail(app)
 
 # Configure Flask login
+app.config['REMEMBER_COOKIE_DURATION'] = timedelta(days=365)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.session_protection = "strong"
@@ -566,6 +567,7 @@ def login():
 					return render_template("confirm_registration", title="OSGA: One Site to Grieve them All", email=login_request.email)
 
 				user = login_request
+				print(f"Remember me = {not (request.form.get('remember_me') is None)}")
 				login_user(user, remember = not (request.form.get("remember_me") is None))
 			
 	return redirect("/")
