@@ -97,6 +97,7 @@ class Users(db.Model):
 	activated = db.Column(db.Boolean, default=False)
 	activation_code = db.Column(db.String(128))
 	activation_timelimit = db.Column(db.DateTime(timezone=True), server_default=func.now())
+	remembered = db.Column(db.Boolean, default=False)
 
 	flowers = relationship(CharactersFlowers)
 	messages = relationship(CharactersMessages)
