@@ -177,7 +177,11 @@ def index():
 		if graves_count > 0:
 			list_complete.append(show)
 
-	return render_template("index.html", title="OSGA: One Site to Grieve them All", shows=list_complete)
+	return render_template(
+		"index.html", 
+		title="OSGA: One Site to Grieve them All", 
+		shows=list_complete, 
+		current_user=current_user)
 
 
 #--------------------------------------------------------------------------------------------------
@@ -352,7 +356,15 @@ def cemetery(cemetery_id):
 
 	page_title = "OSGA - " + show_query.name + "'s' Cemetery"
 
-	return render_template("cemetery.html", title=page_title, graves_count=cemetery_query.count(), characters=cemetery_query.all(), show_title=show_query.name, show_id=show_query.id, is_blocked=is_blocked, is_spoiler=is_spoiler)
+	return render_template(
+		"cemetery.html", 
+		title=page_title, 
+		graves_count=cemetery_query.count(), 
+		characters=cemetery_query.all(), 
+		show_title=show_query.name, 
+		show_id=show_query.id, 
+		is_blocked=is_blocked, 
+		is_spoiler=is_spoiler)
 
 
 @app.route("/api", methods=["GET"])
