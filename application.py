@@ -14,9 +14,10 @@ import json
 import base64, scrypt
 import random, string
 import hashlib
+import logging
 from datetime import datetime, timedelta
 
-from flask import Flask, render_template, request, session, redirect, url_for, flash, escape
+from flask import Flask, render_template, request, session, redirect, url_for, flash, escape, make_response
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -44,7 +45,7 @@ from import_shows import ShowsList
 # IMPORTANT: Setting this variable to True allows anyone to access Flask Admin via /admin. Always set back to False before deploying!
 g_is_local = False
 
-# logging.basicConfig(filename='./osga.log',level=logging.DEBUG)
+#logging.basicConfig(filename='./osga.log',level=logging.DEBUG)
 
 # TODO: Change global variable names to make them start with g_, as to show that they are global.
 
@@ -93,11 +94,14 @@ app.config['USE_SESSION_FOR_NEXT'] = True
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
 login_manager.login_view = "/"
-
 login_manager.init_app(app)
+
 @login_manager.user_loader
 def load_user(user_id):
     return Users.query.get(int(user_id))
+
+### ! Rewriting code for remember-me that didn't work well with flask login ! ###
+app.after_request(osga_set_remember_cookie)
 
 # Configure CAPTCHA
 app.config['CAPTCHA_ENABLE'] = True
@@ -127,7 +131,7 @@ csp = {
 	]
 }
 
-talisman = Talisman(app, content_security_policy=csp)
+#talisman = Talisman(app, content_security_policy=csp)
 
 
 
@@ -169,10 +173,10 @@ if __name__ == "__main__":
 		main()
 
 @app.route("/")
+@cookie_check
 def index():
 	""" Index page """
 	list_shows = Shows.query.all()
-
 	list_complete = []
 
 	if 'user_id' in session:
@@ -187,7 +191,7 @@ def index():
 
 	return render_template(
 		"index.html", 
-		title="OSGA: One Site to Grieve them All", 
+		title="OSGA: One Site to Grieve them All",
 		shows=list_complete, 
 		current_user=current_user)
 
@@ -198,24 +202,27 @@ def index():
 ###################
 
 @app.route("/about")
+@cookie_check
 def about():
 	""" About page """
 	return render_template("about.html", title="OSGA: One Site to Grieve them All")
 
-
 @app.route("/contribute")
+@cookie_check
 def contribute():
 	""" Contribute page """
 	return render_template("contribute.html", title="OSGA: One Site to Grieve them All")
 
 
 @app.route("/terms")
+@cookie_check
 def terms():
 	""" Terms and conditions """
 	return render_template("terms.html", title="OSGA: One Site to Grieve them All")
 
 @csrf_exempt
 @app.route("/contact", methods=["GET", "POST"])
+@cookie_check
 def contact():
 	""" Terms and conditions """
 
@@ -336,6 +343,7 @@ def search_cemetery():
 
 @csrf_exempt
 @app.route("/cemetery/<int:cemetery_id>", methods=["GET", "POST"])
+@cookie_check
 def cemetery(cemetery_id):
 	""" Displays cemetery """
 
@@ -383,6 +391,7 @@ def api():
 
 
 @app.route("/character/<int:character_id>", methods=["GET"])
+@cookie_check
 def character(character_id):
 	""" Displays character info """
 
@@ -400,6 +409,7 @@ def character(character_id):
 
 
 @app.route("/delete_character_message/<int:message_id>", methods=["GET"])
+@cookie_check
 def delete_character_message(message_id):
 	""" Deletes CharactersMessage with id message_id """
 
@@ -478,6 +488,7 @@ def save_message():
 # Register
 @csrf_exempt
 @app.route("/register", methods=["GET", "POST"])
+@cookie_check
 def register():
 	""" Registers the user based on POST data sent from register.html """
 
@@ -560,6 +571,7 @@ def register():
 
 @csrf_exempt
 @app.route("/login", methods=["GET", "POST"])
+@cookie_check
 def login():
 	""" Logs user in and redirects to currently visited page """
 
@@ -596,8 +608,9 @@ def login():
 						email=login_request.email)
 
 				user = login_request
-				login_user(user, remember = not (request.form.get("remember_me") is None))
-				session['user_id'] = user.id
+				user.remembered = not (request.form.get("remember_me") is None)
+				db.session.commit()
+				login_user(user, remember = user.remembered)
 			
 	return redirect("/")
 
@@ -605,12 +618,19 @@ def login():
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
 	""" Logs user out and redirects to currently visisted page """
+	if current_user and current_user.is_authenticated:
+		current_user.remembered = False
+		db.session.commit()
+
+	session['user_id'] = None
 	logout_user()
-	return redirect("/")
+	response = make_response(redirect("/"))
+	return osga_clear_remember_cookie(response)
 			
 
 @csrf_exempt
 @app.route("/confirm_registration", methods=["GET", "POST"])
+@cookie_check
 def confirm_registration():
 
 	email = request.form.get("email")
@@ -662,6 +682,7 @@ def confirm_registration():
 
 @csrf_exempt
 @app.route("/new_password", methods=["GET", "POST"])
+@cookie_check
 def new_password():
 
 	email = request.form.get("email")
@@ -726,6 +747,7 @@ def new_password():
 
 @csrf_exempt
 @app.route("/user_panel", methods=["GET"])
+@cookie_check
 @login_required
 def user_panel_default():
 	""" Returns default user panel tab """	
@@ -734,6 +756,7 @@ def user_panel_default():
 
 @csrf_exempt
 @app.route("/user_panel/<string:page_type>", methods=["GET", "POST"])
+@cookie_check
 @login_required
 def user_panel(page_type):
 	""" Returns specified user panel page if it exists, otherwise default. """
@@ -888,6 +911,7 @@ def user_panel(page_type):
 
 
 @app.route("/user_profile/<int:user_profile_id>", methods=["GET"])
+@cookie_check
 def user_profile(user_profile_id):	
 	""" Displays user profile information """
 	
@@ -934,6 +958,7 @@ def user_profile(user_profile_id):
 ##################
 
 @app.route("/admin_panel", methods=["GET"])
+@cookie_check
 @login_required
 def admin_panel_default():
 	""" Returns default admin panel tab """
@@ -942,6 +967,7 @@ def admin_panel_default():
 
 @csrf_exempt
 @app.route("/admin_panel/<string:page_type>", methods=["GET", "POST"])
+@cookie_check
 @login_required
 def admin_panel(page_type):
 	""" Returns specified admin panel tab if it exists, otherwise default. """
@@ -1031,6 +1057,7 @@ def admin_panel(page_type):
 
 @csrf_exempt
 @app.route("/moderate_comment/<int:comment_id>", methods=["GET", "POST"])
+@cookie_check
 @login_required
 def moderate_comment(comment_id):
 	""" Manages comment with id comment_id based on action received via POST data """
@@ -1063,6 +1090,7 @@ def moderate_comment(comment_id):
 
 @csrf_exempt
 @app.route("/manage_suggestions/<int:suggestion_id>", methods=["GET", "POST"])
+@cookie_check
 @login_required
 def manage_suggestion(suggestion_id):
 	""" Manages suggestion with id suggestion_id based on action received via POST data. """
