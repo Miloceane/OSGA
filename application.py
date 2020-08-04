@@ -87,6 +87,9 @@ mail = Mail(app)
 
 # Configure Flask login
 app.config['REMEMBER_COOKIE_DURATION'] = timedelta(days=365)
+app.config['REMEMBER_COOKIE_DOMAIN'] = '.osga-cemetery.com'
+app.config['REMEMBER_COOKIE_REFRESH_EACH_REQUEST'] = True
+app.config['USE_SESSION_FOR_NEXT'] = True
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.session_protection = "strong"
@@ -171,6 +174,11 @@ def index():
 	list_shows = Shows.query.all()
 
 	list_complete = []
+
+	if 'user_id' in session:
+		print(f"User id in session = {session['user_id']}")
+	else:
+		print("No user id in session")
 
 	for show in list_shows:
 		graves_count = Characters.query.filter_by(show_id=show.id).count()
@@ -563,24 +571,33 @@ def login():
 		# NOTE: isalnum() was used here to force usernames to contain only alphanumeric characters in order to protect against SQL injections,
 		# but SQLAlchemy already makes them technically impossible, so this is probably not necessary.
 		if username_input.isalnum():
-			login_request = Users.query.filter(and_(Users.name == username_input)).first()
+			login_request = Users.query.filter_by(name=username_input).first()
 
 			if login_request is None:
-				return render_template("layout_message.html", title="OSGA: One Site to Grieve them All", error="This username doesn't exist in our database.")
+				return render_template(
+					"layout_message.html", 
+					title="OSGA: One Site to Grieve them All", 
+					error="This username doesn't exist in our database.")
 
 			password_input_hash = scrypt.hash(password_input, login_request.password_salt).hex()[64:]
 			
 			if password_input_hash != login_request.password:
-				return render_template("layout_message.html", title="OSGA: One Site to Grieve them All", error="Your username and password didn't match.")
+				return render_template(
+					"layout_message.html", 
+					title="OSGA: One Site to Grieve them All", 
+					error="Your username and password didn't match.")
 
 			
 			else:
 				if login_request.activated is False:
-					return render_template("confirm_registration", title="OSGA: One Site to Grieve them All", email=login_request.email)
+					return render_template(
+						"confirm_registration", 
+						title="OSGA: One Site to Grieve them All", 
+						email=login_request.email)
 
 				user = login_request
-				print(f"Remember me = {not (request.form.get('remember_me') is None)}")
 				login_user(user, remember = not (request.form.get("remember_me") is None))
+				session['user_id'] = user.id
 			
 	return redirect("/")
 
@@ -602,7 +619,6 @@ def confirm_registration():
 		
 		user = Users.query.filter_by(email=email).first()
 
-
 		if request.form.get("resend"):
 
 			activation_code = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(16))
@@ -614,7 +630,7 @@ def confirm_registration():
 			db.session.commit()
 
 			confirmation_message_title = f"Activation code for OSGA"
-			confirmation_message_html = f"Hello { username },<br><br>If you haven't requested a new activation code, please ignore this email!<br><br> Your new activation code is: <b>{ activation_code }</b> (valid until: { activation_latest.time() }. Fill it in on the confirmation page to activate your account!"
+			confirmation_message_html = f"Hello { user.name },<br><br>If you haven't requested a new activation code, please ignore this email!<br><br> Your new activation code is: <b>{ activation_code }</b> (valid until: { activation_latest.time() }. Fill it in on the confirmation page to activate your account!"
 			msg = Message(confirmation_message_title, sender="staff@osga-cemetery.com", recipients=[email])
 			msg.html = confirmation_message_html
 			mail.send(msg)
@@ -810,7 +826,16 @@ def user_panel(page_type):
 			user.display_activity = not (request.form.get("display_activity") is None)
 			db.session.commit()
 
-		return render_template("user_panel.html", title="OSGA: One Site to Grieve them All", selected_user_settings="active", user_info=user, error=error_message, success=success_message, fresh_session=login_fresh(), new_email=new_email, new_email_address=new_email_address)
+		return render_template(
+			"user_panel.html", 
+			title="OSGA: One Site to Grieve them All", 
+			selected_user_settings="active", 
+			user_info=user, 
+			error=error_message, 
+			success=success_message, 
+			fresh_session=login_fresh(), 
+			new_email=new_email, 
+			new_email_address=new_email_address)
 
 
 	#---- Display Suggestions tab ----#
@@ -892,7 +917,14 @@ def user_profile(user_profile_id):
 			blacklist.append(show.id)
 
 	page_title = "OSGA - " + user_profile.name + "'s profile"
-	return render_template("user_profile.html", title=page_title, user_profile_name=user_profile.name, user_profile_favourite_shows=user_favourite, activity=activity_total[:50], blacklist=blacklist)
+	return render_template(
+		"user_profile.html", 
+		title=page_title,
+		user_profile_name=user_profile.name, 
+		user_profile_favourite_shows=user_favourite, 
+		activity=activity_total[:50], 
+		blacklist=blacklist,
+		current_user=current_user)
 
 
 
