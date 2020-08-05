@@ -370,7 +370,7 @@ def cemetery(cemetery_id):
 		spoiler_query = BlacklistedShows.query.filter(and_(BlacklistedShows.user_id == current_user.id, BlacklistedShows.show_id == cemetery_id)).first()
 		is_spoiler = (spoiler_query != None)
 
-	page_title = "OSGA - " + show_query.name + "'s' Cemetery"
+	page_title = "OSGA - " + show_query.name + "'s Cemetery"
 
 	return render_template(
 		"cemetery.html", 
