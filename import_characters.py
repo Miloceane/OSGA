@@ -50,13 +50,19 @@ class CharactersList():
 
 			char_show = Shows.query.filter_by(name=series).first()
 
-			char_exist = Characters.query.filter_by(name=name, show_id=char_show.id).count()
+			char_exist = Characters.query.filter_by(name=name, show_id=char_show.id)
 
-			if char_exist == 0:
+			if char_exist.count() == 0:
 				if episode_death == "":
 					episode_death = 0
-					
+				
 				db.session.add(Characters(name=name, show_id=char_show.id, universe_id=char_show.universe_id, death_season=season_death, death_episode=episode_death, admin_id=session.get('user_id')))
+			
+			elif char_exist.first().death_episode != episode_death:
+				curr_char = char_exist.first()
+				curr_char.death_episode = episode_death
+				db.session.commit()
+
 
 		db.session.commit()
 		return "Characters have been imported!"

@@ -91,7 +91,7 @@
 						<tr class="grave_text">
 							<td>
 								<a href="/character/{{ characters[i].id }}">{{ characters[i].name }}</a><br>
-								{% if characters[i].death_episode != 0 %}
+								{% if show_series %}
 									Season {{ characters[i].death_season }} Episode {{ characters[i].death_episode }}
 								{% endif %}
 							</td>
