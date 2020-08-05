@@ -34,7 +34,7 @@ class CharactersList():
 		file = open(self.import_file)
 		reader = csv.reader(file)
 
-		query_check = Characters.query.count()
+		# query_check = Characters.query.count()
 		# if query_check > 0:
 		# 	return "Characters had alredy been imported!"
 
@@ -53,12 +53,15 @@ class CharactersList():
 			char_exist = Characters.query.filter_by(name=name, show_id=char_show.id).count()
 
 			if char_exist == 0:
+				if episode_death == "":
+					episode_death = 0
+					
 				db.session.add(Characters(name=name, show_id=char_show.id, universe_id=char_show.universe_id, death_season=season_death, death_episode=episode_death, admin_id=session.get('user_id')))
 
 		db.session.commit()
 		return "Characters have been imported!"
 
-if __name__ == "__main__":
-	books = BooksList("Characters.csv")
-	books.fetch_default_db()
-	print(books.import_books())
+# if __name__ == "__main__":
+# 	books = BooksList("Characters.csv")
+# 	books.fetch_default_db()
+# 	print(books.import_books())
