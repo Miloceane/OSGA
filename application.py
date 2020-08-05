@@ -284,27 +284,27 @@ def contact():
 # 		abort(404)
 	
 
-@app.route("/import_shows")
-def import_shows_to_db():
-	""" Reads CSV file and imports shows to database """
-	if current_user.is_authenticated() and current_user.admin_level > 0:
-		shows = ShowsList("Shows.csv")
-		message = shows.import_shows()
-		return message
+# @app.route("/import_shows")
+# def import_shows_to_db():
+# 	""" Reads CSV file and imports shows to database """
+# 	if current_user.is_authenticated() and current_user.admin_level > 0:
+# 		shows = ShowsList("Shows.csv")
+# 		message = shows.import_shows()
+# 		return message
 
-	else:
-		abort(404)
+# 	else:
+# 		abort(404)
 
-@app.route("/import_characters")
-def import_to_db():
-	""" Reads CSV file and imports characters to database """
-	if current_user.is_authenticated() and current_user.admin_level > 0:
-		characters = CharactersList("Characters.csv")
-		message = characters.import_characters()
-		return message
+# @app.route("/import_characters")
+# def import_to_db():
+# 	""" Reads CSV file and imports characters to database """
+# 	if current_user.is_authenticated() and current_user.admin_level > 0:
+# 		characters = CharactersList("Characters.csv")
+# 		message = characters.import_characters()
+# 		return message
 
-	else:
-		abort(404)
+# 	else:
+# 		abort(404)
 
 
 @app.route("/get_shows_list")
