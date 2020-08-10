@@ -12,7 +12,7 @@ Game of Thrones,Mirri Maz Duur,1,10
 Game of Thrones,Septa Mordane,1,10
 Game of Thrones,Rakharo,2,2
 Game of Thrones,Lommy,2,3
-Game of Thrones,Yoren, ,3
+Game of Thrones,Yoren,2,3
 Game of Thrones,The Tickler,2,5
 Game of Thrones,Renly Baratheon,2,5
 Game of Thrones,Amory Lorch,2,6
@@ -139,7 +139,7 @@ Breaking Bad,Bobby Kee,3,6
 Breaking Bad,Marco Salamanca,3,7
 Breaking Bad,Leonel Salamanca,3,8
 Breaking Bad,Juan Bolsa,3,8
-Breaking Bad,Tom·s Cantillo,3,12
+Breaking Bad,Tom√°s Cantillo,3,12
 Breaking Bad,Gale Boetticher,3,13
 Breaking Bad,Victor,4,1
 Breaking Bad,Nick,4,9
@@ -249,7 +249,7 @@ Vikings,Angrboda,4,2
 Vikings,Kalf,4,5
 Vikings,Queen Kwenthrith,4,8
 Vikings,Count Odo,4,8
-Vikings,WÊrferth,4,8
+Vikings,W√¶rferth,4,8
 Vikings,Yidu,4,8
 Vikings,Erlendur,4,9
 Vikings,Siggy Bjornsdottir,4,9
@@ -279,7 +279,7 @@ Vikings,Astrid,5,10
 Vikings,Bul,5,10
 Vikings,Guthrum,5,10
 Vikings,Halfdan,5,10
-Vikings,SnÊfrid,5,10
+Vikings,Sn√¶frid,5,10
 Vikings,Svase,5,10
 Vikings,Thorgrim,5,10
 Vikings,Lord Cuthred,5,12
@@ -368,16 +368,16 @@ The Lord of the Rings,Lurtz,1,5
 The Lord of the Rings,Snaga,2,6
 The Lord of the Rings,Ugluk,2,7
 The Lord of the Rings,Grishnakh,2,8
-The Lord of the Rings,ThÈodred,2,9
+The Lord of the Rings,Th√©odred,2,9
 The Lord of the Rings,The Balrog,2,10
-The Lord of the Rings,H·ma,2,11
+The Lord of the Rings,H√°ma,2,11
 The Lord of the Rings,Haldir,2,12
-The Lord of the Rings,DÈagol,3,13
+The Lord of the Rings,D√©agol,3,13
 The Lord of the Rings,Saruman,3,14
-The Lord of the Rings,GrÌma Wormtongue,3,15
+The Lord of the Rings,Gr√≠ma Wormtongue,3,15
 The Lord of the Rings,Madril,3,16
 The Lord of the Rings,Denethor,3,17
-The Lord of the Rings,ThÈoden,3,18
+The Lord of the Rings,Th√©oden,3,18
 The Lord of the Rings,The Witch-King of Angmar,3,19
 The Lord of the Rings,Gothmog,3,20
 The Lord of the Rings,Guritz,3,21
@@ -385,8 +385,23 @@ The Lord of the Rings,Gorbag,3,22
 The Lord of the Rings,The Mouth of Sauron,3,23
 The Lord of the Rings,Gollum,3,24
 The Lord of the Rings,Sauron,3,25
-The Lord of the Rings,Kham˚l,3,26
-Money Heist,"Radko Dragi? (""Oslo"")",1,10
+The Lord of the Rings,Kham√ªl,3,26
+Money Heist,"Radko Dragiƒá (""Oslo"")",1,10
 Money Heist,"Agustin Ramos (""Moscow"")",1,14
-Money Heist,"AndrÈs de Fonollosa Gonzalves (""Berlin"")",1,15
-Money Heist,"¡gata JimÈnez (""Nairobi"")",2,14
+Money Heist,"Andr√©s de Fonollosa Gonzalves (""Berlin"")",1,15
+Money Heist,"√Ågata Jim√©nez (""Nairobi"")",2,14
+Tengen Toppa Gurren Lagann,Kamina,1,8
+Tengen Toppa Gurren Lagann,Thymilph the Crashing One,1,8
+Tengen Toppa Gurren Lagann,Adiane the Elegant,1,12
+Tengen Toppa Gurren Lagann,Cytomander the Swift,1,14
+Tengen Toppa Gurren Lagann,Guame the Immovable,1,14
+Tengen Toppa Gurren Lagann,Iraak Coega,1,24
+Tengen Toppa Gurren Lagann,Jorgun Bakusa,1,24
+Tengen Toppa Gurren Lagann,Balinbow Bakusa,1,24
+Tengen Toppa Gurren Lagann,Kidd Coega,1,24
+Tengen Toppa Gurren Lagann,Makken Jokin,1,24
+Tengen Toppa Gurren Lagann,Zorthy Kanai,1,24
+Tengen Toppa Gurren Lagann,Kittan Bachika,1,25
+Tengen Toppa Gurren Lagann,Lord Genome,1,27
+Tengen Toppa Gurren Lagann,Nia Teppelin,1,27
+Tengen Toppa Gurren Lagann,The Anti-Spiral,1,27
