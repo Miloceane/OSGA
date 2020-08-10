@@ -92,7 +92,7 @@
 							<td>
 								<a href="/character/{{ characters[i].id }}">{{ characters[i].name }}</a><br>
 								{% if show_series %}
-									Season {{ characters[i].death_season }} Episode {{ characters[i].death_episode }}
+									{% if show_seasons_count > 1 %}Season {{ characters[i].death_season }} {% endif %}Episode {{ characters[i].death_episode }}
 								{% endif %}
 							</td>
 						</tr>

@@ -284,27 +284,27 @@ def contact():
 # 		abort(404)
 	
 
-# @app.route("/import_shows")
-# def import_shows_to_db():
-# 	""" Reads CSV file and imports shows to database """
-# 	if current_user.is_authenticated() and current_user.admin_level > 0:
-# 		shows = ShowsList("Shows.csv")
-# 		message = shows.import_shows()
-# 		return message
+@app.route("/import_shows")
+def import_shows_to_db():
+	""" Reads CSV file and imports shows to database """
+	if current_user.is_authenticated() and current_user.admin_level > 0:
+		shows = ShowsList("Shows.csv")
+		message = shows.import_shows()
+		return message
 
-# 	else:
-# 		abort(404)
+	else:
+		abort(404)
 
-# @app.route("/import_characters")
-# def import_to_db():
-# 	""" Reads CSV file and imports characters to database """
-# 	if current_user.is_authenticated() and current_user.admin_level > 0:
-# 		characters = CharactersList("Characters.csv")
-# 		message = characters.import_characters()
-# 		return message
+@app.route("/import_characters")
+def import_to_db():
+	""" Reads CSV file and imports characters to database """
+	if current_user.is_authenticated() and current_user.admin_level > 0:
+		characters = CharactersList("Characters.csv")
+		message = characters.import_characters()
+		return message
 
-# 	else:
-# 		abort(404)
+	else:
+		abort(404)
 
 
 @app.route("/get_shows_list")
@@ -348,6 +348,7 @@ def cemetery(cemetery_id):
 	""" Displays cemetery """
 
 	show_query = Shows.query.filter_by(id=cemetery_id).first()
+	seasons_count = 0
 
 	if show_query is None:
 		return redirect("/")
@@ -371,6 +372,7 @@ def cemetery(cemetery_id):
 		is_spoiler = (spoiler_query != None)
 
 	page_title = "OSGA - " + show_query.name + "'s Cemetery"
+	seasons_count = cemetery_query.all()[-1].death_season
 
 	return render_template(
 		"cemetery.html", 
@@ -379,7 +381,8 @@ def cemetery(cemetery_id):
 		characters=cemetery_query.all(), 
 		show_title=show_query.name, 
 		show_series=show_query.is_series,
-		show_id=show_query.id, 
+		show_id=show_query.id,
+		show_seasons_count=seasons_count, 
 		is_blocked=is_blocked, 
 		is_spoiler=is_spoiler)
 
@@ -406,7 +409,16 @@ def character(character_id):
 		spoiler_query = BlacklistedShows.query.filter(and_(BlacklistedShows.user_id == current_user.id, BlacklistedShows.show_id == show.id)).first()
 		is_spoiler = (spoiler_query != None)
 
-	return render_template("character.html", title="OSGA: One Site to Grieve them All", character=character, show=show, is_spoiler=is_spoiler, show_characters=show_characters)
+	seasons_count = show_characters[-1].death_season
+
+	return render_template(
+		"character.html", 
+		title="OSGA: One Site to Grieve them All", 
+		character=character, 
+		show=show, 
+		is_spoiler=is_spoiler, 
+		show_seasons_count=seasons_count,
+		show_characters=show_characters)
 
 
 @app.route("/delete_character_message/<int:message_id>", methods=["GET"])

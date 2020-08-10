@@ -45,8 +45,8 @@
 				<tr class="grave_text">
 					<td>
 						<span class="character_name">{{ character.name }}</span><br>
-						{% if show_series %}
-							Season {{ characters[i].death_season }} Episode {{ characters[i].death_episode }}
+						{% if show.is_series %}
+							{% if show_seasons_count > 1 %}Season {{ character.death_season }} {% endif %}Episode {{ character.death_episode }}
 						{% endif %}
 					</td>
 				</tr>
