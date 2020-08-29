@@ -1,4 +1,4 @@
-import hmac, os
+import hmac, os, csv
 import logging
 from werkzeug.security import safe_str_cmp
 from datetime import datetime
@@ -10,6 +10,53 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, logout_user, login_required, login_fresh, current_user
 
 from models import *
+
+
+###########################
+# Helpers for translation #
+###########################
+
+def get_page_title(language, page):
+    """ 
+    Input: language ("en", "fr"...), page ("about", ...)
+    """
+    title_file = open(f"static/languages/{ language }/titles.csv", encoding="utf-8")
+    
+    if title_file is None:
+        return ""
+
+    # Jinja2 uses UTF-8
+    title_reader = csv.reader(title_file)
+    title = ""
+
+    # If page doesn't have a specific title, use main title
+    for text_id, text in title_reader:
+        if text_id == "main":
+            title = text
+        if text_id == page:
+            title = text
+
+    return title
+
+
+def get_page_static_content(language, page):
+    """
+    Input: language ("en", "fr"...), page ("about", ...)
+    """
+    content_file = open(f"static/languages/{ language }/{ page }.csv", encoding="utf-8")
+
+    if content_file is None:
+        print(f"No { language } content found for page: { page }")
+        return {}
+
+    content_reader = csv.reader(content_file)
+    content = {}
+
+    for text_id, text in content_reader:
+        content[text_id] = text
+
+    return content
+
 
 #########################################################
 # Based on: https://stackabuse.com/quicksort-in-python/ #

@@ -15,6 +15,7 @@ import base64, scrypt
 import random, string
 import hashlib
 import logging
+import csv
 from datetime import datetime, timedelta
 
 from flask import Flask, render_template, request, session, redirect, url_for, flash, escape, make_response, abort
@@ -133,7 +134,8 @@ csp = {
 
 talisman = Talisman(app, content_security_policy=csp)
 
-
+# Configure language
+app.config['MAIN_LANGUAGE'] = 'en'
 
 #--------------------------------------------------------------------------------------------------
 ##########################
@@ -201,11 +203,20 @@ def index():
 # FOOTER FEATURES #
 ###################
 
+# TODO: 
+# 1. .csv language files
+# 2. adapt rendering functions
+# 3. make generic
+
 @app.route("/about")
 @cookie_check
 def about():
 	""" About page """
-	return render_template("about.html", title="OSGA: One Site to Grieve them All")
+	title = get_page_title("en", "about")
+	static_content = get_page_static_content("en", "about")
+		
+	return render_template("about.html", title=title, content=static_content)
+
 
 @app.route("/contribute")
 @cookie_check
