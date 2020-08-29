@@ -1,0 +1,17 @@
+text_id,text
+settings,Settings
+profile,Profile
+logout,"Log out"
+login,"Log in"
+register,"Register"
+username,"Username"
+username_placeholder,"Enter Username"
+password,"Password"
+password_placeholder,"Enter Password"
+remember_me,"Remember me"
+forgot_my_password,"Forgot my password"
+search_placeholder,"Search for a show"
+about,"About"
+terms,"Terms and Conditions"
+contact,"Contact"
+contribute,"Contribute"

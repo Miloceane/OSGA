@@ -178,6 +178,9 @@ if __name__ == "__main__":
 @cookie_check
 def index():
 	""" Index page """
+	title = get_page_title("index")
+	static_content = get_page_static_content("index")
+
 	list_shows = Shows.query.all()
 	list_complete = []
 
@@ -193,7 +196,8 @@ def index():
 
 	return render_template(
 		"index.html", 
-		title="OSGA: One Site to Grieve them All",
+		title=title,
+		content=static_content,
 		shows=list_complete, 
 		current_user=current_user)
 
@@ -203,26 +207,31 @@ def index():
 # FOOTER FEATURES #
 ###################
 
-# TODO: 
-# 1. .csv language files
-# 2. adapt rendering functions
-# 3. make generic
 
 @app.route("/about")
 @cookie_check
 def about():
 	""" About page """
-	title = get_page_title("en", "about")
-	static_content = get_page_static_content("en", "about")
+	title = get_page_title("about")
+	static_content = get_page_static_content("about")
 		
-	return render_template("about.html", title=title, content=static_content)
+	return render_template(
+		"about.html", 
+		title=title, 
+		content=static_content)
 
 
 @app.route("/contribute")
 @cookie_check
 def contribute():
 	""" Contribute page """
-	return render_template("contribute.html", title="OSGA: One Site to Grieve them All")
+	title = get_page_title("contribute")
+	static_content = get_page_static_content("contribute")
+
+	return render_template(
+		"contribute.html",
+		title=title, 
+		content=static_content)
 
 
 @app.route("/terms")
