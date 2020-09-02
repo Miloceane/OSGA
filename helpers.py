@@ -16,16 +16,21 @@ from models import *
 # Helpers for translation #
 ###########################
 
-def get_page_title(language, page):
+def get_page_title(page):
     """ 
     Input: language ("en", "fr"...), page ("about", ...)
     """
+    if session.get('language') is None:
+        language = "en"
+    else:
+        language = session.get('language')
+
+    # Jinja2 uses UTF-8
     title_file = open(f"static/languages/{ language }/titles.csv", encoding="utf-8")
     
     if title_file is None:
         return ""
 
-    # Jinja2 uses UTF-8
     title_reader = csv.reader(title_file)
     title = ""
 
@@ -39,10 +44,15 @@ def get_page_title(language, page):
     return title
 
 
-def get_page_static_content(language, page):
+def get_page_static_content(page):
     """
     Input: language ("en", "fr"...), page ("about", ...)
     """
+    if session.get('language') is None:
+        language = "en"
+    else:
+        language = session['language']
+
     content_file = open(f"static/languages/{ language }/{ page }.csv", encoding="utf-8")
 
     if content_file is None:
@@ -56,6 +66,28 @@ def get_page_static_content(language, page):
         content[text_id] = text
 
     return content
+
+
+# def translate(route):
+#     """
+#     Decorator to translate pages
+#     """
+#     @wraps(route)
+#     def translation_wrapper(*args, **kwargs):
+#         response = make_response(route(*args, **kwargs))
+        
+#         if current_user.is_authenticated and current_user.remembered is True:
+#             response = osga_set_remember_cookie(response)
+        
+#         elif current_user.is_authenticated and current_user.remembered is False:
+#             response = osga_clear_remember_cookie(response)
+#             session['user_id'] = None
+#             logout_user()
+
+#         return response
+
+#     return translation_wrapper
+
 
 
 #########################################################

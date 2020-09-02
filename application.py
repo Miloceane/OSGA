@@ -367,6 +367,8 @@ def search_cemetery():
 def cemetery(cemetery_id):
 	""" Displays cemetery """
 
+	static_content = get_page_static_content("cemetery")
+
 	show_query = Shows.query.filter_by(id=cemetery_id).first()
 	seasons_count = 0
 
@@ -391,12 +393,13 @@ def cemetery(cemetery_id):
 		spoiler_query = BlacklistedShows.query.filter(and_(BlacklistedShows.user_id == current_user.id, BlacklistedShows.show_id == cemetery_id)).first()
 		is_spoiler = (spoiler_query != None)
 
-	page_title = "OSGA - " + show_query.name + "'s Cemetery"
+	page_title = "OSGA - " + show_query.name
 	seasons_count = cemetery_query.all()[-1].death_season
 
 	return render_template(
 		"cemetery.html", 
 		title=page_title, 
+		content=static_content,
 		graves_count=cemetery_query.count(), 
 		characters=cemetery_query.all(), 
 		show_title=show_query.name, 

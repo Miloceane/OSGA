@@ -13,9 +13,9 @@
 
       		<div class="osga_index_login">
 				<p>
-					<a href="/user_panel">Settings</a> |
-					<a href="/user_profile/{{ current_user.id }}">Profile</a> |
-					<a href="/logout">Log out</a>
+					<a href="/user_panel">{{ content['settings'] }}</a> |
+					<a href="/user_profile/{{ current_user.id }}">{{ content['profile'] }}</a> |
+					<a href="/logout">{{ content['logout'] }}</a>
 				</p>
 			</div>
 		
@@ -24,8 +24,8 @@
 		
 			<div class="osga_index_login">
 				<p>
-					<a onclick="document.getElementById('login_box').style.display='block'" href="#">Log in</a> |
-					<a href="/register">Register</a>
+					<a onclick="document.getElementById('login_box').style.display='block'" href="#">{{ content['login'] }}</a> |
+					<a href="/register">{{ content['register'] }}</a>
 				</p>
 			</div>
 			<div id="login_box" class="modal" display="none">
@@ -39,18 +39,18 @@
 						<div class="modal-body">
 							<p>
 								<form action="{{ url_for('login') }}" method="post">
-									<label for="username"><b>Username: </b></label>
-									<input type="text" placeholder="Enter Username" name="username" required><br>
+									<label for="username"><b>{{ content['username'] }}: </b></label>
+									<input type="text" placeholder="{{ content['username_placeholder'] }}" name="username" required><br>
 
-									<label for="password"><b>Password: </b></label>
-									<input type="password" placeholder="Enter Password" name="password" required><br>
+									<label for="password"><b>{{ content['password'] }}: </b></label>
+									<input type="password" placeholder="{{ content['password_placeholder'] }}" name="password" required><br>
 
 									<input type="checkbox" name="remember_me">
-									<label for="remember_me"> Remember me</label><br>
+									<label for="remember_me"> {{ content['remember_me'] }}</label><br>
 	
-									<button type="submit">Log in</button><br><br>
+									<button type="submit">{{ content['login'] }}</button><br><br>
 
-									<a href="/new_password">Forgot my password</a>
+									<a href="/new_password">{{ content['forgot_my_password'] }}</a>
 
 								</form>
 							</p>
@@ -63,7 +63,7 @@
 		<div id="osga_main_search">
 			<div id="main_dropdown">
 				<div id="main_dropdown_list" class="osga_dropdown_content" onclick="main_dropdown_function()">
-					<input type="text" placeholder="Search for a show" id="main_input" onkeyup="filter_function()">
+					<input type="text" placeholder="{{ content['search_placeholder'] }}" id="main_input" onkeyup="filter_function()">
 					{% for show in shows %}
 						<a href="/cemetery/{{ show.id }}">{{ show.name }}</a>
 					{% endfor %}
@@ -72,7 +72,7 @@
 		</div>
 			
 		<div id="footer">
-		    <a href="/about">About</a> | <a href="/terms">Terms and Conditions</a> | <a href="/contact">Contact</a> | <a href="/contribute">Contribute</a>
+		    <a href="/about">{{ content['about'] }}</a> | <a href="/terms">{{ content['terms'] }}</a> | <a href="/contact">{{ content['contact'] }}</a> | <a href="/contribute">{{ content['contribute'] }}</a>
 		</div>
 
 	</div>
