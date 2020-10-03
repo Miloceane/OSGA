@@ -65,7 +65,15 @@
 				<div id="main_dropdown_list" class="osga_dropdown_content" onclick="main_dropdown_function()">
 					<input type="text" placeholder="{{ content['search_placeholder'] }}" id="main_input" onkeyup="filter_function()">
 					{% for show in shows %}
-						<a href="/cemetery/{{ show.id }}">{{ show.name }}</a>
+						{% if " (Universe)" in show.name %}
+							<a href="/universe/{{ show.id }}">
+								{{ show.name }}
+							</a>
+						{% else %}
+							<a href="/cemetery/{{ show.id }}">
+								{{ show.name }}
+							</a>
+						{% endif %}
 					{% endfor %}
 				</div>
 			</div>

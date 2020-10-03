@@ -14,11 +14,6 @@ from sqlalchemy.sql import func
 
 db = SQLAlchemy()
 
-class Universes(db.Model):
-	__tablename__ = 'shows_universes'
-	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String(128))
-
 class Shows(db.Model):
 	__tablename__ = 'shows'
 	id = db.Column(db.Integer, primary_key=True)
@@ -26,6 +21,14 @@ class Shows(db.Model):
 	universe_id = db.Column(db.Integer, db.ForeignKey('shows_universes.id')) 
 	api_id = db.Column(db.String(128)) 
 	is_series = db.Column(db.Boolean, default=True)
+	universe = relationship("Universes", back_populates="shows")
+	
+
+class Universes(db.Model):
+	__tablename__ = 'shows_universes'
+	id = db.Column(db.Integer, primary_key=True)
+	name = db.Column(db.String(128))
+	shows = relationship(Shows)
 
 
 class FavouritedShows(db.Model):

@@ -193,6 +193,11 @@ def index():
 		graves_count = Characters.query.filter_by(show_id=show.id).count()
 		if graves_count > 0:
 			list_complete.append(show)
+		if not show.is_series and (show.universe not in list_complete):
+			universe_query_count = Shows.query.filter_by(universe_id=show.universe.id).count()
+			if universe_query_count > 1:
+				show.universe.name = f"{show.universe.name} (Universe)"
+				list_complete.append(show.universe)
 
 	return render_template(
 		"index.html", 
@@ -342,6 +347,21 @@ def get_shows_list():
 	return json.dumps(shows_list)
 
 
+@app.route("/get_universes_list")
+def get_universes_list():
+	""" Returns a shows list in JSON format """
+	universes_query = Universes.query.order_by(Universes.name).all()
+	universes_list = []
+
+	for universe in universes_query:
+		shows_count = Shows.query.filter_by(universe_id=universe.id).count()
+		if shows_count > 1:
+			universe_item = { "id": universe.id, "name": universe.name }
+			universes_list.append(universe_item)
+
+	return json.dumps(universes_list)
+
+
 #--------------------------------------------------------------------------------------------------
 ######################
 # CEMETARIES: ROUTES #
@@ -362,10 +382,59 @@ def search_cemetery():
 
 
 @csrf_exempt
+@app.route("/universe/<int:cemetery_id>", methods=["GET", "POST"])
+@cookie_check
+def universe(cemetery_id):
+	""" Displays cemetery of universe """
+
+	static_content = get_page_static_content("cemetery")
+
+	universe_query = Universes.query.filter_by(id=cemetery_id).first()
+	seasons_count = 0
+
+	if universe_query is None:
+		return redirect("/")
+
+	if request.form.get("graves_sorting") == "popularity":
+		cemetery_query = Characters.query.join(Shows, Shows.id == Characters.show_id, isouter=True).filter(Shows.universe_id == cemetery_id).order_by(Characters.flower_count.desc())
+	else:
+		cemetery_query = Characters.query.join(Shows, Shows.id == Characters.show_id, isouter=True).filter(Shows.universe_id == cemetery_id).order_by(Characters.death_season, Characters.death_episode)
+
+
+	for character in cemetery_query:
+		quick_sort_flowers(character.flowers, 0, len(character.flowers) - 1)
+
+	if current_user is None or current_user.is_authenticated is False:
+		is_blocked = False
+		is_spoiler = False
+	else:
+		is_blocked = current_user.blocked
+		spoiler_query = BlacklistedShows.query.filter(and_(BlacklistedShows.user_id == current_user.id, BlacklistedShows.show_id == cemetery_id)).first()
+		is_spoiler = (spoiler_query != None)
+
+	page_title = "OSGA - " + universe_query.name + " Universe"
+	seasons_count = cemetery_query.all()[-1].death_season
+
+	return render_template(
+		"cemetery.html", 
+		title=page_title, 
+		content=static_content,
+		graves_count=cemetery_query.count(), 
+		characters=cemetery_query.all(), 
+		is_universe=True,
+		show_title=universe_query.name, 
+		show_series=False,
+		show_id=universe_query.id,
+		show_seasons_count=seasons_count, 
+		is_blocked=is_blocked, 
+		is_spoiler=is_spoiler)
+
+
+@csrf_exempt
 @app.route("/cemetery/<int:cemetery_id>", methods=["GET", "POST"])
 @cookie_check
 def cemetery(cemetery_id):
-	""" Displays cemetery """
+	""" Displays cemetery of show """
 
 	static_content = get_page_static_content("cemetery")
 

@@ -5,8 +5,9 @@
 /********************************/
 
 var json_shows_list = ""
+var json_universes_list = ""
 
-function get_top_search_options(e) 
+function retrieve_shows_list()
 {
 	if (json_shows_list.length == 0)
 	{
@@ -36,6 +37,44 @@ function get_top_search_options(e)
         };
         xhttp.send();
     }
+}
+
+function retrieve_universes_list()
+{
+	if (json_universes_list.length == 0)
+	{
+		var xhttp = new XMLHttpRequest(); 
+
+		ajax_url = "/get_universes_list";
+		xhttp.open("GET", ajax_url, true);
+		xhttp.setRequestHeader("Content-Type", "application/json");
+		
+        xhttp.onreadystatechange = function () 
+        {
+            if (xhttp.readyState === 4 && xhttp.status === 200) 
+            {
+                json_universes_list = JSON.parse(xhttp.response);
+
+                let top_search_div = document.getElementById("top_dropdown_list");
+
+		        for (i = 0; i < json_universes_list.length; i++)
+		        {
+		        	let search_link = document.createElement("a");
+		        	search_link.innerHTML = json_universes_list[i].name + " (Universe)";
+		        	search_link.href = "/universe/" + json_universes_list[i].id;
+
+		        	top_search_div.appendChild(search_link);
+		        }
+            }
+        };
+        xhttp.send();
+    }
+}
+
+function get_top_search_options(e) 
+{
+	retrieve_shows_list();
+	retrieve_universes_list();
 }
 
 function top_dropdown_function() 
