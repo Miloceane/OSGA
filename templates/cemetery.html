@@ -42,6 +42,16 @@
 	
 	{% endif %}
 	<br>
+	{% if is_universe %}
+	<form action="{{ url_for('universe', cemetery_id=show_id) }}" method="post">
+		Sort graves by: 
+		<select name="graves_sorting">
+			<option value="chronological">Chronological order</option>
+			<option value="popularity">Popularity</option>
+		</select>
+		<button>Reload</button>
+	</form>
+	{% else %}
 	<form action="{{ url_for('cemetery', cemetery_id=show_id) }}" method="post">
 		Sort graves by: 
 		<select name="graves_sorting">
@@ -50,6 +60,7 @@
 		</select>
 		<button>Reload</button>
 	</form>
+	{% endif %}
 	<br>
 	
 	<div id="add_message_box" class="modal" display="none">

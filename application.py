@@ -471,6 +471,7 @@ def cemetery(cemetery_id):
 		content=static_content,
 		graves_count=cemetery_query.count(), 
 		characters=cemetery_query.all(), 
+		is_universe=False,
 		show_title=show_query.name, 
 		show_series=show_query.is_series,
 		show_id=show_query.id,
