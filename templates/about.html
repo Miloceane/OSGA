@@ -2,41 +2,26 @@
 
 {% block inside_row %}
 <main id="about" class="col-12" role="main">
-	<h1>About OSGA</h1>
+	<h1>{{ title }}</h1>
 	<div id="about_desc">
 		<p>
-		OSGA (One Site to Grieve them All) aims to provide a mourning place for all lovers of TV shows who lost beloved characters on screen. Each show has its own cemetery, where you can find the resting place of your favourite character and leave messages and flowers.
-		<br><br>We all know the pain of losing our favourite character in a book, movie or TV show. Some years ago, when the show was still running, the website Slate made a fictional graveyard where it was possible to leave flowers on the graves of deceased Game of Thrones characters. OSGA was born based on this idea, extended to many other series or shows, with many more features! <br>OSGA started out in May 2020 as a student project during the Web App course of the minor Fulltime Programmeren (Fulltime Programming) at the University of Amsterdam.<br><br>
+		{{ content["about_desc"]|safe }}
 		</p>
-		<h2>About the team</h2>
+		<h2>{{ content["team_title"] }}</h2>
 			<p>
-			For now, the "team" only consists of one person (Charlotte, who created this website), but if OSGA becomes larger (more shows, more users, more characters to add, more comments to moderate), moderators will probably be needed! :)<br><br>
+			{{ content["team_desc"]|safe }}
+			<br><br>
 			</p>
 
-		<h2>Acknowledgments</h2>
+		<h2>{{ content["acknowledgments_title"] }}</h2>
 		<p>
-			This website was made by one person but clearly, it wouldn't exist nor be the way it is if it wasn't for a bunch of help from other people!<br>
-			So I would like to give a shout out to all the people to whom I'm very thankful for helping make this possible:
-			<ul>
-				<li>
-					All the staff of Minor Fulltime Programmeren, who provided a lot of time and help to motivate students even during harsh COVID times! Special mention to Rebecca, for your enthusiasm towards OSGA, and to Martijn, Quinten and Marijn, for your dedication and involvement, direct or indirect; without you guys I wouldn't have had the motivation, knowledge and skills to make this website the way it is!
-				</li>
-				<li>
-					Grégoire and Charly for the fine CSS tips, panic rubber-duck debugging, general web dev testing and feedback, and also for proving me that Javascript isn't all that bad after all (see, I said it)
-				</li>
-				<li>
-					Sacha and Victoire for the security and user features testing, as well as your very relevant and useful feedback
-				</li>
-				<li>
-					And all the people who have been enthusiastically supporting OSGA ever since I first mentioned its idea: Lucie, Louise, Pauline, Wilco (also for the daily moral support!), Julie, Alexandra, and my parents (hi there if you're reading this!)
-				</li>
-			</ul>
-			Thank you so much! :)<br><br>
+			{{ content["acknowledgments_desc"]|safe }}
+			<br><br>
 		</p>
 
-		<h2>Attribution</h2>
+		<h2>{{ content["attribution_title"] }}</h2>
 		<p>
-			The flowers and scroll pictures are licensed under the CC-BY 4.0. Source: <a href="https://github.com/twitter/twemoji">Twemoji</a>.
+			{{ content["attribution_desc"]|safe }}
 		</p>
 	</div>
 </main>

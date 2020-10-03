@@ -1,4 +1,4 @@
-import hmac, os
+import hmac, os, csv
 import logging
 from werkzeug.security import safe_str_cmp
 from datetime import datetime
@@ -10,6 +10,85 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, logout_user, login_required, login_fresh, current_user
 
 from models import *
+
+
+###########################
+# Helpers for translation #
+###########################
+
+def get_page_title(page):
+    """ 
+    Input: language ("en", "fr"...), page ("about", ...)
+    """
+    if session.get('language') is None:
+        language = "en"
+    else:
+        language = session.get('language')
+
+    # Jinja2 uses UTF-8
+    title_file = open(f"static/languages/{ language }/titles.csv", encoding="utf-8")
+    
+    if title_file is None:
+        return ""
+
+    title_reader = csv.reader(title_file)
+    title = ""
+
+    # If page doesn't have a specific title, use main title
+    for text_id, text in title_reader:
+        if text_id == "main":
+            title = text
+        if text_id == page:
+            title = text
+
+    return title
+
+
+def get_page_static_content(page):
+    """
+    Input: language ("en", "fr"...), page ("about", ...)
+    """
+    if session.get('language') is None:
+        language = "en"
+    else:
+        language = session['language']
+
+    content_file = open(f"static/languages/{ language }/{ page }.csv", encoding="utf-8")
+
+    if content_file is None:
+        print(f"No { language } content found for page: { page }")
+        return {}
+
+    content_reader = csv.reader(content_file)
+    content = {}
+
+    for text_id, text in content_reader:
+        content[text_id] = text
+
+    return content
+
+
+# def translate(route):
+#     """
+#     Decorator to translate pages
+#     """
+#     @wraps(route)
+#     def translation_wrapper(*args, **kwargs):
+#         response = make_response(route(*args, **kwargs))
+        
+#         if current_user.is_authenticated and current_user.remembered is True:
+#             response = osga_set_remember_cookie(response)
+        
+#         elif current_user.is_authenticated and current_user.remembered is False:
+#             response = osga_clear_remember_cookie(response)
+#             session['user_id'] = None
+#             logout_user()
+
+#         return response
+
+#     return translation_wrapper
+
+
 
 #########################################################
 # Based on: https://stackabuse.com/quicksort-in-python/ #

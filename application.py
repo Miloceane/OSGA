@@ -15,6 +15,7 @@ import base64, scrypt
 import random, string
 import hashlib
 import logging
+import csv
 from datetime import datetime, timedelta
 
 from flask import Flask, render_template, request, session, redirect, url_for, flash, escape, make_response, abort
@@ -133,7 +134,8 @@ csp = {
 
 talisman = Talisman(app, content_security_policy=csp)
 
-
+# Configure language
+app.config['MAIN_LANGUAGE'] = 'en'
 
 #--------------------------------------------------------------------------------------------------
 ##########################
@@ -176,6 +178,9 @@ if __name__ == "__main__":
 @cookie_check
 def index():
 	""" Index page """
+	title = get_page_title("index")
+	static_content = get_page_static_content("index")
+
 	list_shows = Shows.query.all()
 	list_complete = []
 
@@ -191,7 +196,8 @@ def index():
 
 	return render_template(
 		"index.html", 
-		title="OSGA: One Site to Grieve them All",
+		title=title,
+		content=static_content,
 		shows=list_complete, 
 		current_user=current_user)
 
@@ -201,17 +207,31 @@ def index():
 # FOOTER FEATURES #
 ###################
 
+
 @app.route("/about")
 @cookie_check
 def about():
 	""" About page """
-	return render_template("about.html", title="OSGA: One Site to Grieve them All")
+	title = get_page_title("about")
+	static_content = get_page_static_content("about")
+		
+	return render_template(
+		"about.html", 
+		title=title, 
+		content=static_content)
+
 
 @app.route("/contribute")
 @cookie_check
 def contribute():
 	""" Contribute page """
-	return render_template("contribute.html", title="OSGA: One Site to Grieve them All")
+	title = get_page_title("contribute")
+	static_content = get_page_static_content("contribute")
+
+	return render_template(
+		"contribute.html",
+		title=title, 
+		content=static_content)
 
 
 @app.route("/terms")
@@ -347,6 +367,8 @@ def search_cemetery():
 def cemetery(cemetery_id):
 	""" Displays cemetery """
 
+	static_content = get_page_static_content("cemetery")
+
 	show_query = Shows.query.filter_by(id=cemetery_id).first()
 	seasons_count = 0
 
@@ -371,12 +393,13 @@ def cemetery(cemetery_id):
 		spoiler_query = BlacklistedShows.query.filter(and_(BlacklistedShows.user_id == current_user.id, BlacklistedShows.show_id == cemetery_id)).first()
 		is_spoiler = (spoiler_query != None)
 
-	page_title = "OSGA - " + show_query.name + "'s Cemetery"
+	page_title = "OSGA - " + show_query.name
 	seasons_count = cemetery_query.all()[-1].death_season
 
 	return render_template(
 		"cemetery.html", 
 		title=page_title, 
+		content=static_content,
 		graves_count=cemetery_query.count(), 
 		characters=cemetery_query.all(), 
 		show_title=show_query.name, 
