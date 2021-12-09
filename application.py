@@ -52,7 +52,7 @@ g_is_local = False
 
 # Configure Flask app
 app = Flask(__name__)
-app.secret_key = "dd9fadd2de6003bf66cbe5ecdb6551015150fd955811ba1e8217d76c21f5f974" #os.environ.get("SECRET_KEY")
+app.secret_key = os.getenv("SECRET_KEY")
 
 
 # Configure database
