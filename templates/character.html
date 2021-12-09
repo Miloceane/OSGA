@@ -37,7 +37,7 @@
 
 	<div id="character_info">
 		<h1>{{ character.name }}</h1>
-		<h5>From <a href="{{ url_for('cemetery', cemetery_id=character.show_id) }}">{{ show.name }}</a></h5>
+		<h5>{{ content["from"] }}<a href="{{ url_for('cemetery', cemetery_id=character.show_id) }}">{{ show.name }}</a></h5>
 		<br>
 		<div class="grave">
 			<table>
@@ -106,7 +106,7 @@
 		{% endif %}
 	</div>
 	<div id="other_characters">
-		<h6>{{ content["all_deceased_characters_from"] }} <a href="{{ url_for('cemetery', cemetery_id=character.show_id) }}">{{ content["show.name"] }}</a>:</h6>
+		<h6>{{ content["all_deceased_characters_from"] }} <a href="{{ url_for('cemetery', cemetery_id=character.show_id) }}">{{ show.name }}</a>:</h6>
 		{% for character in show_characters %}
 			{% if show_characters[0].id != character.id %}· {% endif %}
 		<a href="/character/{{ character.id }}">{{ character.name }}</a>
