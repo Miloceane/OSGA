@@ -2,56 +2,20 @@
 
 {% block inside_row %}
 <main id="about" class="col-12" role="main">
-	<h1>Terms and conditions</h1>
+	<h1>{{ title }}</h1>
 	<div id="about_desc">
 		<p>
-		By registering on OSGA, you agree to the following terms and conditions. (Last updated: 21-07-2020)
+		{{ content["terms_intro"]| safe }}
 		<br><br></p>
 
-		<h3>User features</h3>
-		<p>
-		To this date, OSGA is an entirely free website and will not ask you for any payment whatsoever when using the features available to you as a registered user.<br>
-		User input features refer to all features allowing user to add visible content to OSGA visitors, including:
-		<ul>
-			<li>
-				Choosing a username;
-			</li>
-			<li>
-				Leaving messages on graves;
-			</li>
-			<li>
-				Sending suggestions to OSGA's staff.
-			</li>
-		</ul>
-		There is at the moment no possibility to delete your account as a user. This is purposefully made to be able to keep track of users posting inappropriate content. If you want to ask for your account to be deleted, please contact us using the <a href="/contact">contact form</a>!
-		<br><br></p>
+		<h3>{{ content["user_features_subtitle"]| safe }}</h3>
+		<p>{{ content["user_features_paragraph"]| safe }}</p>
 
-		<h3>Conditions of use</h3>
-		<p>
-			In order to keep OSGA a pleasant and peaceful website for all visitors, we ask you to refrain from inappropriate behavior. OSGA's staff has the right to block or terminate (permanently block) your account with immediate effect, without warning, if your account is seen displaying such behaviors. This includes:
-			<ul>
-				<li>1. Using user input features to post inappropriate content, which includes:
-					<ul>
-						<li>Discriminatory content, including racism, sexism, discrimination based on religion, sexual orientation and other types of discrimination. </li>
-						<li>Content that engages in, endorses or promotes hatred or harassment.</li>
-						<li>Links towards external websites.</li>
-						<li>Passwords or other personal or private information about you or other users.</li>
-						<li>Spam (for instance, sending the same message a number of times).</li>
-						<li>Commercial content such as marketing, advertising, etc.</li>
-						<li>Not otherwise mentioned illegal content.</li>
-					</ul>
-				</li>
-				<li>2. Stealing or attempting to steal user information or accounts in any way.</li>
-				<li>3. Interfering with OSGA's servers, database and/or network systems, including fraudulently manipulating OSGA using bots or other technical tools.</li>
-				<li>4. Disrupting or attempting to disrupt the functioning of OSGA in any way (including but not restricted to code injection, any other hacking attempt, DDOS attempts, etc.)</li>
-			</ul>
-		<br></p>
+		<h3>{{ content["conditions_use_subtitle"]| safe }}</h3>
+		<p>{{ content["conditions_use_paragraph"]| safe }}</p>
 
-		<h3>Confidentiality</h3>
-		<p>
-			OSGA will never send your private, non explicitly displayed on the website, information to other parties.<br>
-			This includes your password (which is stored encrypted) and your email address.  
-		<br><br></p>
+		<h3>{{ content["confidentiality_subtitle"]| safe }}</h3>
+		<p>{{ content["confidentiality_paragraph"]| safe }}</p>
 
 	</div>
 </main>

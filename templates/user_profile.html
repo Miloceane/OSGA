@@ -6,27 +6,27 @@
 		<table>
 			<tr>
 				<td>
-					<h1>User profile: {{ user_profile_name }}</h1><br>
+					<h1>{{ user_profile_label }}: {{ user_profile_name }}</h1><br>
 				</td>
 			</tr>
 			{% if user_profile_favourite_shows %}
 				<tr>
 					<td>	
-						Favourite shows: 
+						{{ favourite_shows_label }} 
 						<form action="{{ url_for('search_cemetery') }}" method="post">
 					    	<select name="cemetery_search">
 					    		{% for show in user_profile_favourite_shows %}
 									<option value="{{ show.name }}">{{ show.name }}</option>
 								{% endfor %}
 							</select>
-							<button>See cemetery</button>
+							<button>{{ see_cemetery_button }}</button>
 						</form><br>
 					</td>
 				</tr>
 			{% endif %}
 			<tr>
 				<td>
-					<h3>Activity:</h3>
+					<h3>{{ activity_label }}</h3>
 					<p>
 						{% if activity and activity|length > 0 %}
 						<ul>
@@ -37,7 +37,7 @@
 							{% endfor %}
 						</ul>
 						{% else %}
-						There is no activity to display for this user.
+						{{ no_activity_message }}
 						{% endif %}
 					</p>
 				</td>

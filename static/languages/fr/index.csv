@@ -1,0 +1,18 @@
+text_id,text
+settings,Paramètres
+profile,Profil
+logout,"Déconnexion"
+login,"Connexion"
+register,"Inscription"
+username,"Nom d'utilisateur"
+username_placeholder,"Nom d'utilisateur"
+password,"Mot de passe"
+password_placeholder,"Mot de passe"
+remember_me,"Se souvenir de moi"
+forgot_my_password,"Mot de passe oublié"
+search_placeholder,"Chercher un film ou une série"
+about,"À propos"
+terms,"Termes et Conditions"
+contact,"Contact"
+contribute,"Contribuer"
+language_label,"Langage"

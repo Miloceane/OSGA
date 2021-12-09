@@ -1,0 +1,11 @@
+text_id,text
+create_account_label,"Create an account"
+fill_form_message,"Please fill the form below to register."
+username_label,"Username"
+username_conditions_message,"(Can only contain letters and numbers)"
+password_label,"Password"
+password_conditions_message,"(Must be at least 8 characters long)"
+email_address_label,"E-mail address"
+confirm_terme,"I confirm that I have read and accepted the <a href='/terms' target='_blank'>Terms and Conditions</a> (you can also find them at the bottom of each page anytime)"
+captcha_message,"CAPTCHA verification, please type the code hereunder in the following form field:"
+confirm_registration_button,"Confirm registration"

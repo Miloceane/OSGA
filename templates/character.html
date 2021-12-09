@@ -11,9 +11,9 @@
 			<div class="modal-content">
 				<div class="modal-body">
 					<p>
-						This is the page of a character from a show in your spoilers blacklist! Are you sure you want to view it?<br>
+						{{ content["in_blacklist_message"] }}
 						<br>
-						<button onclick="display_spoiler_character()">View anyway.</button>
+						<button onclick="display_spoiler_character()">{{ content["view_anyway_button"] }}</button>
 					</p>
 				</div>
 			</div>
@@ -26,10 +26,9 @@
 			<div class="modal-content">
 				<div class="modal-body">
 					<p>
-						Do you want to burn (delete) the message you left there? This can't be undone!
-						<br><br>
+						{{ content["burn_message_message"] }}<br><br>
 						<input type="submit" id="confirm_delete_message" value="Yes, I'm sure.">
-						<button onclick="document.getElementById('validation_box').style.display='none'">Oh wait, no!</button>
+						<button onclick="document.getElementById('validation_box').style.display='none'">{{ content["cancel_button"] }}</button>
 					</p>
 				</div>
 			</div>
@@ -46,7 +45,7 @@
 					<td>
 						<span class="character_name">{{ character.name }}</span><br>
 						{% if show.is_series %}
-							{% if show_seasons_count > 1 %}Season {{ character.death_season }} {% endif %}Episode {{ character.death_episode }}
+							{% if show_seasons_count > 1 %}{{ content["season_capital_label"] }} {{ character.death_season }} {% endif %}{{ content["episode_capital_label"] }} {{ character.death_episode }}
 						{% endif %}
 					</td>
 				</tr>
@@ -87,8 +86,8 @@
 						{% if message.admin_id > 0 %}
 						<div id="message_{{ message.id }}" class="character_message" message_id="{{ message.id }}">
 							<div class="character_message_header">
-								Left by <a href="/user_profile/{{ message.user_id }}">{{ message.user.name }}</a>
-								 on {{ message.date.strftime('%Y-%m-%d') }}
+								Left by <a href="/user_profile/{{ message.user_id }}">{{ content["message.user.name"] }}</a>
+								 on {{ content["message.date.strftime('%Y-%m-%d')"] }}
 								 {% if current_user.is_authenticated and message.user_id == current_user.id %}
 								 	<span class="delete_message">
 								 		<img src="/static/images/fire.png" alt="Delete message" message_id="{{ message.id }}"/>
@@ -107,7 +106,7 @@
 		{% endif %}
 	</div>
 	<div id="other_characters">
-		<h6>All deceased characters from <a href="{{ url_for('cemetery', cemetery_id=character.show_id) }}">{{ show.name }}</a>:</h6>
+		<h6>{{ content["all_deceased_characters_from"] }} <a href="{{ url_for('cemetery', cemetery_id=character.show_id) }}">{{ content["show.name"] }}</a>:</h6>
 		{% for character in show_characters %}
 			{% if show_characters[0].id != character.id %}· {% endif %}
 		<a href="/character/{{ character.id }}">{{ character.name }}</a>

@@ -69,13 +69,6 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-
-# Configure API connexion
-# Note: this would probably be better put somewhere safer such as in the database
-api_id = '9cba8155f5e9c914ace595df9e6e57efc8bf073b3e69de3aba717a147a634a27'
-api_key = 'e2e38b259acb59d88cd855a3af7a9f60c8dab289592f73ee1f1bdba9877dda5d'
-headers = { 'Content-Type': 'application/json', 'trakt-api-key': '9cba8155f5e9c914ace595df9e6e57efc8bf073b3e69de3aba717a147a634a27', 'trakt-api-version': '2'}
-
 # Configure mail
 app.config["MAIL_SERVER"] = 'mail.privateemail.com'
 app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
@@ -242,8 +235,13 @@ def contribute():
 @app.route("/terms")
 @cookie_check
 def terms():
+	title = get_page_title("terms")
+	static_content = get_page_static_content("terms")
+
 	""" Terms and conditions """
-	return render_template("terms.html", title="OSGA: One Site to Grieve them All")
+	return render_template("terms.html", 
+		title=title,
+		content=static_content)
 
 @csrf_exempt
 @app.route("/contact", methods=["GET", "POST"])
@@ -278,6 +276,18 @@ def contact():
 		    error_message += "The CAPTCHA verification didn't work, please try again!"
 
 	return render_template("contact.html", title="OSGA: One Site to Grieve them All", error=error_message, email=request.form.get("email"), subject=request.form.get("subject"), message=request.form.get("message"))
+
+
+@csrf_exempt
+@app.route("/language/<string:language_choice>")
+def language(language_choice):
+	for dir_name in os.listdir("static/languages/"):
+		if language_choice == dir_name:
+			session['language'] = language_choice
+			break
+
+	return redirect("/")
+
 
 
 #--------------------------------------------------------------------------------------------------
@@ -387,8 +397,6 @@ def search_cemetery():
 def universe(cemetery_id):
 	""" Displays cemetery of universe """
 
-	static_content = get_page_static_content("cemetery")
-
 	universe_query = Universes.query.filter_by(id=cemetery_id).first()
 	seasons_count = 0
 
@@ -414,6 +422,12 @@ def universe(cemetery_id):
 
 	page_title = "OSGA - " + universe_query.name + " Universe"
 	seasons_count = cemetery_query.all()[-1].death_season
+
+	# TODO!!
+	# - Finish cemetery translation
+	# - Check backend connection to retrieve cemetery info properly?
+
+	static_content = get_page_static_content("cemetery")
 
 	return render_template(
 		"cemetery.html", 
@@ -479,18 +493,12 @@ def cemetery(cemetery_id):
 		is_blocked=is_blocked, 
 		is_spoiler=is_spoiler)
 
-
-@app.route("/api", methods=["GET"])
-def api():
-	""" Page for api tests """
-	api_request = get('https://api.trakt.tv/shows/popular', headers=headers).json()
-	return 	
-
-
 @app.route("/character/<int:character_id>", methods=["GET"])
 @cookie_check
 def character(character_id):
 	""" Displays character info """
+
+	static_content = get_page_static_content("character")
 
 	character = Characters.query.get(character_id)
 	show = Shows.query.get(character.show_id)
@@ -507,6 +515,7 @@ def character(character_id):
 	return render_template(
 		"character.html", 
 		title="OSGA: One Site to Grieve them All", 
+		content=static_content,
 		character=character, 
 		show=show, 
 		is_spoiler=is_spoiler, 
@@ -1091,9 +1100,6 @@ def admin_panel(page_type):
 	if page_type == "declare_death":
 
 		if request.form.get("character"): # Receive death declaration
-			# TODO: Add some protection against injections here in case an admin suddenly decides to hack the website (been there)
-			# TODO: Maybe switch to OMDB API? Track seems to have issues matching IMDB ids...
-			show_api_id = "0" # Old code for reference: if request.form.get("declare_death_show_search")
 			character = request.form.get("character")
 			season = request.form.get("declare_death_season")
 			episode = request.form.get("declare_death_episode")
@@ -1101,7 +1107,7 @@ def admin_panel(page_type):
 			
 			show_request = Shows.query.filter_by(name=show_title)
 			if show_request.count() == 0: # Show doesn't exist in database yet
-				db.session.add(Shows(name=show_title, api_id=show_api_id))
+				db.session.add(Shows(name=show_title, api_id=0))
 				db.session.commit()
 				show_request = Shows.query.filter_by(name=show_title)
 
@@ -1114,12 +1120,10 @@ def admin_panel(page_type):
 		headers_index_search = headers
 		headers_index_search['X-Pagination-Limit'] = '30'
 		headers_index_search['X-Pagination-Page'] = '3'
-		api_request = get('https://api.trakt.tv/shows/popular', headers=headers_index_search).json()
 
 		return render_template("admin_panel.html", 
 			selected_declare_death="active", 
 			title="OSGA: One Site to Grieve them All", 
-			shows=api_request, 
 			message=message)
 
 

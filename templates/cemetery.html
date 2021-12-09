@@ -14,17 +14,14 @@
 
 <main id="cemetery_page" class="col-12" role="main">
 	<h1>{{ show_title }}</h1>
-	<h2>Memorial Grounds</h2>
+	<h2>{{ content["memorial_grounds_title"]|safe }}</h2>
 
 	{% if current_user.is_authenticated %}
 		<br>
 		{% if is_blocked %}
-			Your account has been blocked: you can't leave public flowers nor messages on graves anymore. You can leave temporary flowers, they just won't be registered.
+			{{ content["blocked_account_message"] }}
 		{% else %}
-			Welcome to {{ show_title }}'s cemetery. Here you can leave flowers or messages to your favourite characters. Messages will be reviewed by the maintenance of this cemetery for approval before they can be displayed to the public.
-			<br><br>
-			To select a different type of flower than the default red rose, or to leave a message, click on the picture of the item type you wish to use here under.
-			<br><br>
+			{{ content["registered_welcome_message"] }}<br><br>{{ content["registered_welcome_message_2"] }}
 			<div id="flower_choice">
 				<p>
 				{% for i in range(4) %}
@@ -35,30 +32,26 @@
 			</div>
 		{% endif %}
 	{% else %}
-		Welcome to {{ show_title }}'s cemetery. You can click on a grave to leave a flower in memory of a character.
-		<br>
-		Registered users can leave several types of flowers as well as messages.
-		<br>
-	
+		{{ content["unregistered_welcome_message"] }}<br>{{ content["unregistered_welcome_message_2"] }}	
 	{% endif %}
 	<br>
 	{% if is_universe %}
 	<form action="{{ url_for('universe', cemetery_id=show_id) }}" method="post">
-		Sort graves by: 
+		{{ content["sort_graves_by_label"] }}  
 		<select name="graves_sorting">
-			<option value="chronological">Chronological order</option>
-			<option value="popularity">Popularity</option>
+			<option value="chronological">{{ content["chronological_order_label"] }}</option>
+			<option value="popularity">{{ content["popularity_label"] }}</option>
 		</select>
-		<button>Reload</button>
+		<button>{{ content["reload_button"] }}</button>
 	</form>
 	{% else %}
 	<form action="{{ url_for('cemetery', cemetery_id=show_id) }}" method="post">
-		Sort graves by: 
+		{{ content["sort_graves_by_label"] }} 
 		<select name="graves_sorting">
-			<option value="chronological">Chronological order</option>
-			<option value="popularity">Popularity</option>
+			<option value="chronological">{{ content["chronological_order_label"] }}</option>
+			<option value="popularity">{{ content["popularity_label"] }}</option>
 		</select>
-		<button>Reload</button>
+		<button>{{ content["reload_button"] }}</button>
 	</form>
 	{% endif %}
 	<br>
@@ -68,10 +61,10 @@
 			<div class="modal-content">
 				<div class="modal-body">
 					<p>
-						Write here the message you want to leave. Other visitors will be able to see it once the cemetery maintenance will have approved it.<br>
+						{{ content["leave_message_message"] }}<br>
 						<input type="text" id="message_text">
 						<br><br>
-						<button onclick="leave_message()">Leave message.</button>
+						<button onclick="leave_message()">{{ content["leave_message_button"] }}</button>
 					</p>
 				</div>
 			</div>
@@ -84,9 +77,9 @@
 			<div class="modal-content">
 				<div class="modal-body">
 					<p>
-						This is the cemetery of a show in your spoilers blacklist! Are you sure you want to view it?<br>
+						{{ content["show_in_blacklist_message"] }}<br>
 						<br>
-						<button onclick="display_spoiler_cemetery()">View anyway.</button>
+						<button onclick="display_spoiler_cemetery()">{{ content["view_anyway_button"] }}</button>
 					</p>
 				</div>
 			</div>
@@ -103,7 +96,10 @@
 							<td>
 								<a href="/character/{{ characters[i].id }}">{{ characters[i].name }}</a><br>
 								{% if show_series %}
-									{% if show_seasons_count > 1 %}Season {{ characters[i].death_season }} {% endif %}Episode {{ characters[i].death_episode }}
+									{% if show_seasons_count > 1 %}
+										{{ content["season_capital_label"] }} {{ characters[i].death_season }}
+									{% endif %}
+									{{ content["episode_capital_label"] }} {{ characters[i].death_episode }}
 								{% endif %}
 							</td>
 						</tr>
@@ -127,9 +123,9 @@
 									{% endfor %}
 								</div><br>
 								{% if characters[i].flowers|length == 1 %}
-									<span id="grave_{{ i }}_count">1</span> flower.
+									<span id="grave_{{ i }}_count">1</span>{{ content["flower"] }}
 								{% else %}
-									<span id="grave_{{ i }}_count">{{ characters[i].flowers|length }}</span> flowers.
+									<span id="grave_{{ i }}_count">{{ characters[i].flowers|length }}</span>{{ content["flowers"] }}
 								{% endif %}
 							</td>
 						</tr>

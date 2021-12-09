@@ -1,3 +1,9 @@
+################################
+# OSGA - helpers.py            #
+# Written by Charlotte Lafage  #
+# (GitHub: Miloceane)          #
+################################
+
 import hmac, os, csv
 import logging
 from werkzeug.security import safe_str_cmp
@@ -12,16 +18,16 @@ from flask_login import LoginManager, login_user, logout_user, login_required, l
 from models import *
 
 
-###########################
-# Helpers for translation #
-###########################
+####################################
+# Homemade helpers for translation #
+####################################
 
 def get_page_title(page):
     """ 
     Input: language ("en", "fr"...), page ("about", ...)
     """
     if session.get('language') is None:
-        language = "en"
+        language = "fr"
     else:
         language = session.get('language')
 
@@ -63,6 +69,13 @@ def get_page_static_content(page):
     content = {}
 
     for text_id, text in content_reader:
+        content[text_id] = text
+
+    # Add main layout text in all pages static content
+    content_layout_file = open(f"static/languages/{ language }/layout_pages.csv", encoding="utf-8")
+    content_layout_reader = csv.reader(content_layout_file)
+
+    for text_id, text in content_layout_reader:
         content[text_id] = text
 
     return content

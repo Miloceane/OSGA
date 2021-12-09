@@ -28,8 +28,8 @@
 							{{ current_user.name}}
 						</button>
 						<div class="dropdown-menu">
-							<a class="dropdown-item" href="/user_panel">User panel</a>
-		  					<a class="dropdown-item" href="/logout">Log out</a>
+							<a class="dropdown-item" href="/user_panel">{{ content["user_panel_button"] }}</a>
+		  					<a class="dropdown-item" href="/logout">{{ content["log_out_button"] }}</a>
 		  				</div>
 		  			</div>
 	  			</li>
@@ -37,10 +37,10 @@
 		  		{% else %}
 
 		  		<li class="nav-item">	
-	  				<a class="nav-link" onclick="document.getElementById('login_box').style.display='block'">Log in</a>
+	  				<a class="nav-link" onclick="document.getElementById('login_box').style.display='block'">{{ content["log_in_button"] }}</a>
 				</li>
 				<li class="nav-item">	
-					<a class="nav-item nav-link" href="/register">Register</a>
+					<a class="nav-item nav-link" href="/register">{{ content["register_button"] }}</a>
 				</li>
 		  		{% endif %}
 		  		
@@ -50,25 +50,25 @@
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5>Log in</h5>
+							<h5>{{ content["log_in_button"] }}</h5>
           					<button type="button" class="close" data-dismiss="modal"  height="20px" onclick="document.getElementById('login_box').style.display='none'">&times;</button>
 						</div>
 
 						<div class="modal-body">
 							<p>
 								<form action="{{ url_for('login') }}" method="post">
-									<label for="username"><b>Username: </b></label>
+									<label for="username"><b>{{ content["username_label"] }}: </b></label>
 									<input type="text" placeholder="Enter Username" name="username" required><br>
 
-									<label for="password"><b>Password: </b></label>
+									<label for="password"><b>{{ content["password_label"] }}: </b></label>
 									<input type="password" placeholder="Enter Password" name="password" required><br>
 
 									<input type="checkbox" name="remember_me">
-									<label for="remember_me"> Remember me</label><br>
+									<label for="remember_me"> {{ content["remember_me_label"] }}</label><br>
 
-									<button type="submit">Log in</button><br><br>
+									<button type="submit">{{ content["log_in_button"] }}</button><br><br>
 
-									<a href="/new_password">Forgot my password</a>
+									<a href="/new_password">{{ content["forgot_password_label"] }}</a>
 								</form>
 							</p>
 						</div>
@@ -86,7 +86,7 @@
 	</div>
 </div>
 <div id="footer">
-    <a href="/about">About</a> | <a href="/terms">Terms and Conditions</a> | <a href="/contact">Contact</a> | <a href="/contribute">Contribute</a>
+    <a href="/about">{{ content["about_label"] }}</a> | <a href="/terms">{{ content["terms_label"] }}</a> | <a href="/contact">{{ content["contact_label"] }}</a> | <a href="/contribute">{{ content["contribute_label"] }}</a> | {{ content["language_label"] }}: <a href="/language/en">EN</a> - <a href="/language/fr">FR</a> 
 </div>
 
 <script src="/static/javascript/top_search_loaded.js">
